@@ -10,6 +10,7 @@ import { FocusMark } from "./components/FocusMark";
 import { ProductVisual } from "./components/ProductVisual";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { TimerPreview } from "./components/TimerPreview";
+import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { features } from "./data/features";
 import { badgeMilestones, getImageSlots, siteLinks, widgetNames } from "./data/siteContent";
 
@@ -35,6 +36,13 @@ export default function App() {
     : "en";
 
   const imageSlots = getImageSlots(currentLanguage);
+
+  if (
+    window.location.pathname ===
+    "/privacy"
+  ) {
+    return <PrivacyPolicyPage />;
+  }
 
   return (
     <main>
@@ -280,7 +288,15 @@ export default function App() {
 
       <footer className="footer shell">
         <div className="brand"><FocusMark /><span>focus</span></div>
-        <p>{t("footer.message")}</p><span>© 2026 Focus</span>
+        <div className="footer-center">
+          <p>{t("footer.message")}</p>
+          <a href="/privacy">
+            {currentLanguage === "pt-BR"
+              ? "Política de Privacidade"
+              : "Privacy Policy"}
+          </a>
+        </div>
+        <span>© 2026 Focus</span>
       </footer>
     </main>
   );
