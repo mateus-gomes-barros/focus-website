@@ -1,0 +1,793 @@
+===== PACKAGE =====
+{
+  "name": "focus-website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.0.2",
+    "framer-motion": "^12.23.12",
+    "i18next": "^26.4.2",
+    "lucide-react": "^0.542.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-i18next": "^17.0.13",
+    "vite": "^7.1.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "eslint": "^9.34.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.41.0"
+  }
+}
+===== SOURCE FILES =====
+src/App.tsx
+src/components/AnalyticsPreview.tsx
+src/components/FocusMark.tsx
+src/components/LanguageSwitcher.tsx
+src/components/ProductVisual.tsx
+src/components/TimerPreview.tsx
+src/data/features.ts
+src/data/siteContent.ts
+src/i18n.ts
+src/index.css
+src/main.tsx
+===== APP =====
+import {
+  Activity, ArrowDown, ArrowRight, ArrowUpRight, BellRing, Check,
+  Code2, FolderKanban, Menu, Smartphone, Sparkles, Target, TimerReset, X,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { AnalyticsPreview } from "./components/AnalyticsPreview";
+import { FocusMark } from "./components/FocusMark";
+import { ProductVisual } from "./components/ProductVisual";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
+import { TimerPreview } from "./components/TimerPreview";
+import { features } from "./data/features";
+import { badgeMilestones, getImageSlots, siteLinks, widgetNames } from "./data/siteContent";
+
+const reveal = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.15 },
+  transition: { duration: 0.65 },
+};
+
+const flow = [
+  ["01", "Start a session", "Choose a project and what you are working on."],
+  ["02", "Focus remembers", "Time, tasks, activity and streaks update together."],
+  ["03", "See the pattern", "Analytics turn everyday work into visible progress."],
+];
+
+export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  const currentLanguage = i18n.resolvedLanguage?.startsWith("pt")
+    ? "pt-BR"
+    : "en";
+
+  const imageSlots = getImageSlots(currentLanguage);
+
+  return (
+    <main>
+      <nav className="nav shell" aria-label="Main navigation">
+        <a className="brand" href="#top" aria-label="Focus home"><FocusMark /><span>focus</span></a>
+        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+          <a href="#system" onClick={() => setMenuOpen(false)}>{t("navigation.product")}</a>
+          <a href="#features" onClick={() => setMenuOpen(false)}>{t("navigation.features")}</a>
+          <a href="#analytics" onClick={() => setMenuOpen(false)}>{t("navigation.analytics")}</a>
+          <a href="#widgets" onClick={() => setMenuOpen(false)}>{t("navigation.widgets")}</a>
+          <a className="nav-cta" href="#download" onClick={() => setMenuOpen(false)}>{t("navigation.action")} <ArrowUpRight size={15} /></a>
+        </div>
+        <div className="nav-actions">
+          <LanguageSwitcher />
+          <button className="menu-button" aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
+      </nav>
+
+      <section className="hero shell" id="top">
+        <motion.div className="hero-copy" initial={{ opacity: 0, x: -25 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
+          <div className="eyebrow"><span /> {t("hero.eyebrow")}</div>
+          <h1>{t("hero.title")}<br /><em>{t("hero.highlight")}</em></h1>
+          <p>{t("hero.description")}</p>
+          <div className="hero-actions">
+            <a className="button-primary" href="#download">{t("hero.primaryAction")} <ArrowUpRight size={18} /></a>
+            <a className="text-link" href="#system">{t("hero.secondaryAction")} <ArrowDown size={16} /></a>
+          </div>
+          <div className="hero-points">
+            <span>{t("hero.point1")}</span>
+            <span>{t("hero.point2")}</span>
+            <span>{t("hero.point3")}</span>
+          </div>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.15 }}>
+          <TimerPreview />
+        </motion.div>
+      </section>
+
+      <motion.section className="statement shell" {...reveal} id="system">
+        <p>{t("system.eyebrow")}</p>
+        <h2>{t("system.title")} <span>{t("system.highlight")}</span></h2>
+        <div className="flow-grid">
+          {flow.map(([number], index) => (
+            <div className="flow-item" key={number}>
+              <span>{number}</span>
+              <h3>{t(`system.steps.${index}.title`)}</h3>
+              <p>{t(`system.steps.${index}.description`)}</p>
+              <ArrowRight size={18} />
+            </div>
+          ))}
+        </div>
+      </motion.section>
+
+      <section className="features shell" id="features">
+        <motion.div className="section-heading" {...reveal}>
+          <span className="section-kicker">{t("foundation.eyebrow")}</span>
+          <h2>{t("foundation.title")}<br /><span>{t("foundation.highlight")}</span></h2>
+        </motion.div>
+        <div className="feature-grid">
+          {features.map(({ number, icon: Icon, title, text }, index) => (
+            <motion.article className="feature-card" key={number} {...reveal} transition={{ duration: 0.55, delay: index * 0.08 }}>
+              <div className="feature-top"><span>{number}</span><Icon size={22} /></div><h3>{t(`foundation.features.${index}.title`)}</h3>
+              <p>{t(`foundation.features.${index}.description`)}</p>
+            </motion.article>
+          ))}
+        </div>
+      </section>
+
+      <section className="showcase shell">
+        <motion.div className="showcase-copy" {...reveal}>
+          <span className="section-kicker">{t("timer.eyebrow")}</span>
+          <h2>{t("timer.title")}<br /><span>{t("timer.highlight")}</span></h2>
+          <p>{t("timer.description")}</p>
+          <div className="settings-row">
+            <span><TimerReset size={17} /> {t("timer.duration")}</span>
+            <span><Sparkles size={17} /> {t("timer.transitions")}</span>
+          </div>
+        </motion.div>
+        <ProductVisual src={imageSlots.timer} label={t("timer.imageLabel")} alt={t("timer.imageLabel")} />
+      </section>
+
+      <section className="showcase reverse shell">
+        <ProductVisual src={imageSlots.notifications} label={t("notification.imageLabel")} alt={t("notification.imageLabel")} className="phone-visual" />
+        <motion.div className="showcase-copy" {...reveal}>
+          <span className="section-kicker">{t("notification.eyebrow")}</span>
+          <h2>{t("notification.title")}<br /><span>{t("notification.highlight")}</span></h2>
+          <p>{t("notification.description")}</p>
+          <ul className="check-list">
+            <li><Check size={16} /> {t("notification.item1")}</li>
+            <li><Check size={16} /> {t("notification.item2")}</li>
+            <li><Check size={16} /> {t("notification.item3")}</li>
+          </ul>
+        </motion.div>
+      </section>
+
+      <section className="projects-section shell">
+        <motion.div className="wide-heading" {...reveal}>
+          <span className="section-kicker">{t("projects.eyebrow")}</span>
+          <h2>{t("projects.title")} <span>{t("projects.highlight")}</span></h2>
+          <p>{t("projects.description")}</p>
+        </motion.div>
+        <div className="project-layout">
+          <ProductVisual src={imageSlots.projects} label={t("projects.imageLabel")} alt={t("projects.imageLabel")} />
+          <div className="detail-stack">
+            <article><FolderKanban /><div><h3>{t("projects.projectTitle")}</h3><p>{t("projects.projectDescription")}</p></div></article>
+            <article><Check /><div><h3>{t("projects.taskTitle")}</h3><p>{t("projects.taskDescription")}</p></div></article>
+            <article><Target /><div><h3>{t("projects.goalTitle")}</h3><p>{t("projects.goalDescription")}</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section className="analytics-section" id="analytics">
+        <div className="shell analytics-layout">
+          <motion.div className="analytics-copy" {...reveal}>
+            <span className="section-kicker">{t("analytics.eyebrow")}</span>
+            <h2>{t("analytics.title")} <span>{t("analytics.highlight")}</span></h2>
+            <p>{t("analytics.description")}</p>
+            <div className="period-tabs">
+              <span>{t("analytics.week")}</span>
+              <span className="active">{t("analytics.month")}</span>
+              <span>{t("analytics.year")}</span>
+              <span>{t("analytics.allTime")}</span>
+            </div>
+          </motion.div>
+          <AnalyticsPreview />
+        </div>
+        <div className="shell image-pair">
+          <ProductVisual src={imageSlots.analytics} label={t("analytics.analyticsImage")} alt={t("analytics.analyticsImage")} />
+          <ProductVisual src={imageSlots.history} label={t("analytics.historyImage")} alt={t("analytics.historyImage")} />
+        </div>
+      </section>
+
+      <section className="insights shell">
+        <motion.div className="section-heading" {...reveal}>
+          <span className="section-kicker">{t("insights.eyebrow")}</span>
+          <h2>
+            {t("insights.title1")}<br />
+            {t("insights.title2")}<br />
+            <span>{t("insights.highlight")}</span>
+          </h2>
+        </motion.div>
+        <div className="insight-grid">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <article key={index}>
+              <Activity size={18} />
+              <span>{t(`insights.cards.${index}.label`)}</span>
+              <strong>{t(`insights.cards.${index}.value`)}</strong>
+              <p>{t(`insights.cards.${index}.detail`)}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="badges-section shell">
+        <motion.div className="badges-copy" {...reveal}>
+          <span className="section-kicker">{t("badges.eyebrow")}</span>
+          <h2>{t("badges.title")} <span>{t("badges.highlight")}</span></h2>
+          <p>{t("badges.description")}</p>
+          <div className="badge-strip">
+            {badgeMilestones.map((badge) => (
+              <div className="badge-item" key={badge.name}>
+                <b>{badge.icon}</b>
+                <span>{badge.name}</span>
+                <small>
+                  {currentLanguage === "pt-BR"
+                    ? badge.days.replace("days", "dias").replace("day", "dia")
+                    : badge.days}
+                </small>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+        <ProductVisual src={imageSlots.badges} label={t("badges.imageLabel")} alt={t("badges.imageLabel")} />
+      </section>
+
+      <section className="widgets-section" id="widgets">
+        <div className="shell widgets-layout">
+          <ProductVisual src={imageSlots.widgets} label={t("widgets.imageLabel")} alt={t("widgets.imageLabel")} className="widgets-visual" />
+          <motion.div className="showcase-copy" {...reveal}>
+            <span className="section-kicker">{t("widgets.eyebrow")}</span>
+            <h2>{t("widgets.title")}<br /><span>{t("widgets.highlight")}</span></h2>
+            <p>{t("widgets.description")}</p>
+            <div className="widget-tags">{widgetNames.map((name, index) => {
+              const portugueseWidgets = [
+                "Foco de hoje",
+                "Sequência atual",
+                "Atividade semanal",
+                "Atividade mensal",
+                "Análises semanais",
+                "Análises mensais",
+                "Metas",
+                "Projeto principal",
+                "Timer de foco",
+              ];
+
+              return (
+                <span key={name}>
+                  {currentLanguage === "pt-BR"
+                    ? portugueseWidgets[index]
+                    : name}
+                </span>
+              );
+            })}</div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="connection shell">
+        <motion.div {...reveal}>
+          <span className="section-kicker">{t("connection.eyebrow")}</span>
+          <h2>{t("connection.title")}<br /><span>{t("connection.highlight")}</span></h2>
+        </motion.div>
+        <div className="connection-chain">
+          {Array.from({ length: 6 }).map((_, index) => (
+            
+            <div key={index}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{t(`connection.steps.${index}`)}</strong>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="origin shell">
+        <motion.div className="origin-card" {...reveal}>
+          <BellRing size={25} />
+          <blockquote>“{t("origin.quote")}”</blockquote>
+          <p>{t("origin.description")}</p>
+        </motion.div>
+      </section>
+
+      <motion.section className="final-cta shell" id="download" {...reveal}>
+        <div className="cta-glow" /><FocusMark />
+        <h2>{t("final.title")}<br /><span>{t("final.highlight")}</span></h2>
+        <p>{t("final.description")}</p>
+        <div className="hero-actions">
+          <a className="button-primary" href={siteLinks.download}>{t("final.download")} <Smartphone size={18} /></a>
+          <a className="text-link" href={siteLinks.github} target="_blank" rel="noreferrer">{t("final.github")} <Code2 size={18} /></a>
+        </div>
+      </motion.section>
+
+      <footer className="footer shell">
+        <div className="brand"><FocusMark /><span>focus</span></div>
+        <p>{t("footer.message")}</p><span>© 2026 Focus</span>
+      </footer>
+    </main>
+  );
+}
+===== ROUTER REFERENCES =====
+src/App.tsx:281:      <footer className="footer shell">
+src/App.tsx:283:        <p>{t("footer.message")}</p><span>© 2026 Focus</span>
+src/App.tsx:284:      </footer>
+src/i18n.ts:208:      footer: {
+src/i18n.ts:417:      footer: {
+src/index.css:5:.timer-stage{min-height:550px;display:grid;place-items:center;position:relative}.timer-stage:before{content:"";position:absolute;inset:5%;background:radial-gradient(circle,rgba(43,220,98,.16),transparent 62%);filter:blur(12px)}.orb{position:absolute;border-radius:50%;border:1px solid rgba(69,242,123,.16)}.orb-one{width:430px;height:430px}.orb-two{width:520px;height:520px;opacity:.42;border-style:dashed;animation:spin 36s linear infinite}.app-window{width:min(410px,92%);background:linear-gradient(155deg,rgba(18,24,19,.96),rgba(5,8,6,.96));border:1px solid rgba(255,255,255,.12);border-radius:24px;position:relative;z-index:2;box-shadow:0 40px 100px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.04);overflow:hidden}.window-top{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line)}.mini-brand{font-size:14px;gap:7px}.mini-brand .brand-mark{width:18px;height:18px}.mini-brand .brand-mark span{width:5px;height:5px}.live-dot{font-size:9px;letter-spacing:.13em;color:var(--green);display:flex;gap:7px;align-items:center}.live-dot:before{content:"";width:5px;height:5px;background:var(--green);border-radius:50%;box-shadow:0 0 9px var(--green)}.timer-content{display:flex;flex-direction:column;align-items:center;padding:32px 24px 30px}.session-label{color:#868d88;font-size:12px}.timer-ring{width:235px;height:235px;margin:24px 0;position:relative;display:grid;place-items:center}.timer-ring svg{width:100%;transform:rotate(-90deg)}.timer-ring circle{fill:none;stroke-width:3}.ring-track{stroke:rgba(255,255,255,.07)}.ring-progress{stroke:var(--green);stroke-dasharray:678;stroke-dashoffset:214;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(69,242,123,.6))}.timer-value{position:absolute;text-align:center;display:flex;flex-direction:column;gap:6px}.timer-value strong{font-size:48px;letter-spacing:-.06em;font-weight:500;font-variant-numeric:tabular-nums}.timer-value span{color:#6e7671;font-size:11px}.session-button{border:1px solid rgba(69,242,123,.28);background:rgba(69,242,123,.08);color:var(--green);padding:11px 18px;border-radius:999px;display:flex;align-items:center;gap:8px;cursor:pointer}.window-footer{border-top:1px solid var(--line);padding:17px 22px;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;font-size:11px;color:#6f7772}.window-footer strong{color:#e3e7e4;font-size:12px}.trend{color:var(--green)}
+src/index.css:9:.final-cta{min-height:480px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}.cta-glow{position:absolute;width:580px;height:340px;background:radial-gradient(ellipse,rgba(69,242,123,.12),transparent 68%);pointer-events:none}.final-cta>*:not(.cta-glow){position:relative;z-index:1}.final-cta>.brand-mark{margin-bottom:24px}.final-cta h2{font-size:clamp(43px,6vw,70px)}.final-cta p{color:var(--muted);margin:20px 0 28px}.footer{min-height:110px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;font-size:12px;color:#616863}.footer .brand{color:#f4f7f5}.footer>span{text-align:right}
+src/index.css:12:@media(max-width:620px){.shell{width:min(100% - 32px,1180px)}.nav{height:74px}.nav-links>a:not(.nav-cta){display:none}.nav-cta{padding:10px 13px}.hero{min-height:auto;padding:65px 0 45px;gap:25px}.hero h1{font-size:54px}.hero-copy>p{font-size:16px}.hero-actions{flex-direction:column;gap:18px}.trust-line{line-height:1.4}.timer-stage{min-height:440px}.orb-one{width:330px;height:330px}.orb-two{width:390px;height:390px}.app-window{width:340px}.timer-ring{width:190px;height:190px}.timer-value strong{font-size:41px}.statement,.features{padding-block:80px}.progress-section{padding-bottom:95px}.analytics-card{padding:22px 17px}.chart,.chart-labels{gap:8px}.footer{grid-template-columns:1fr auto}.footer p{display:none}}
+src/components/TimerPreview.tsx:59:        <div className="window-footer">
+===== TRANSLATIONS =====
+
+===== src/i18n.ts =====
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+
+const resources = {
+  en: {
+    translation: {
+      language: "EN",
+      navigation: {
+        product: "Product",
+        features: "Features",
+        analytics: "Analytics",
+        widgets: "Widgets",
+        action: "Get the app",
+      },
+      hero: {
+        eyebrow: "A system for visible progress",
+        title: "Focus on what matters.",
+        highlight: "We’ll remember the progress.",
+        description:
+          "A minimalist productivity system connecting focus sessions, projects, goals, streaks and intelligent analytics — turning everyday work into a history you can see.",
+        primaryAction: "Download Focus",
+        secondaryAction: "Discover the system",
+        point1: "Start the timer.",
+        point2: "Build the streak.",
+        point3: "Understand your time.",
+      },
+      system: {
+        eyebrow: "Focus is more than a timer.",
+        title: "One session feeds your entire",
+        highlight: "productivity story.",
+        steps: [
+          {
+            number: "01",
+            title: "Start a session",
+            description: "Choose a project and what you are working on.",
+          },
+          {
+            number: "02",
+            title: "Focus remembers",
+            description:
+              "Time, tasks, activity and streaks update together.",
+          },
+          {
+            number: "03",
+            title: "See the pattern",
+            description:
+              "Analytics turn everyday work into visible progress.",
+          },
+        ],
+      },
+      foundation: {
+        eyebrow: "The foundation",
+        title: "Everything connected.",
+        highlight: "Almost nothing manual.",
+        features: [
+          {
+            number: "01",
+            title: "Deep focus, made simple.",
+            description:
+              "Start a session in seconds. No setup maze, no distractions — just you and the work that matters.",
+          },
+          {
+            number: "02",
+            title: "Your work, in context.",
+            description:
+              "Connect every focus session to a task and project, so your time always tells a useful story.",
+          },
+          {
+            number: "03",
+            title: "Progress you can see.",
+            description:
+              "Understand your rhythm with streaks, trends and focused time — without turning your day into a spreadsheet.",
+          },
+        ],
+      },
+      timer: {
+        eyebrow: "A timer that fits your day",
+        title: "Think about the work.",
+        highlight: "Not the timer.",
+        description:
+          "Customize focus, short break and long break durations. Auto-start can move from work to rest and back again without constantly asking for your attention.",
+        duration: "Flexible durations",
+        transitions: "Automatic transitions",
+        imageLabel: "Timer or dashboard screenshot",
+        previewStatus: "Focusing",
+        previewProject: "Deep work · Focus App",
+        previewDuration: "of 50 minutes",
+        previewAction: "Start session",
+        previewToday: "Today",
+        previewFocused: "3h 24m focused",
+      },
+      notification: {
+        eyebrow: "Your timer stays with you",
+        title: "Leave the app.",
+        highlight: "Keep the focus.",
+        description:
+          "On supported Android and Samsung devices, active sessions remain visible through ongoing notifications and lock-screen integrations.",
+        item1: "Active task and project",
+        item2: "Remaining focus time",
+        item3: "Current streak",
+        imageLabel: "Android notification or lock screen",
+      },
+      projects: {
+        eyebrow: "Projects + tasks + goals",
+        title: "Give every focused minute",
+        highlight: "a purpose.",
+        description:
+          "Focus connects intention with execution. Choose what matters, work on it, complete it and keep the result as part of a larger history.",
+        projectTitle: "Projects give time meaning",
+        projectDescription:
+          "See exactly where your attention goes instead of stopping at a total number of hours.",
+        taskTitle: "Tasks create the feedback loop",
+        taskDescription:
+          "Choose what matters → Focus → Complete it → See the progress.",
+        goalTitle: "Goals keep the year visible",
+        goalDescription:
+          "Track achievements that are bigger than today’s task list.",
+        imageLabel: "Projects and tasks screenshot",
+      },
+      analytics: {
+        eyebrow: "Analytics that understand focus",
+        title: "Using Focus creates the report",
+        highlight: "automatically.",
+        description:
+          "Move between this week, month, year and all time. See total focus, completed sessions, daily averages and the project receiving most of your attention.",
+        week: "Week",
+        month: "Month",
+        year: "Year",
+        allTime: "All time",
+        analyticsImage: "Full analytics screenshot",
+        historyImage: "Six-month history screenshot",
+        thisMonth: "This month",
+        currentStreak: "Current streak",
+        longestStreak: "Longest streak",
+        days: "days",
+      },
+      insights: {
+        eyebrow: "Insights without digging",
+        title1: "What happened.",
+        title2: "Where time went.",
+        highlight: "Whether you’re improving.",
+        cards: [
+          {
+            label: "Focus momentum",
+            value: "+18%",
+            detail: "More focus than last month",
+          },
+          {
+            label: "Most productive day",
+            value: "Tuesday",
+            detail: "7h 42m of deep work",
+          },
+          {
+            label: "Main focus",
+            value: "MaDev",
+            detail: "42% of all focus time",
+          },
+          {
+            label: "Active days",
+            value: "24 days",
+            detail: "Consistency over intensity",
+          },
+        ],
+      },
+      badges: {
+        eyebrow: "Consistency worth collecting",
+        title: "Your streak becomes part of",
+        highlight: "your identity.",
+        description:
+          "Milestones become gradually harder, turning invisible discipline into a progression you want to protect — without meaningless points or pressure.",
+        imageLabel: "Badges and activity heatmap",
+      },
+      widgets: {
+        eyebrow: "Your productivity at a glance",
+        title: "Not shortcuts.",
+        highlight: "Windows into your progress.",
+        description:
+          "Multiple Android widgets bring the same connected Focus data directly to your home screen.",
+        imageLabel: "Android home-screen widgets",
+      },
+      connection: {
+        eyebrow: "Everything is connected",
+        title: "You focus.",
+        highlight: "Focus remembers.",
+        steps: [
+          "Focus time increases",
+          "Project receives time",
+          "Analytics recalculate",
+          "Streak advances",
+          "Widgets update",
+          "Your story grows",
+        ],
+      },
+      origin: {
+        quote:
+          "Productivity software shouldn’t become another thing you need to manage.",
+        description:
+          "Focus was built for real life, where some days hold four focused hours and others hold twenty-five minutes. Both matter. Over time, they become a truthful record of the days you actually showed up.",
+      },
+      final: {
+        title: "Start the timer.",
+        highlight: "Watch your progress grow.",
+        description:
+          "A focused day starts with one intentional session.",
+        download: "Download Focus",
+        github: "View on GitHub",
+      },
+      footer: {
+        message: "Designed and built with intention.",
+      },
+    },
+  },
+
+  "pt-BR": {
+    translation: {
+      language: "PT-BR",
+      navigation: {
+        product: "Produto",
+        features: "Recursos",
+        analytics: "Estatísticas",
+        widgets: "Widgets",
+        action: "Baixar o app",
+      },
+      hero: {
+        eyebrow: "Um sistema para tornar o progresso visível",
+        title: "Foque no que importa.",
+        highlight: "Nós lembramos do seu progresso.",
+        description:
+          "Um sistema de produtividade minimalista que conecta sessões de foco, projetos, metas, sequências e análises inteligentes — transformando o trabalho diário em uma história que você pode visualizar.",
+        primaryAction: "Baixar o Focus",
+        secondaryAction: "Conheça o sistema",
+        point1: "Inicie o timer.",
+        point2: "Construa sua sequência.",
+        point3: "Entenda seu tempo.",
+      },
+      system: {
+        eyebrow: "Focus é mais do que um timer.",
+        title: "Uma sessão alimenta toda a sua",
+        highlight: "história de produtividade.",
+        steps: [
+          {
+            number: "01",
+            title: "Inicie uma sessão",
+            description: "Escolha um projeto e no que você está trabalhando.",
+          },
+          {
+            number: "02",
+            title: "O Focus se lembra",
+            description:
+              "Tempo, tarefas, atividades e sequências são atualizados juntos.",
+          },
+          {
+            number: "03",
+            title: "Enxergue o padrão",
+            description:
+              "As análises transformam o trabalho diário em progresso visível.",
+          },
+        ],
+      },
+      foundation: {
+        eyebrow: "A base do sistema",
+        title: "Tudo conectado.",
+        highlight: "Quase nada manual.",
+        features: [
+          {
+            number: "01",
+            title: "Foco profundo de forma simples.",
+            description:
+              "Inicie uma sessão em segundos. Sem configurações complicadas ou distrações — apenas você e o trabalho que importa.",
+          },
+          {
+            number: "02",
+            title: "Seu trabalho dentro de um contexto.",
+            description:
+              "Conecte cada sessão a uma tarefa e projeto, fazendo com que seu tempo sempre conte uma história útil.",
+          },
+          {
+            number: "03",
+            title: "Progresso que você consegue enxergar.",
+            description:
+              "Entenda seu ritmo por meio de sequências, tendências e tempo focado — sem transformar o seu dia em uma planilha.",
+          },
+        ],
+      },
+      timer: {
+        eyebrow: "Um timer que se adapta ao seu dia",
+        title: "Pense no trabalho.",
+        highlight: "Não no timer.",
+        description:
+          "Personalize a duração do foco, das pausas curtas e das pausas longas. O início automático pode alternar entre trabalho e descanso sem exigir sua atenção constantemente.",
+        duration: "Durações flexíveis",
+        transitions: "Transições automáticas",
+        imageLabel: "Imagem do timer ou painel",
+        previewStatus: "Em foco",
+        previewProject: "Trabalho profundo · Focus App",
+        previewDuration: "de 50 minutos",
+        previewAction: "Iniciar sessão",
+        previewToday: "Hoje",
+        previewFocused: "3h24 de foco",
+      },
+      notification: {
+        eyebrow: "Seu timer acompanha você",
+        title: "Saia do aplicativo.",
+        highlight: "Continue focado.",
+        description:
+          "Em dispositivos Android e Samsung compatíveis, sessões ativas permanecem visíveis em notificações contínuas e integrações com a tela bloqueada.",
+        item1: "Tarefa e projeto ativos",
+        item2: "Tempo de foco restante",
+        item3: "Sequência atual",
+        imageLabel: "Notificação Android ou tela bloqueada",
+      },
+      projects: {
+        eyebrow: "Projetos + tarefas + metas",
+        title: "Dê propósito a cada",
+        highlight: "minuto de foco.",
+        description:
+          "O Focus conecta intenção e execução. Escolha o que importa, trabalhe, conclua e mantenha o resultado como parte de uma história maior.",
+        projectTitle: "Projetos dão significado ao tempo",
+        projectDescription:
+          "Veja exatamente para onde sua atenção está indo, em vez de visualizar apenas um total de horas.",
+        taskTitle: "Tarefas criam um ciclo de progresso",
+        taskDescription:
+          "Escolha o que importa → Foque → Conclua → Veja o progresso.",
+        goalTitle: "Metas mantêm o ano visível",
+        goalDescription:
+          "Acompanhe conquistas maiores do que a lista de tarefas de hoje.",
+        imageLabel: "Imagem de projetos e tarefas",
+      },
+      analytics: {
+        eyebrow: "Análises que entendem o seu foco",
+        title: "Usar o Focus cria o relatório",
+        highlight: "automaticamente.",
+        description:
+          "Alterne entre esta semana, mês, ano e todo o período. Veja tempo total de foco, sessões concluídas, médias diárias e o projeto que mais recebeu sua atenção.",
+        week: "Semana",
+        month: "Mês",
+        year: "Ano",
+        allTime: "Todo o período",
+        analyticsImage: "Imagem completa das análises",
+        historyImage: "Imagem do histórico de seis meses",
+        thisMonth: "Este mês",
+        currentStreak: "Sequência atual",
+        longestStreak: "Maior sequência",
+        days: "dias",
+      },
+      insights: {
+        eyebrow: "Informações sem precisar investigar",
+        title1: "O que aconteceu.",
+        title2: "Para onde seu tempo foi.",
+        highlight: "Se você está melhorando.",
+        cards: [
+          {
+            label: "Ritmo de foco",
+            value: "+18%",
+            detail: "Mais foco do que no mês passado",
+          },
+          {
+            label: "Dia mais produtivo",
+            value: "Terça-feira",
+            detail: "7h42 de trabalho focado",
+          },
+          {
+            label: "Foco principal",
+            value: "MaDev",
+            detail: "42% de todo o tempo focado",
+          },
+          {
+            label: "Dias ativos",
+            value: "24 dias",
+            detail: "Consistência acima da intensidade",
+          },
+        ],
+      },
+      badges: {
+        eyebrow: "Uma consistência que vale colecionar",
+        title: "Sua sequência se torna parte da",
+        highlight: "sua identidade.",
+        description:
+          "Os marcos ficam gradualmente mais difíceis, transformando uma disciplina invisível em uma progressão que você deseja proteger — sem pontos sem significado ou pressão.",
+        imageLabel: "Imagem das insígnias e mapa de atividades",
+      },
+      widgets: {
+        eyebrow: "Sua produtividade de relance",
+        title: "Não são apenas atalhos.",
+        highlight: "São janelas para o seu progresso.",
+        description:
+          "Diversos widgets para Android levam os mesmos dados conectados do Focus diretamente para a tela inicial.",
+        imageLabel: "Widgets do Focus para Android",
+      },
+      connection: {
+        eyebrow: "Tudo está conectado",
+        title: "Você se concentra.",
+        highlight: "O Focus se lembra.",
+        steps: [
+          "O tempo focado aumenta",
+          "O projeto recebe tempo",
+          "As análises são recalculadas",
+          "Sua sequência avança",
+          "Os widgets são atualizados",
+          "Sua história cresce",
+        ],
+      },
+      origin: {
+        quote:
+          "Um software de produtividade não deveria se tornar outra coisa que você precisa administrar.",
+        description:
+          "O Focus foi criado para a vida real, na qual alguns dias possuem quatro horas de foco e outros apenas vinte e cinco minutos. Ambos importam. Com o tempo, eles se transformam em um registro verdadeiro dos dias em que você realmente apareceu.",
+      },
+      final: {
+        title: "Inicie o timer.",
+        highlight: "Veja seu progresso crescer.",
+        description:
+          "Um dia produtivo começa com uma única sessão intencional.",
+        download: "Baixar o Focus",
+        github: "Ver no GitHub",
+      },
+      footer: {
+        message: "Projetado e desenvolvido com intenção.",
+      },
+    },
+  },
+};
+
+const savedLanguage = localStorage.getItem("focus-language");
+const browserLanguage = navigator.language.toLowerCase().startsWith("pt")
+  ? "pt-BR"
+  : "en";
+
+void i18n.use(initReactI18next).init({
+  resources,
+  lng: savedLanguage || browserLanguage,
+  fallbackLng: "en",
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+i18n.on("languageChanged", (language) => {
+  localStorage.setItem("focus-language", language);
+  document.documentElement.lang = language;
+});
+
+export default i18n;
+===== GIT STATUS =====
+?? focus-website-privacy-current.txt

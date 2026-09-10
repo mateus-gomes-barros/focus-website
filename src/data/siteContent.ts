@@ -1,6 +1,8 @@
 export const siteLinks = {
   github: "https://github.com/mateus-gomes-barros/pomodoro",
-  download: "#download",
+  download: "/downloads/focus-4.0.0-android.apk",
+  checksum:
+    "/downloads/focus-4.0.0-android.apk.sha256",
 };
 
 export function getImageSlots(language: string) {

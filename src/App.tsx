@@ -276,13 +276,131 @@ export default function App() {
         </motion.div>
       </section>
 
-      <motion.section className="final-cta shell" id="download" {...reveal}>
-        <div className="cta-glow" /><FocusMark />
-        <h2>{t("final.title")}<br /><span>{t("final.highlight")}</span></h2>
-        <p>{t("final.description")}</p>
-        <div className="hero-actions">
-          <a className="button-primary" href={siteLinks.download}>{t("final.download")} <Smartphone size={18} /></a>
-          <a className="text-link" href={siteLinks.github} target="_blank" rel="noreferrer">{t("final.github")} <Code2 size={18} /></a>
+      <motion.section
+        className="download-section shell"
+        id="download"
+        {...reveal}
+      >
+        <div className="download-heading">
+          <span className="section-kicker">
+            {t("final.eyebrow")}
+          </span>
+
+          <h2>
+            {t("final.title")}
+            <br />
+            <span>{t("final.highlight")}</span>
+          </h2>
+
+          <p>{t("final.description")}</p>
+        </div>
+
+        <div className="download-layout">
+          <article className="download-card">
+            <div className="download-platform">
+              <div className="download-icon">
+                <Smartphone size={25} />
+              </div>
+
+              <div>
+                <span>{t("final.platform")}</span>
+                <strong>{t("final.available")}</strong>
+              </div>
+            </div>
+
+            <div className="download-meta">
+              <div>
+                <span>{t("final.versionLabel")}</span>
+                <strong>4.0.0</strong>
+              </div>
+
+              <div>
+                <span>{t("final.sizeLabel")}</span>
+                <strong>5.9 MB</strong>
+              </div>
+
+              <div>
+                <span>{t("final.formatLabel")}</span>
+                <strong>APK</strong>
+              </div>
+            </div>
+
+            <a
+              className="button-primary download-button"
+              href={siteLinks.download}
+              download="focus-4.0.0-android.apk"
+            >
+              {t("final.download")}
+              <ArrowDown size={18} />
+            </a>
+
+            <div className="download-security">
+              <Check size={15} />
+
+              <p>
+                {t("final.signed")}
+                {" "}
+                <a
+                  href={siteLinks.checksum}
+                  download
+                >
+                  {t("final.checksum")}
+                </a>
+              </p>
+            </div>
+          </article>
+
+          <aside className="install-guide">
+            <span className="install-number">
+              01 — 03
+            </span>
+
+            <h3>{t("final.instructionsTitle")}</h3>
+
+            <ol>
+              {Array.from({
+                length: 3,
+              }).map((_, index) => (
+                <li key={index}>
+                  <span>{index + 1}</span>
+                  <p>
+                    {t(
+                      `final.steps.${index}`,
+                    )}
+                  </p>
+                </li>
+              ))}
+            </ol>
+
+            <p className="install-note">
+              {t("final.permissionNote")}
+            </p>
+          </aside>
+        </div>
+
+        <div className="download-footer">
+          <div className="store-statuses">
+            <span>
+              {t("final.galaxyStoreSoon")}
+            </span>
+
+            <span>
+              {t("final.playStoreSoon")}
+            </span>
+
+            <span>
+              {t("final.appStoreSoon")}
+            </span>
+          </div>
+
+          <a
+            href={siteLinks.github}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t("final.github")}
+            <Code2 size={16} />
+          </a>
         </div>
       </motion.section>
 
