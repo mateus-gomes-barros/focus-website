@@ -8,18 +8,19 @@ const resources = {
       navigation: {
         product: "Product",
         features: "Features",
+        focusHome: "FocushoMe",
         analytics: "Analytics",
         widgets: "Widgets",
         action: "Get the app",
       },
       hero: {
-        eyebrow: "A system for visible progress",
+        eyebrow: "Focus 5.0 · Living Glass",
         title: "Focus on what matters.",
-        highlight: "We’ll remember the progress.",
+        highlight: "Discover how you focus.",
         description:
-          "A minimalist productivity system connecting focus sessions, projects, goals, streaks and intelligent analytics — turning everyday work into a history you can see.",
-        primaryAction: "Download Focus",
-        secondaryAction: "Discover the system",
+          "A calmer, more personal productivity system. Focus 5.0 connects your work, reveals your patterns and gives your progress an identity.",
+        primaryAction: "Open Focus",
+        secondaryAction: "Discover FocushoMe",
         point1: "Start the timer.",
         point2: "Build the streak.",
         point3: "Understand your time.",
@@ -88,6 +89,39 @@ const resources = {
         previewAction: "Start session",
         previewToday: "Today",
         previewFocused: "3h 24m focused",
+      },
+      focusHome: {
+        eyebrow: "New in Focus 5.0",
+        title: "Your focus develops",
+        highlight: "an identity of its own.",
+        description:
+          "FocushoMe analyzes real patterns across your sessions, tasks, projects and goals to reveal how you naturally build progress.",
+        item1: "12 identities shaped by real behavior",
+        item2: "A new assessment after each complete month",
+        item3: "Your emblem lives inside the timer",
+        previewEyebrow: "Your FocushoMe",
+        previewDescription:
+          "Clarity through structure. Progress built with intention.",
+        trait1: "Clarity",
+        trait2: "Structure",
+        trait3: "Momentum",
+        principles: [
+          {
+            title: "Living Glass",
+            description:
+              "Translucent surfaces, subtle light and depth replace opaque blocks throughout Focus 5.0.",
+          },
+          {
+            title: "Built from your patterns",
+            description:
+              "Your identity comes from how you actually focus — never from a generic personality quiz.",
+          },
+          {
+            title: "Present everywhere",
+            description:
+              "Your color and emblem follow you through the timer, reports and home-screen widgets.",
+          },
+        ],
       },
       notification: {
         eyebrow: "Your timer stays with you",
@@ -198,17 +232,18 @@ const resources = {
           "Focus was built for real life, where some days hold four focused hours and others hold twenty-five minutes. Both matter. Over time, they become a truthful record of the days you actually showed up.",
       },
       final: {
-        eyebrow: "Download for Android",
+        eyebrow: "Focus 5.0 is available",
         title: "Start the timer.",
         highlight: "Watch your progress grow.",
         description:
-          "Download the official Focus 4.0 APK and start building a visible history of your progress.",
+          "Use Focus directly on the web or download the official Focus 5.0 APK for Android.",
         platform: "Android",
         available: "Available now",
         versionLabel: "Version",
         sizeLabel: "Size",
         formatLabel: "Format",
         download: "Download Focus for Android",
+        openWeb: "Open Focus on the web",
         signed:
           "Official APK digitally signed by the developer.",
         checksum: "Verify SHA-256",
@@ -240,18 +275,19 @@ const resources = {
       navigation: {
         product: "Produto",
         features: "Recursos",
+        focusHome: "FocushoMe",
         analytics: "Estatísticas",
         widgets: "Widgets",
         action: "Baixar o app",
       },
       hero: {
-        eyebrow: "Um sistema para tornar o progresso visível",
+        eyebrow: "Focus 5.0 · Living Glass",
         title: "Foque no que importa.",
-        highlight: "Nós lembramos do seu progresso.",
+        highlight: "Descubra como você foca.",
         description:
-          "Um sistema de produtividade minimalista que conecta sessões de foco, projetos, metas, sequências e análises inteligentes — transformando o trabalho diário em uma história que você pode visualizar.",
-        primaryAction: "Baixar o Focus",
-        secondaryAction: "Conheça o sistema",
+          "Um sistema de produtividade mais calmo e pessoal. O Focus 5.0 conecta seu trabalho, revela seus padrões e dá uma identidade ao seu progresso.",
+        primaryAction: "Abrir o Focus",
+        secondaryAction: "Conheça o FocushoMe",
         point1: "Inicie o timer.",
         point2: "Construa sua sequência.",
         point3: "Entenda seu tempo.",
@@ -320,6 +356,39 @@ const resources = {
         previewAction: "Iniciar sessão",
         previewToday: "Hoje",
         previewFocused: "3h24 de foco",
+      },
+      focusHome: {
+        eyebrow: "Novo no Focus 5.0",
+        title: "Seu foco desenvolve",
+        highlight: "uma identidade própria.",
+        description:
+          "O FocushoMe analisa padrões reais das suas sessões, tarefas, projetos e metas para revelar como você naturalmente constrói progresso.",
+        item1: "12 identidades formadas pelo seu comportamento",
+        item2: "Uma nova avaliação após cada mês completo",
+        item3: "Seu emblema vive dentro do timer",
+        previewEyebrow: "Seu FocushoMe",
+        previewDescription:
+          "Clareza por meio da estrutura. Progresso construído com intenção.",
+        trait1: "Clareza",
+        trait2: "Estrutura",
+        trait3: "Ritmo",
+        principles: [
+          {
+            title: "Living Glass",
+            description:
+              "Superfícies translúcidas, luz sutil e profundidade substituem os blocos opacos em todo o Focus 5.0.",
+          },
+          {
+            title: "Criado pelos seus padrões",
+            description:
+              "Sua identidade surge da forma como você realmente foca — nunca de um teste de personalidade genérico.",
+          },
+          {
+            title: "Presente em todo lugar",
+            description:
+              "Sua cor e seu emblema acompanham você no timer, nos relatórios e nos widgets.",
+          },
+        ],
       },
       notification: {
         eyebrow: "Seu timer acompanha você",
@@ -430,17 +499,18 @@ const resources = {
           "O Focus foi criado para a vida real, na qual alguns dias possuem quatro horas de foco e outros apenas vinte e cinco minutos. Ambos importam. Com o tempo, eles se transformam em um registro verdadeiro dos dias em que você realmente apareceu.",
       },
       final: {
-        eyebrow: "Download para Android",
+        eyebrow: "Focus 5.0 disponível",
         title: "Inicie o timer.",
         highlight: "Veja seu progresso crescer.",
         description:
-          "Baixe o APK oficial do Focus 4.0 e comece a construir um histórico visível do seu progresso.",
+          "Use o Focus diretamente pela web ou baixe o APK oficial do Focus 5.0 para Android.",
         platform: "Android",
         available: "Disponível agora",
         versionLabel: "Versão",
         sizeLabel: "Tamanho",
         formatLabel: "Formato",
         download: "Baixar Focus para Android",
+        openWeb: "Abrir Focus na web",
         signed:
           "APK oficial assinado digitalmente pelo desenvolvedor.",
         checksum: "Verificar SHA-256",

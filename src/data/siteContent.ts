@@ -1,8 +1,9 @@
 export const siteLinks = {
   github: "https://github.com/mateus-gomes-barros/pomodoro",
-  download: "/downloads/focus-4.0.0-android.apk",
+  webApp: "https://pomodoro-1ktl-theta.vercel.app/",
+  download: "/downloads/focus-5.0.0-android.apk",
   checksum:
-    "/downloads/focus-4.0.0-android.apk.sha256",
+    "/downloads/focus-5.0.0-android.apk.sha256",
 };
 
 export function getImageSlots(language: string) {
@@ -13,14 +14,50 @@ export function getImageSlots(language: string) {
   const image = (filename: string) =>
     `/images/${locale}/${filename}`;
 
+  if (locale === "pt-BR") {
+    const focus5 = (
+      filename: string,
+    ) =>
+      `/images/pt-BR/focus5/${filename}`;
+
+    return {
+      timer:
+        focus5("timer-dashboard.png"),
+      notifications:
+        focus5("android-notification.jpg"),
+      projects:
+        focus5("projects-and-tasks.png"),
+      analytics:
+        focus5("analytics-dashboard.png"),
+      history:
+        focus5("monthly-history.png"),
+      badges:
+        focus5("badges-and-heatmap.png"),
+      widgets:
+        focus5("android-widgets.jpg"),
+    };
+  }
+
+  const focus5 = (
+    filename: string,
+  ) =>
+    `/images/en/focus5/${filename}`;
+
   return {
-    timer: image("timer-dashboard.webp"),
-    notifications: image("android-notification.webp"),
-    projects: image("projects-and-tasks.webp"),
-    analytics: image("analytics-dashboard.webp"),
-    history: image("monthly-history.webp"),
-    badges: image("badges-and-heatmap.webp"),
-    widgets: image("android-widgets.webp"),
+    timer:
+      focus5("timer-dashboard.svg"),
+    notifications:
+      focus5("android-notification.svg"),
+    projects:
+      focus5("projects-and-tasks.svg"),
+    analytics:
+      focus5("analytics-dashboard.svg"),
+    history:
+      focus5("monthly-history.svg"),
+    badges:
+      focus5("badges-and-heatmap.svg"),
+    widgets:
+      focus5("android-widgets.svg"),
   };
 }
 
@@ -37,5 +74,5 @@ export const badgeMilestones = [
 export const widgetNames = [
   "Today’s Focus", "Current Streak", "Weekly Activity",
   "Monthly Activity", "Weekly Analytics", "Monthly Analytics",
-  "Goals", "Top Project", "Focus Timer",
+  "Goals", "Top Project", "Focus Timer", "FocushoMe",
 ];

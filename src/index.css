@@ -246,6 +246,342 @@
 }
 
 
+
+/* FocushoMe · Focus 5.0 */
+
+.focushome-section {
+  position: relative;
+  overflow: hidden;
+  padding-block: 130px;
+  border-block: 1px solid var(--line);
+  background:
+    radial-gradient(
+      circle at 72% 42%,
+      rgba(232, 121, 249, .09),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 90% 70%,
+      rgba(45, 212, 191, .055),
+      transparent 28%
+    ),
+    #070908;
+}
+
+.focushome-layout {
+  display: grid;
+  grid-template-columns: .82fr 1.18fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.focushome-copy h2 {
+  margin: 20px 0 25px;
+  font-size: clamp(42px, 5vw, 66px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -.058em;
+}
+
+.focushome-copy h2 span {
+  color: #e879f9;
+}
+
+.focushome-copy > p {
+  max-width: 545px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+.focushome-preview {
+  position: relative;
+  display: grid;
+  min-height: 570px;
+  place-items: center;
+  isolation: isolate;
+}
+
+.focushome-ambient {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(45px);
+  pointer-events: none;
+}
+
+.focushome-ambient-one {
+  width: 300px;
+  height: 300px;
+  background: rgba(232, 121, 249, .1);
+}
+
+.focushome-ambient-two {
+  width: 420px;
+  height: 210px;
+  transform: rotate(-28deg);
+  background: rgba(69, 242, 123, .045);
+}
+
+.focushome-orbit {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border: 1px solid rgba(255, 255, 255, .075);
+  border-radius: 50%;
+}
+
+.focushome-orbit::before,
+.focushome-orbit::after {
+  position: absolute;
+  content: "";
+  border: 1px solid rgba(255, 255, 255, .045);
+  border-radius: 50%;
+  inset: 35px;
+}
+
+.focushome-orbit::after {
+  inset: 75px;
+  border-color: rgba(232, 121, 249, .1);
+}
+
+.focushome-mini {
+  position: absolute;
+  display: grid;
+  width: 78px;
+  justify-items: center;
+  gap: 5px;
+  color: #737c76;
+  font-size: 9px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.focushome-mini-1 {
+  top: 15px;
+  left: 66px;
+}
+
+.focushome-mini-2 {
+  top: 92px;
+  right: -16px;
+}
+
+.focushome-mini-3 {
+  right: 12px;
+  bottom: 65px;
+}
+
+.focushome-mini-4 {
+  bottom: 4px;
+  left: 68px;
+}
+
+.focushome-identity-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 310px;
+  min-height: 405px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 34px 28px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 38px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, .075),
+      rgba(255, 255, 255, .018)
+    ),
+    rgba(8, 10, 9, .78);
+  box-shadow:
+    0 35px 110px rgba(0, 0, 0, .48),
+    inset 0 1px 0 rgba(255, 255, 255, .1);
+  backdrop-filter: blur(28px);
+}
+
+.focushome-identity-card::before {
+  position: absolute;
+  width: 230px;
+  height: 150px;
+  top: -75px;
+  left: -65px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .055);
+  filter: blur(20px);
+  content: "";
+}
+
+.focushome-preview-eyebrow {
+  color: #9b77a2;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.focushome-main-symbol {
+  display: grid;
+  width: 178px;
+  height: 178px;
+  margin: 16px 0 8px;
+  place-items: center;
+  border: 1px solid rgba(232, 121, 249, .14);
+  border-radius: 50%;
+  background: rgba(232, 121, 249, .025);
+  box-shadow:
+    0 0 55px rgba(232, 121, 249, .08),
+    inset 0 0 35px rgba(232, 121, 249, .035);
+}
+
+.focushome-identity-card > strong {
+  color: #f9eafa;
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: -.04em;
+}
+
+.focushome-identity-card > p {
+  max-width: 230px;
+  margin: 9px 0 17px;
+  color: #858c87;
+  font-size: 11px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.focushome-traits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.focushome-traits span {
+  padding: 7px 9px;
+  border: 1px solid rgba(232, 121, 249, .13);
+  border-radius: 999px;
+  background: rgba(232, 121, 249, .035);
+  color: #c9a8ce;
+  font-size: 8px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.glass-principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 65px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--line);
+}
+
+.glass-principles article {
+  min-height: 205px;
+  padding: 26px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, .035),
+      rgba(255, 255, 255, .012)
+    ),
+    #080b09;
+}
+
+.glass-principles article > span {
+  color: #e879f9;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.glass-principles h3 {
+  margin: 54px 0 9px;
+  font-size: 17px;
+  letter-spacing: -.025em;
+}
+
+.glass-principles p {
+  max-width: 300px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .focushome-layout {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .focushome-copy {
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 620px) {
+  .focushome-section {
+    padding-block: 85px;
+  }
+
+  .focushome-preview {
+    min-height: 470px;
+  }
+
+  .focushome-orbit {
+    width: 390px;
+    height: 390px;
+  }
+
+  .focushome-mini-1 {
+    top: -7px;
+    left: 39px;
+  }
+
+  .focushome-mini-2 {
+    top: 64px;
+    right: -4px;
+  }
+
+  .focushome-mini-3 {
+    right: 3px;
+    bottom: 45px;
+  }
+
+  .focushome-mini-4 {
+    bottom: -9px;
+    left: 39px;
+  }
+
+  .focushome-identity-card {
+    width: min(285px, calc(100vw - 52px));
+    min-height: 380px;
+    border-radius: 32px;
+  }
+
+  .focushome-main-symbol {
+    width: 160px;
+    height: 160px;
+  }
+
+  .glass-principles {
+    grid-template-columns: 1fr;
+  }
+
+  .glass-principles article {
+    min-height: 165px;
+  }
+
+  .glass-principles h3 {
+    margin-top: 35px;
+  }
+}
+
 /* Android download */
 
 .download-section {
@@ -364,9 +700,41 @@
   font-weight: 550;
 }
 
+.download-actions {
+  display: grid;
+  gap: 10px;
+}
+
 .download-button {
   width: 100%;
   justify-content: center;
+}
+
+.web-app-button {
+  display: inline-flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(69, 242, 123, .18);
+  border-radius: 999px;
+  background: rgba(69, 242, 123, .045);
+  color: #dce5df;
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    border-color .2s,
+    background .2s,
+    color .2s,
+    transform .2s;
+}
+
+.web-app-button:hover {
+  border-color: rgba(69, 242, 123, .35);
+  background: rgba(69, 242, 123, .09);
+  color: #fff;
+  transform: translateY(-1px);
 }
 
 .download-security {

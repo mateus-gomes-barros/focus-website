@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AnalyticsPreview } from "./components/AnalyticsPreview";
 import { FocusMark } from "./components/FocusMark";
+import { FocusHomePreview } from "./components/FocusHomePreview";
 import { ProductVisual } from "./components/ProductVisual";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { TimerPreview } from "./components/TimerPreview";
@@ -51,6 +52,7 @@ export default function App() {
         <div className={`nav-links ${menuOpen ? "open" : ""}`}>
           <a href="#system" onClick={() => setMenuOpen(false)}>{t("navigation.product")}</a>
           <a href="#features" onClick={() => setMenuOpen(false)}>{t("navigation.features")}</a>
+          <a href="#focushome" onClick={() => setMenuOpen(false)}>{t("navigation.focusHome")}</a>
           <a href="#analytics" onClick={() => setMenuOpen(false)}>{t("navigation.analytics")}</a>
           <a href="#widgets" onClick={() => setMenuOpen(false)}>{t("navigation.widgets")}</a>
           <a className="nav-cta" href="#download" onClick={() => setMenuOpen(false)}>{t("navigation.action")} <ArrowUpRight size={15} /></a>
@@ -69,8 +71,23 @@ export default function App() {
           <h1>{t("hero.title")}<br /><em>{t("hero.highlight")}</em></h1>
           <p>{t("hero.description")}</p>
           <div className="hero-actions">
-            <a className="button-primary" href="#download">{t("hero.primaryAction")} <ArrowUpRight size={18} /></a>
-            <a className="text-link" href="#system">{t("hero.secondaryAction")} <ArrowDown size={16} /></a>
+            <a
+              className="button-primary"
+              href={siteLinks.webApp}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t("hero.primaryAction")}
+              <ArrowUpRight size={18} />
+            </a>
+
+            <a
+              className="text-link"
+              href="#focushome"
+            >
+              {t("hero.secondaryAction")}
+              <ArrowDown size={16} />
+            </a>
           </div>
           <div className="hero-points">
             <span>{t("hero.point1")}</span>
@@ -124,6 +141,101 @@ export default function App() {
           </div>
         </motion.div>
         <ProductVisual src={imageSlots.timer} label={t("timer.imageLabel")} alt={t("timer.imageLabel")} />
+      </section>
+
+      <section
+        className="focushome-section"
+        id="focushome"
+      >
+        <div className="shell focushome-layout">
+          <motion.div
+            className="focushome-copy"
+            {...reveal}
+          >
+            <span className="section-kicker">
+              {t("focusHome.eyebrow")}
+            </span>
+
+            <h2>
+              {t("focusHome.title")}
+              <br />
+              <span>
+                {t("focusHome.highlight")}
+              </span>
+            </h2>
+
+            <p>
+              {t("focusHome.description")}
+            </p>
+
+            <ul className="check-list">
+              <li>
+                <Check size={16} />
+                {t("focusHome.item1")}
+              </li>
+
+              <li>
+                <Check size={16} />
+                {t("focusHome.item2")}
+              </li>
+
+              <li>
+                <Check size={16} />
+                {t("focusHome.item3")}
+              </li>
+            </ul>
+          </motion.div>
+
+          <motion.div
+            {...reveal}
+            transition={{
+              duration: 0.75,
+              delay: 0.12,
+            }}
+          >
+            <FocusHomePreview
+              eyebrow={t(
+                "focusHome.previewEyebrow",
+              )}
+              name="Prism"
+              description={t(
+                "focusHome.previewDescription",
+              )}
+              traits={[
+                t("focusHome.trait1"),
+                t("focusHome.trait2"),
+                t("focusHome.trait3"),
+              ]}
+            />
+          </motion.div>
+        </div>
+
+        <div className="shell glass-principles">
+          {Array.from({
+            length: 3,
+          }).map((_, index) => (
+            <article key={index}>
+              <span>
+                {String(index + 1).padStart(
+                  2,
+                  "0",
+                )}
+              </span>
+
+              <h3>
+                {t(
+                  `focusHome.principles.${index}.title`,
+                )}
+              </h3>
+
+              <p>
+                {t(
+                  `focusHome.principles.${index}.description`,
+                )}
+              </p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="showcase reverse shell">
@@ -238,6 +350,7 @@ export default function App() {
                 "Metas",
                 "Projeto principal",
                 "Timer de foco",
+                "FocushoMe",
               ];
 
               return (
@@ -311,12 +424,12 @@ export default function App() {
             <div className="download-meta">
               <div>
                 <span>{t("final.versionLabel")}</span>
-                <strong>4.0.0</strong>
+                <strong>5.0.0</strong>
               </div>
 
               <div>
                 <span>{t("final.sizeLabel")}</span>
-                <strong>5.9 MB</strong>
+                <strong>5.6 MB</strong>
               </div>
 
               <div>
@@ -325,14 +438,26 @@ export default function App() {
               </div>
             </div>
 
-            <a
-              className="button-primary download-button"
-              href={siteLinks.download}
-              download="focus-4.0.0-android.apk"
-            >
-              {t("final.download")}
-              <ArrowDown size={18} />
-            </a>
+            <div className="download-actions">
+              <a
+                className="button-primary download-button"
+                href={siteLinks.download}
+                download="focus-5.0.0-android.apk"
+              >
+                {t("final.download")}
+                <ArrowDown size={18} />
+              </a>
+
+              <a
+                className="web-app-button"
+                href={siteLinks.webApp}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t("final.openWeb")}
+                <ArrowUpRight size={18} />
+              </a>
+            </div>
 
             <div className="download-security">
               <Check size={15} />
