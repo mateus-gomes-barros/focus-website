@@ -261,7 +261,6 @@ const resources = {
           "Coming soon to Google Play",
         appStoreSoon:
           "Coming soon to the App Store",
-        github: "View source code",
       },
       footer: {
         message: "Designed and built with intention.",
@@ -528,7 +527,6 @@ const resources = {
           "Em breve na Google Play",
         appStoreSoon:
           "Em breve na App Store",
-        github: "Ver código-fonte",
       },
       footer: {
         message: "Projetado e desenvolvido com intenção.",

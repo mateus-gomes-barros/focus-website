@@ -1,5 +1,4 @@
 export const siteLinks = {
-  github: "https://github.com/mateus-gomes-barros/pomodoro",
   webApp: "https://pomodoro-1ktl-theta.vercel.app/",
   download: "/downloads/focus-5.0.0-android.apk",
   checksum:

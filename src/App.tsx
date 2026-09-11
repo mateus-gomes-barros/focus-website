@@ -1,6 +1,6 @@
 import {
   Activity, ArrowDown, ArrowRight, ArrowUpRight, BellRing, Check,
-  Code2, FolderKanban, Menu, Smartphone, Sparkles, Target, TimerReset, X,
+  FolderKanban, Menu, Smartphone, Sparkles, Target, TimerReset, X,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -518,14 +518,6 @@ export default function App() {
             </span>
           </div>
 
-          <a
-            href={siteLinks.github}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {t("final.github")}
-            <Code2 size={16} />
-          </a>
         </div>
       </motion.section>
 
