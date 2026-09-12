@@ -424,7 +424,7 @@ export default function App() {
             <div className="download-meta">
               <div>
                 <span>{t("final.versionLabel")}</span>
-                <strong>5.0.0</strong>
+                <strong>5.0.1</strong>
               </div>
 
               <div>
