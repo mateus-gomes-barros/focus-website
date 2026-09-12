@@ -442,7 +442,7 @@ export default function App() {
               <a
                 className="button-primary download-button"
                 href={siteLinks.download}
-                download="focus-5.0.0-android.apk"
+                download="focus-5.0.1-android.apk"
               >
                 {t("final.download")}
                 <ArrowDown size={18} />
