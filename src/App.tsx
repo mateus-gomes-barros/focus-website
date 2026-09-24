@@ -406,7 +406,17 @@ export default function App() {
           </h2>
 
           <p>{t("final.description")}</p>
-          <p>{t("final.updaterNotice")}</p>
+          <div className="updater-notice" role="note">
+            <div className="updater-notice-icon" aria-hidden="true">↗</div>
+            <div>
+              <strong className="updater-notice-title">
+                {t("final.updaterTitle")}
+              </strong>
+              <p className="updater-notice-text">
+                {t("final.updaterNotice")}
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="download-layout">
