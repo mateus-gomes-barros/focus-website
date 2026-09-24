@@ -406,6 +406,7 @@ export default function App() {
           </h2>
 
           <p>{t("final.description")}</p>
+          <p>{t("final.updaterNotice")}</p>
         </div>
 
         <div className="download-layout">
@@ -429,7 +430,7 @@ export default function App() {
 
               <div>
                 <span>{t("final.sizeLabel")}</span>
-                <strong>5.6 MB</strong>
+                <strong>4,6 MB</strong>
               </div>
 
               <div>
