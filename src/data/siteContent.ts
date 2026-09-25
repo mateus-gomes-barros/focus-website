@@ -1,8 +1,8 @@
 export const siteLinks = {
   webApp: "https://pomodoro-1ktl-theta.vercel.app/",
-  download: "/downloads/focus-5.0.1-android.apk",
+  download: "/downloads/focus-5.0.3-android.apk",
   checksum:
-    "/downloads/focus-5.0.1-android.apk.sha256",
+    "/downloads/focus-5.0.3-android.apk.sha256",
 };
 
 export function getImageSlots(language: string) {
