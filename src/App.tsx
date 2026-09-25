@@ -435,7 +435,7 @@ export default function App() {
             <div className="download-meta">
               <div>
                 <span>{t("final.versionLabel")}</span>
-                <strong>5.0.3</strong>
+                <strong>5.0.4</strong>
               </div>
 
               <div>
@@ -453,7 +453,7 @@ export default function App() {
               <a
                 className="button-primary download-button"
                 href={siteLinks.download}
-                download="focus-5.0.3-android.apk"
+                download="focus-5.0.4-android.apk"
               >
                 {t("final.download")}
                 <ArrowDown size={18} />
