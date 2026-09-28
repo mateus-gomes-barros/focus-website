@@ -238,7 +238,7 @@ const resources = {
         description:
           "Use Focus directly on the web or download the official Focus 6.0 APK for Android.",
         updaterTitle: "Important Android update",
-        updaterNotice: "Already using Focus Palm 5.0.1 or 5.0.2? Install the latest version manually once to enable the corrected in-app updater. Future updates will be offered directly in Focus Palm.",
+        updaterNotice: "Already used Focus before 6.0? Install Focus 6.0 once to enable the new automatic update flow. Future releases can then be offered directly inside Focus.",
         platform: "Android",
         available: "Available now",
         versionLabel: "Version",
@@ -506,7 +506,7 @@ const resources = {
         description:
           "Use o Focus diretamente pela web ou baixe o APK oficial do Focus 6.0 para Android.",
         updaterTitle: "Atualização importante para Android",
-        updaterNotice: "Já usa o Focus Palm 5.0.1 ou 5.0.2? Instale a versão mais recente manualmente uma última vez para habilitar o atualizador interno corrigido. As próximas atualizações serão oferecidas diretamente no Focus Palm.",
+        updaterNotice: "Já usava o Focus antes do 6.0? Instale o Focus 6.0 uma vez para habilitar o novo fluxo de atualizações automáticas. As próximas versões poderão ser oferecidas diretamente dentro do Focus.",
         platform: "Android",
         available: "Disponível agora",
         versionLabel: "Versão",
