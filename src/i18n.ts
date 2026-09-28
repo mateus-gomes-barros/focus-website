@@ -14,11 +14,11 @@ const resources = {
         action: "Get the app",
       },
       hero: {
-        eyebrow: "Focus 5.0 · Living Glass",
+        eyebrow: "Focus 6.0 · Living Glass",
         title: "Focus on what matters.",
         highlight: "Discover how you focus.",
         description:
-          "A calmer, more personal productivity system. Focus 5.0 connects your work, reveals your patterns and gives your progress an identity.",
+          "A calmer, more personal productivity system. Focus 6.0 connects your work, reveals your patterns and gives your progress an identity.",
         primaryAction: "Open Focus",
         secondaryAction: "Discover FocushoMe",
         point1: "Start the timer.",
@@ -91,7 +91,7 @@ const resources = {
         previewFocused: "3h 24m focused",
       },
       focusHome: {
-        eyebrow: "New in Focus 5.0",
+        eyebrow: "New in Focus 6.0",
         title: "Your focus develops",
         highlight: "an identity of its own.",
         description:
@@ -109,7 +109,7 @@ const resources = {
           {
             title: "Living Glass",
             description:
-              "Translucent surfaces, subtle light and depth replace opaque blocks throughout Focus 5.0.",
+              "Translucent surfaces, subtle light and depth replace opaque blocks throughout Focus 6.0.",
           },
           {
             title: "Built from your patterns",
@@ -232,11 +232,11 @@ const resources = {
           "Focus was built for real life, where some days hold four focused hours and others hold twenty-five minutes. Both matter. Over time, they become a truthful record of the days you actually showed up.",
       },
       final: {
-        eyebrow: "Focus 5.0 is available",
+        eyebrow: "Focus 6.0 is available",
         title: "Start the timer.",
         highlight: "Watch your progress grow.",
         description:
-          "Use Focus directly on the web or download the official Focus 5.0 APK for Android.",
+          "Use Focus directly on the web or download the official Focus 6.0 APK for Android.",
         updaterTitle: "Important Android update",
         updaterNotice: "Already using Focus Palm 5.0.1 or 5.0.2? Install the latest version manually once to enable the corrected in-app updater. Future updates will be offered directly in Focus Palm.",
         platform: "Android",
@@ -282,11 +282,11 @@ const resources = {
         action: "Baixar o app",
       },
       hero: {
-        eyebrow: "Focus 5.0 · Living Glass",
+        eyebrow: "Focus 6.0 · Living Glass",
         title: "Foque no que importa.",
         highlight: "Descubra como você foca.",
         description:
-          "Um sistema de produtividade mais calmo e pessoal. O Focus 5.0 conecta seu trabalho, revela seus padrões e dá uma identidade ao seu progresso.",
+          "Um sistema de produtividade mais calmo e pessoal. O Focus 6.0 conecta seu trabalho, revela seus padrões e dá uma identidade ao seu progresso.",
         primaryAction: "Abrir o Focus",
         secondaryAction: "Conheça o FocushoMe",
         point1: "Inicie o timer.",
@@ -359,7 +359,7 @@ const resources = {
         previewFocused: "3h24 de foco",
       },
       focusHome: {
-        eyebrow: "Novo no Focus 5.0",
+        eyebrow: "Novo no Focus 6.0",
         title: "Seu foco desenvolve",
         highlight: "uma identidade própria.",
         description:
@@ -377,7 +377,7 @@ const resources = {
           {
             title: "Living Glass",
             description:
-              "Superfícies translúcidas, luz sutil e profundidade substituem os blocos opacos em todo o Focus 5.0.",
+              "Superfícies translúcidas, luz sutil e profundidade substituem os blocos opacos em todo o Focus 6.0.",
           },
           {
             title: "Criado pelos seus padrões",
@@ -500,11 +500,11 @@ const resources = {
           "O Focus foi criado para a vida real, na qual alguns dias possuem quatro horas de foco e outros apenas vinte e cinco minutos. Ambos importam. Com o tempo, eles se transformam em um registro verdadeiro dos dias em que você realmente apareceu.",
       },
       final: {
-        eyebrow: "Focus 5.0 disponível",
+        eyebrow: "Focus 6.0 disponível",
         title: "Inicie o timer.",
         highlight: "Veja seu progresso crescer.",
         description:
-          "Use o Focus diretamente pela web ou baixe o APK oficial do Focus 5.0 para Android.",
+          "Use o Focus diretamente pela web ou baixe o APK oficial do Focus 6.0 para Android.",
         updaterTitle: "Atualização importante para Android",
         updaterNotice: "Já usa o Focus Palm 5.0.1 ou 5.0.2? Instale a versão mais recente manualmente uma última vez para habilitar o atualizador interno corrigido. As próximas atualizações serão oferecidas diretamente no Focus Palm.",
         platform: "Android",
