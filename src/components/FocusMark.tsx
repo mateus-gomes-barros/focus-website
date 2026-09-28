@@ -1,29 +1,65 @@
-export const focusRingPath =
-  "M31.8 5.8C42.7 4.4 53.8 10.4 58.1 20.3C62.9 31.2 59.1 45.7 50 54.1C41.7 61.7 27.6 61.4 17.1 55.8C7.4 50.6 3.2 39.2 5.7 27.8C8.2 16.4 19.5 7.4 31.8 5.8Z";
+import type { SVGProps } from "react";
 
-export function FocusMark() {
+export const focusOrbitPaths = {
+  primary:
+    "M13 10.5C5.5 17.4 2.8 27.8 4.9 38.2C7.5 51.2 18.6 59.2 31.4 60.5C44.9 61.9 56.9 54.1 60.2 41.5C61.1 38.1 61.4 34.8 61 31.6",
+  secondary:
+    "M9 35C7.5 22 15 11 26 7C39 3 52 8 58 20C64 32 60 47 50 55",
+};
+
+export function FocusMark({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      className="focus-mark-svg"
       viewBox="0 0 64 64"
+      fill="none"
+      className={className}
       aria-hidden="true"
+      {...props}
     >
-      <defs>
-        <linearGradient id="focus-mark-metal" x1="10" y1="8" x2="55" y2="58" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#f1f3f2" />
-          <stop offset=".45" stopColor="#8f9893" />
-          <stop offset="1" stopColor="#444b47" />
-        </linearGradient>
-      </defs>
       <path
-        d={focusRingPath}
-        fill="rgba(255,255,255,.025)"
-        stroke="url(#focus-mark-metal)"
-        strokeWidth="4.6"
+        d={focusOrbitPaths.primary}
+        stroke="currentColor"
+        strokeWidth="3.1"
         strokeLinecap="round"
         strokeLinejoin="round"
+        opacity=".84"
       />
-      <circle cx="32" cy="32" r="4.2" fill="#aab0ad" opacity=".78" />
+      <path
+        d={focusOrbitPaths.secondary}
+        stroke="currentColor"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity=".4"
+      />
+    </svg>
+  );
+}
+
+export function FocusOrbitFrame() {
+  return (
+    <svg
+      className="focus-orbit-frame"
+      viewBox="0 0 64 64"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d={focusOrbitPaths.primary}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity=".72"
+      />
+      <path
+        d={focusOrbitPaths.secondary}
+        stroke="currentColor"
+        strokeWidth="1.15"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity=".34"
+      />
     </svg>
   );
 }
