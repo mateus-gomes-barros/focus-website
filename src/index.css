@@ -37,10 +37,10 @@ button{font:inherit}
 
 .focus-orbit-frame{
   position:absolute;
-  inset:.05%;
+  inset:-4.5%;
   z-index:6;
-  width:99.9%;
-  height:99.9%;
+  width:109%;
+  height:109%;
   color:#969e99;
   pointer-events:none;
   filter:
@@ -50,7 +50,7 @@ button{font:inherit}
 
 .watch-glass{
   position:absolute;
-  inset:1.15%;
+  inset:5.2%;
   overflow:hidden;
   border-radius:50%;
   background:
@@ -576,7 +576,12 @@ button{font:inherit}
 }
 
 @media(max-width:720px){
-  .watch-glass{inset:.8%}
+  .focus-orbit-frame{
+    inset:-3.5%;
+    width:107%;
+    height:107%;
+  }
+  .watch-glass{inset:4.6%}
   .watch-brand{left:12.5%}
   .watch-language{right:12.5%}
   .watch-tile{padding-inline:9.5%}
