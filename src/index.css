@@ -945,3 +945,65 @@ button { font: inherit; }
     font-size: 11px;
   }
 }
+
+
+/* Secondary-copy readability boost */
+.focushome-emblem span {
+  font-size: clamp(12px, 1.16cqw, 13px);
+}
+
+.watch-highlight {
+  font-size: clamp(12px, 1.16cqw, 13px);
+}
+
+.analytics-visual-head span,
+.analytics-chip,
+.analytics-caption {
+  font-size: clamp(12px, 1.12cqw, 13px);
+}
+
+.platform-grid strong {
+  font-size: clamp(13px, 1.32cqw, 15px);
+}
+
+.platform-grid span {
+  font-size: clamp(12px, 1.16cqw, 13px);
+}
+
+.platform-grid i {
+  font-size: clamp(11px, 1.08cqw, 12px);
+}
+
+.update-note strong,
+.download-grid a span {
+  font-size: clamp(13px, 1.26cqw, 14px);
+}
+
+.update-note p,
+.download-grid a small {
+  font-size: clamp(12px, 1.14cqw, 13px);
+}
+
+.future-layout blockquote {
+  font-size: clamp(13px, 1.3cqw, 15px);
+}
+
+.hero-timer-value span,
+.hero-timer-meta {
+  font-size: clamp(10px, 1cqw, 11px);
+}
+
+@media (max-width: 520px) {
+  .platform-grid span,
+  .update-note p,
+  .download-grid a small,
+  .analytics-caption,
+  .watch-highlight,
+  .focushome-emblem span {
+    font-size: 12px;
+  }
+
+  .platform-grid i {
+    font-size: 11px;
+  }
+}
