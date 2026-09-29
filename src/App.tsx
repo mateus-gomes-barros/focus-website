@@ -107,6 +107,10 @@ const content = {
     futureTitle: "O que vem depois.",
     futureDescription: "Palm para iPhone/iPad, Focus Pulse e Focus Extension continuam no meu uso diário e em testes privados.",
     futureNote: "Só vou liberar essas plataformas quando a experiência estiver pronta para outras pessoas.",
+    logEyebrow: "Focus Log",
+    logTitle: "Conheça muito mais sobre o focus aqui",
+    logDescription: "O Focus passou por muitas versões até se tornar estável e utilizável diariamente. Estou pronto para compartilhar tudo o que desenvolvi ao longo de meses de uso: bugs que encontrei, decisões, funcionalidades que achei interessantes e o que se tornou indispensável no meu dia a dia.",
+    logCta: "Me leve para o Focus Log",
   },
   en: {
     heroEyebrow: "Focus 6.0",
@@ -194,10 +198,14 @@ const content = {
     futureTitle: "What comes next.",
     futureDescription: "Palm for iPhone/iPad, Focus Pulse and Focus Extension remain in my daily use and private testing.",
     futureNote: "I will only release these platforms when the experience is ready for other people.",
+    logEyebrow: "Focus Log",
+    logTitle: "Discover much more about Focus here",
+    logDescription: "Focus went through many versions before becoming stable and useful every day. I am ready to share what I built through months of real use: bugs I found, decisions I made, features I considered interesting and what became indispensable in my daily routine.",
+    logCta: "Take me to Focus Log",
   },
 } as const;
 
-const desktopIds = ["top", "story", "focushome", "analytics", "platforms", "download", "future"];
+const desktopIds = ["top", "story", "focushome", "analytics", "platforms", "download", "future", "focus-log"];
 const mobileIds = [
   "top",
   "story-mobile",
@@ -215,6 +223,7 @@ const mobileIds = [
   "download-more-mobile",
   "future-mobile",
   "future-note-mobile",
+  "focus-log",
 ];
 
 function HeroVisual() {
@@ -565,6 +574,17 @@ export default function App() {
                 <div className="future-layout mobile-future-layout mobile-future-note">
                   <span className="watch-kicker">{c.futureEyebrow}</span>
                   <blockquote>{c.futureNote}</blockquote>
+                </div>
+              </section>
+
+              <section className="watch-tile" id="focus-log">
+                <div className="watch-centered narrow">
+                  <span className="watch-kicker">{c.logEyebrow}</span>
+                  <h2>{c.logTitle}</h2>
+                  <p>{c.logDescription}</p>
+                  <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
+                    {c.logCta}<ArrowUpRight size={14} />
+                  </a>
                 </div>
               </section>
             </div>
