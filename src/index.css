@@ -2810,3 +2810,316 @@ button { font: inherit; }
     --ambient-base-opacity: .18;
   }
 }
+
+
+/* =========================================================
+   WATCH NAVIGATION SPILL
+   The dot rail remains attached to the watch while information
+   appears to leak outside the circular display.
+   ========================================================= */
+.watch-nav-system {
+  position: absolute;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+}
+
+.watch-nav-system .watch-dots {
+  pointer-events: auto;
+}
+
+.watch-nav-menu {
+  position: absolute;
+  left: 91.5%;
+  top: 50%;
+  width: clamp(220px, 18vw, 300px);
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transform: translateY(-50%) translateX(-18px) scale(.96);
+  transform-origin: left center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity .22s ease,
+    transform .48s cubic-bezier(.16, 1, .3, 1),
+    visibility 0s linear .48s;
+}
+
+.watch-nav-system.open .watch-nav-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(-50%) translateX(0) scale(1);
+  transition:
+    opacity .18s ease,
+    transform .48s cubic-bezier(.16, 1, .3, 1),
+    visibility 0s;
+}
+
+.watch-nav-signal {
+  position: relative;
+  width: 54px;
+  height: 210px;
+  flex: 0 0 54px;
+}
+
+.watch-nav-signal::before,
+.watch-nav-signal::after {
+  position: absolute;
+  left: 0;
+  border: 2px solid rgba(69, 242, 123, .58);
+  border-right: 0;
+  content: "";
+}
+
+.watch-nav-signal::before {
+  top: 45px;
+  width: 35px;
+  height: 78px;
+  border-radius: 46px 0 0 46px;
+  transform: skewY(-5deg);
+}
+
+.watch-nav-signal::after {
+  top: 111px;
+  left: 18px;
+  width: 25px;
+  height: 54px;
+  border-radius: 38px 0 0 38px;
+  border-color: rgba(69, 242, 123, .88);
+}
+
+.watch-nav-signal i {
+  position: absolute;
+  right: -2px;
+  width: 34px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(69,242,123,.95), rgba(69,242,123,.22));
+  box-shadow: 0 0 12px rgba(69,242,123,.2);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.watch-nav-signal i:nth-child(1) { top: 62px; }
+.watch-nav-signal i:nth-child(2) { top: 104px; width: 46px; }
+.watch-nav-signal i:nth-child(3) { top: 150px; width: 60px; }
+
+.watch-nav-system.open .watch-nav-signal i {
+  animation: watchNavSignal .5s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.watch-nav-system.open .watch-nav-signal i:nth-child(2) { animation-delay: .06s; }
+.watch-nav-system.open .watch-nav-signal i:nth-child(3) { animation-delay: .12s; }
+
+.watch-nav-menu-list {
+  position: relative;
+  width: 100%;
+  display: grid;
+  gap: 2px;
+  padding: 12px 0;
+}
+
+.watch-nav-menu-list::before {
+  position: absolute;
+  left: -12px;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(69,242,123,.42), transparent);
+  content: "";
+  transform: scaleY(0);
+  transform-origin: center;
+}
+
+.watch-nav-system.open .watch-nav-menu-list::before {
+  animation: watchNavRail .55s .08s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.watch-nav-menu-list button {
+  --nav-index: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 8px 4px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #7f8b84;
+  text-align: left;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-14px);
+  transition:
+    color .18s ease,
+    background .18s ease,
+    transform .18s ease;
+}
+
+.watch-nav-system.open .watch-nav-menu-list button {
+  animation: watchNavItem .42s cubic-bezier(.16,1,.3,1) forwards;
+  animation-delay: calc(.08s + (var(--nav-index) * 34ms));
+}
+
+.watch-nav-menu-list button:hover,
+.watch-nav-menu-list button:focus-visible,
+.watch-nav-menu-list button.active {
+  color: #dfffe9;
+  background: linear-gradient(90deg, rgba(69,242,123,.09), transparent);
+  outline: none;
+  transform: translateX(4px);
+}
+
+.watch-nav-menu-list button span {
+  color: rgba(69, 242, 123, .48);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .08em;
+}
+
+.watch-nav-menu-list button strong {
+  font-size: clamp(12px, .92vw, 15px);
+  font-weight: 690;
+  letter-spacing: -.015em;
+  white-space: nowrap;
+}
+
+.watch-nav-menu-list button.active span,
+.watch-nav-menu-list button.active strong {
+  color: var(--green);
+}
+
+@keyframes watchNavSignal {
+  to { transform: scaleX(1); }
+}
+
+@keyframes watchNavRail {
+  to { transform: scaleY(1); }
+}
+
+@keyframes watchNavItem {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .watch-nav-menu {
+    left: 50%;
+    top: auto;
+    bottom: -3.5%;
+    width: min(88vw, 430px);
+    min-height: 0;
+    display: block;
+    transform: translateX(-50%) translateY(18px) scale(.96);
+    transform-origin: center top;
+  }
+
+  .watch-nav-system.open .watch-nav-menu {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .watch-nav-signal {
+    width: 100%;
+    height: 32px;
+  }
+
+  .watch-nav-signal::before {
+    left: 50%;
+    top: 0;
+    width: 64px;
+    height: 24px;
+    border: 2px solid rgba(69,242,123,.55);
+    border-bottom: 0;
+    border-right: 2px solid rgba(69,242,123,.55);
+    border-radius: 40px 40px 0 0;
+    transform: translateX(-50%);
+  }
+
+  .watch-nav-signal::after {
+    display: none;
+  }
+
+  .watch-nav-signal i {
+    top: auto !important;
+    bottom: 0;
+    right: auto;
+    left: 50%;
+    height: 1px;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+  }
+
+  .watch-nav-signal i:nth-child(1) { width: 80px; }
+  .watch-nav-signal i:nth-child(2) { width: 130px; }
+  .watch-nav-signal i:nth-child(3) { width: 180px; }
+
+  .watch-nav-menu-list {
+    max-height: min(42dvh, 330px);
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 8px;
+    overflow: auto;
+    padding: 10px;
+    border: 1px solid rgba(69,242,123,.13);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 50% 0, rgba(69,242,123,.07), transparent 42%),
+      rgba(4, 9, 6, .94);
+    box-shadow:
+      0 18px 50px rgba(0,0,0,.5),
+      inset 0 1px 0 rgba(255,255,255,.035);
+    backdrop-filter: blur(20px);
+  }
+
+  .watch-nav-menu-list::before {
+    display: none;
+  }
+
+  .watch-nav-menu-list button {
+    min-width: 0;
+    padding: 9px;
+    border-radius: 12px;
+  }
+
+  .watch-nav-menu-list button strong {
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 420px) {
+  .watch-nav-menu {
+    bottom: -1%;
+    width: 92vw;
+  }
+
+  .watch-nav-menu-list {
+    grid-template-columns: 1fr;
+    max-height: 38dvh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .watch-nav-menu,
+  .watch-nav-menu-list button,
+  .watch-nav-signal i {
+    transition: none;
+    animation: none !important;
+  }
+
+  .watch-nav-system.open .watch-nav-menu-list button {
+    opacity: 1;
+    transform: none;
+  }
+
+  .watch-nav-system.open .watch-nav-signal i {
+    transform: scaleX(1);
+  }
+}
