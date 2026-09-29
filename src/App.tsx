@@ -660,17 +660,18 @@ export default function App() {
                     if (event.currentTarget === event.target) setSelectedPlatform(null);
                   }}
                 >
-                  <button
-                    type="button"
-                    className="platform-modal-close"
-                    aria-label={c.platformModal.close}
-                    onClick={() => setSelectedPlatform(null)}
-                  >
-                    <FocusMark className="platform-modal-close-mark" />
-                    <X className="platform-modal-close-x" size={17} />
-                  </button>
+                  <div className="platform-modal-wrap">
+                    <button
+                      type="button"
+                      className="platform-modal-close"
+                      aria-label={c.platformModal.close}
+                      onClick={() => setSelectedPlatform(null)}
+                    >
+                      <FocusMark className="platform-modal-close-mark" />
+                      <X className="platform-modal-close-x" size={17} />
+                    </button>
 
-                  <section className="platform-modal" role="dialog" aria-modal="true" aria-labelledby="platform-modal-title">
+                    <section className="platform-modal" role="dialog" aria-modal="true" aria-labelledby="platform-modal-title">
                     <span className="platform-modal-kicker">{c.platformModal.eyebrow}</span>
                     <h3 id="platform-modal-title">{detail.title}</h3>
                     <small>{detail.device}</small>
@@ -685,7 +686,8 @@ export default function App() {
                         ))}
                       </ul>
                     </div>
-                  </section>
+                    </section>
+                  </div>
                 </div>
               );
             })()}
