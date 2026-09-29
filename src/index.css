@@ -3255,3 +3255,19 @@ button { font: inherit; }
     pointer-events: auto;
   }
 }
+
+
+/* Ensure the invisible hover bridge never blocks navigation menu clicks. */
+.watch-nav-system .watch-dots {
+  z-index: 3;
+}
+
+.watch-nav-menu {
+  z-index: 2;
+}
+
+@media (min-width: 721px) {
+  .watch-nav-system.open::after {
+    z-index: 0;
+  }
+}
