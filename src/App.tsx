@@ -29,7 +29,7 @@ const content = {
     openWeb: "Abrir Focus Web",
     storyEyebrow: "Feito no uso real",
     storyTitle: "3 meses antes de publicar.",
-    storyDescription: "Usei o Focus em projetos, trabalho, faculdade e lazer. Juntei tudo o que sentia falta em outros apps para que produtividade não virasse uma tarefa a mais — mas uma extensão natural do meu dia.",
+    storyDescription: "Usei o Focus em projetos, trabalho, faculdade e lazer. Juntei tudo o que sentia falta em outros apps para que produtividade não virasse uma tarefa a mais, mas uma extensão natural do meu dia.",
     storyPills: ["Projetos", "Trabalho", "Faculdade", "Lazer"],
     homeEyebrow: "O coração do Focus",
     homeTitle: "Seu foco ganha uma identidade.",
