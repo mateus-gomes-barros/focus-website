@@ -110,6 +110,8 @@ const content = {
     logEyebrow: "Focus Log",
     logTitle: "Conheça muito mais sobre o focus aqui",
     logDescription: "O Focus passou por muitas versões até se tornar estável e utilizável diariamente. Estou pronto para compartilhar tudo o que desenvolvi ao longo de meses de uso: bugs que encontrei, decisões, funcionalidades que achei interessantes e o que se tornou indispensável no meu dia a dia.",
+    logMobileIntro: "O Focus passou por muitas versões até se tornar estável e utilizável diariamente.",
+    logMobileMore: "Agora estou pronto para compartilhar meses de uso real: bugs que encontrei, decisões, funcionalidades que achei interessantes e o que se tornou indispensável no meu dia a dia.",
     logCta: "Me leve para o Focus Log",
   },
   en: {
@@ -201,6 +203,8 @@ const content = {
     logEyebrow: "Focus Log",
     logTitle: "Discover much more about Focus here",
     logDescription: "Focus went through many versions before becoming stable and useful every day. I am ready to share what I built through months of real use: bugs I found, decisions I made, features I considered interesting and what became indispensable in my daily routine.",
+    logMobileIntro: "Focus went through many versions before becoming stable and useful every day.",
+    logMobileMore: "Now I am ready to share months of real use: bugs I found, decisions I made, features I considered interesting and what became indispensable in my daily routine.",
     logCta: "Take me to Focus Log",
   },
 } as const;
@@ -223,7 +227,8 @@ const mobileIds = [
   "download-more-mobile",
   "future-mobile",
   "future-note-mobile",
-  "focus-log",
+  "focus-log-mobile",
+  "focus-log-cta-mobile",
 ];
 
 function HeroVisual() {
@@ -577,11 +582,30 @@ export default function App() {
                 </div>
               </section>
 
-              <section className="watch-tile" id="focus-log">
+              <section className="watch-tile desktop-dense-tile" id="focus-log">
                 <div className="watch-centered narrow">
                   <span className="watch-kicker">{c.logEyebrow}</span>
                   <h2>{c.logTitle}</h2>
                   <p>{c.logDescription}</p>
+                  <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
+                    {c.logCta}<ArrowUpRight size={14} />
+                  </a>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile focus-log-mobile" id="focus-log-mobile">
+                <div className="mobile-tile-card focus-log-mobile-card">
+                  <span className="watch-kicker">{c.logEyebrow}</span>
+                  <h2>{c.logTitle}</h2>
+                  <p>{c.logMobileIntro}</p>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile focus-log-mobile" id="focus-log-cta-mobile">
+                <div className="mobile-tile-card focus-log-mobile-card focus-log-mobile-cta">
+                  <span className="watch-kicker">{c.logEyebrow}</span>
+                  <h2>{language === "pt-BR" ? "Meses de evolução, agora abertos." : "Months of evolution, now open."}</h2>
+                  <p>{c.logMobileMore}</p>
                   <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
                     {c.logCta}<ArrowUpRight size={14} />
                   </a>
