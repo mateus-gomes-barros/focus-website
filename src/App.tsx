@@ -706,15 +706,25 @@ export default function App() {
             }}
           >
             <aside className="watch-dots" aria-label="Section navigation">
-              {sectionIds.map((id) => (
-                <button
-                  key={id}
-                  type="button"
-                  aria-label={id}
-                  className={activeSection === id ? "active" : ""}
-                  onClick={() => goTo(id)}
-                />
-              ))}
+              {(isMobile ? sectionMenuItems : sectionMenuItems).map((item) => {
+                const target = isMobile ? item.mobile : item.desktop;
+                const groupKey = item.desktop;
+                const isCurrent = isMobile
+                  ? activeSection === target ||
+                    activeSection.startsWith(`${groupKey}-`) ||
+                    (groupKey === "top" && activeSection === "top")
+                  : activeSection === target;
+
+                return (
+                  <button
+                    key={item.desktop}
+                    type="button"
+                    aria-label={item.label}
+                    className={isCurrent ? "active" : ""}
+                    onClick={() => goTo(target)}
+                  />
+                );
+              })}
             </aside>
 
             <div className="watch-nav-menu" role="menu" aria-hidden={!isSectionMenuOpen}>
