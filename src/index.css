@@ -2356,3 +2356,113 @@ button { font: inherit; }
     width: 56cqw;
   }
 }
+
+
+/* =========================================================
+   MOBILE CLIPPING FIX — story + future platforms
+   These pages were still too tall for the circular safe band.
+   Split content instead of shrinking it.
+   ========================================================= */
+@media (max-width: 720px) {
+  .mobile-story-tile {
+    padding-top: 23%;
+    padding-bottom: 18%;
+  }
+
+  .mobile-story-card,
+  .mobile-story-context-card {
+    width: 66%;
+    max-width: 66%;
+  }
+
+  .mobile-story-card p {
+    font-size: 12px;
+    line-height: 1.42;
+  }
+
+  .mobile-story-context-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mobile-story-pills {
+    width: 100%;
+    margin-top: 12px;
+    gap: 7px;
+  }
+
+  .mobile-story-pills span {
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+
+  .mobile-platforms-tile {
+    padding-top: 24%;
+    padding-bottom: 18%;
+  }
+
+  .mobile-platforms-tile .watch-tile-heading {
+    width: 64%;
+    max-width: 64%;
+    margin-bottom: 14px;
+  }
+
+  .mobile-platforms-tile .watch-tile-heading h2 {
+    font-size: clamp(21px, 6.1cqw, 28px);
+    line-height: 1;
+  }
+
+  .mobile-platform-grid-future {
+    width: 64%;
+    max-width: 64%;
+  }
+
+  .mobile-platform-grid-future article {
+    min-height: 56px;
+  }
+
+  .mobile-platforms-last .mobile-platform-grid-future {
+    width: 62%;
+    max-width: 62%;
+  }
+
+  .mobile-platforms-last .platform-card {
+    min-height: 60px;
+  }
+
+  /* Keep all split-page content clear of the topbar and lower curve. */
+  .mobile-story-tile .watch-kicker,
+  .mobile-platforms-tile .watch-kicker {
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 430px) {
+  .mobile-story-tile,
+  .mobile-platforms-tile {
+    padding-top: 25%;
+    padding-bottom: 19%;
+  }
+
+  .mobile-story-card,
+  .mobile-story-context-card,
+  .mobile-platforms-tile .watch-tile-heading,
+  .mobile-platform-grid-future,
+  .mobile-platforms-last .mobile-platform-grid-future {
+    width: 62%;
+    max-width: 62%;
+  }
+
+  .mobile-story-card p {
+    font-size: 11px;
+  }
+
+  .mobile-story-pills span {
+    font-size: 10px;
+  }
+
+  .mobile-platforms-tile .watch-tile-heading h2 {
+    font-size: clamp(20px, 5.8cqw, 25px);
+  }
+}
