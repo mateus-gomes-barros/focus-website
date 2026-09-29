@@ -197,7 +197,20 @@ const content = {
   },
 } as const;
 
-const ids = ["top", "story", "focushome", "analytics", "platforms", "download", "future"];
+const desktopIds = ["top", "story", "focushome", "analytics", "platforms", "download", "future"];
+const mobileIds = [
+  "top",
+  "story",
+  "focushome-mobile",
+  "focushome-identity-mobile",
+  "analytics",
+  "platforms-mobile",
+  "platforms-future-mobile",
+  "download-mobile",
+  "download-more-mobile",
+  "future-mobile",
+  "future-note-mobile",
+];
 
 function HeroVisual() {
   return (
@@ -233,24 +246,40 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("top");
   const [language, setLanguage] = useState<"pt-BR" | "en">("pt-BR");
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 720px)").matches);
   const c = content[language];
+  const sectionIds = isMobile ? mobileIds : desktopIds;
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 720px)");
+    const sync = () => setIsMobile(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     const root = scrollerRef.current;
     if (!root) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
         if (visible) setActiveSection(visible.target.id);
       },
       { root, threshold: [0.5, 0.7, 0.9] },
     );
-    ids.forEach((id) => {
+
+    sectionIds.forEach((id) => {
       const node = document.getElementById(id);
       if (node) observer.observe(node);
     });
+
     return () => observer.disconnect();
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     if (!selectedPlatform) return;
@@ -276,6 +305,29 @@ export default function App() {
       { key: "extension", icon: Puzzle, name: "Extension", meta: c.platformCopy.extension, ready: false },
     ],
     [c],
+  );
+
+  const renderPlatformCard = (
+    { key, icon: Icon, name, meta, ready }: (typeof platforms)[number],
+    index: number,
+  ) => (
+    <article
+      className={ready ? "ready platform-card" : "future platform-card"}
+      key={`${key}-${index}`}
+      role="button"
+      tabIndex={0}
+      onClick={() => setSelectedPlatform(key)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setSelectedPlatform(key);
+        }
+      }}
+    >
+      <div className="platform-icon"><Icon size={17} /></div>
+      <div><strong>{name}</strong><span>{meta}</span></div>
+      <i>{ready ? c.available : c.future}</i>
+    </article>
   );
 
   if (window.location.pathname === "/privacy") return <PrivacyPolicyPage />;
@@ -316,7 +368,7 @@ export default function App() {
                 </div>
               </section>
 
-              <section className="watch-tile focushome-tile" id="focushome">
+              <section className="watch-tile focushome-tile desktop-dense-tile" id="focushome">
                 <div className="focushome-layout">
                   <div className="focushome-copy">
                     <span className="watch-kicker">{c.homeEyebrow}</span>
@@ -332,6 +384,27 @@ export default function App() {
                 </div>
               </section>
 
+              <section className="watch-tile mobile-split-tile focushome-mobile-copy" id="focushome-mobile">
+                <div className="mobile-tile-card">
+                  <span className="watch-kicker">{c.homeEyebrow}</span>
+                  <h2>{c.homeTitle}</h2>
+                  <p>{c.homeDescription}</p>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile focushome-mobile-identity" id="focushome-identity-mobile">
+                <div className="mobile-tile-card mobile-identity-card">
+                  <div className="focushome-emblem">
+                    <div className="focushome-glow" />
+                    <FocusHomeSymbol type="prism" size={220} />
+                    <strong>Prism</strong><span>FocushoMe</span>
+                  </div>
+                  <ul className="mobile-feature-list">
+                    {c.homePoints.map((item) => <li key={item}><Check size={14} />{item}</li>)}
+                  </ul>
+                </div>
+              </section>
+
               <section className="watch-tile analytics-tile" id="analytics">
                 <div className="analytics-copy">
                   <span className="watch-kicker">{c.analyticsEyebrow}</span>
@@ -342,32 +415,34 @@ export default function App() {
                 <AnalyticsVisual />
               </section>
 
-              <section className="watch-tile platforms-tile" id="platforms">
+              <section className="watch-tile platforms-tile desktop-dense-tile" id="platforms">
                 <div className="watch-tile-heading"><span className="watch-kicker">{c.platformsEyebrow}</span><h2>{c.platformsTitle}</h2></div>
                 <div className="platform-grid">
-                  {platforms.map(({ key, icon: Icon, name, meta, ready }, index) => (
-                    <article
-                      className={ready ? "ready platform-card" : "future platform-card"}
-                      key={`${name}-${index}`}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => setSelectedPlatform(key)}
-                      onKeyDown={(event) => {
-                        if (event.key === "Enter" || event.key === " ") {
-                          event.preventDefault();
-                          setSelectedPlatform(key);
-                        }
-                      }}
-                    >
-                      <div className="platform-icon"><Icon size={17} /></div>
-                      <div><strong>{name}</strong><span>{meta}</span></div>
-                      <i>{ready ? c.available : c.future}</i>
-                    </article>
-                  ))}
+                  {platforms.map(renderPlatformCard)}
                 </div>
               </section>
 
-              <section className="watch-tile download-tile" id="download">
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-mobile">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.platformsEyebrow}</span>
+                  <h2>{c.platformsTitle}</h2>
+                </div>
+                <div className="platform-grid mobile-platform-grid">
+                  {platforms.slice(0, 4).map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-future-mobile">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.future}</span>
+                  <h2>{language === "pt-BR" ? "Próximas plataformas." : "Platforms coming next."}</h2>
+                </div>
+                <div className="platform-grid mobile-platform-grid mobile-platform-grid-future">
+                  {platforms.slice(4).map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile download-tile desktop-dense-tile" id="download">
                 <div className="watch-tile-heading"><span className="watch-kicker">{c.downloadEyebrow}</span><h2>{c.downloadTitle}</h2></div>
                 <div className="update-note"><RefreshCw size={17} /><div><strong>{c.migrationTitle}</strong><p>{c.migrationText}</p></div></div>
                 <div className="download-grid">
@@ -378,10 +453,51 @@ export default function App() {
                 </div>
               </section>
 
-              <section className="watch-tile future-tile" id="future">
+              <section className="watch-tile mobile-split-tile mobile-download-tile" id="download-mobile">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.downloadEyebrow}</span>
+                  <h2>{c.downloadTitle}</h2>
+                </div>
+                <div className="update-note"><RefreshCw size={17} /><div><strong>{c.migrationTitle}</strong><p>{c.migrationText}</p></div></div>
+                <div className="download-grid mobile-download-grid">
+                  <a href={siteLinks.android}><Smartphone size={16} /><span>{c.downloadLabels.android}<small>6.0.0 · APK</small></span><Download size={14} /></a>
+                  <a href={siteLinks.macOS}><Laptop size={16} /><span>{c.downloadLabels.mac}<small>6.0.0 · DMG</small></span><Download size={14} /></a>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-download-tile" id="download-more-mobile">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.downloadEyebrow}</span>
+                  <h2>{language === "pt-BR" ? "Continue onde preferir." : "Continue wherever you prefer."}</h2>
+                </div>
+                <div className="download-grid mobile-download-grid">
+                  <a href={siteLinks.windows}><MonitorSmartphone size={16} /><span>{c.downloadLabels.windows}<small>6.0.0 · EXE</small></span><Download size={14} /></a>
+                  <a href={siteLinks.webApp} target="_blank" rel="noreferrer"><Globe2 size={16} /><span>{c.downloadLabels.web}<small>Browser</small></span><ArrowUpRight size={14} /></a>
+                </div>
+              </section>
+
+              <section className="watch-tile future-tile desktop-dense-tile" id="future">
                 <div className="future-layout">
                   <div><span className="watch-kicker">{c.futureEyebrow}</span><h2>{c.futureTitle}</h2><p>{c.futureDescription}</p></div>
                   <div className="future-orbit"><Watch size={30} /><Puzzle size={24} /><Smartphone size={24} /><BarChart3 size={22} /></div>
+                  <blockquote>{c.futureNote}</blockquote>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-future-tile" id="future-mobile">
+                <div className="future-layout mobile-future-layout">
+                  <div>
+                    <span className="watch-kicker">{c.futureEyebrow}</span>
+                    <h2>{c.futureTitle}</h2>
+                    <p>{c.futureDescription}</p>
+                  </div>
+                  <div className="future-orbit"><Watch size={30} /><Puzzle size={24} /><Smartphone size={24} /><BarChart3 size={22} /></div>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-future-tile" id="future-note-mobile">
+                <div className="future-layout mobile-future-layout mobile-future-note">
+                  <span className="watch-kicker">{c.futureEyebrow}</span>
                   <blockquote>{c.futureNote}</blockquote>
                 </div>
               </section>
@@ -429,7 +545,7 @@ export default function App() {
             })()}
 
             <aside className="watch-dots" aria-label="Section navigation">
-              {ids.map((id) => <button key={id} type="button" aria-label={id} className={activeSection === id ? "active" : ""} onClick={() => goTo(id)} />)}
+              {sectionIds.map((id) => <button key={id} type="button" aria-label={id} className={activeSection === id ? "active" : ""} onClick={() => goTo(id)} />)}
             </aside>
           </div>
         </div>
