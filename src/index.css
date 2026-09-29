@@ -3573,3 +3573,45 @@ button { font: inherit; }
     height: 46px;
   }
 }
+
+
+/* Anchor the close control to the platform modal, not the main Focus orbit. */
+.platform-modal-wrap {
+  position: relative;
+  width: min(60cqw, 590px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.platform-modal-wrap .platform-modal {
+  width: 100%;
+  height: 100%;
+}
+
+.platform-modal-wrap .platform-modal-close {
+  top: 3.5%;
+  right: 1.5%;
+}
+
+@container focus-watch (max-width: 640px) {
+  .platform-modal-wrap {
+    width: 72cqw;
+  }
+
+  .platform-modal-wrap .platform-modal-close {
+    top: 2.5%;
+    right: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .platform-modal-wrap {
+    width: min(82vw, 82dvh);
+  }
+
+  .platform-modal-wrap .platform-modal-close {
+    top: 1.5%;
+    right: -1.5%;
+  }
+}
