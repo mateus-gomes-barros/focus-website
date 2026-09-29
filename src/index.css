@@ -1007,3 +1007,10 @@ button { font: inherit; }
     font-size: 11px;
   }
 }
+
+
+/* Download supporting copy: intentionally 15px */
+.update-note p,
+.download-grid a small {
+  font-size: 15px;
+}
