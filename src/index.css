@@ -1031,3 +1031,14 @@ button { font: inherit; }
   position: absolute;
   right: 0;
 }
+
+
+/* Multiplatform tile refinement */
+.platform-grid span {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.platforms-tile .watch-tile-heading {
+  margin-top: 2.2cqw;
+}
