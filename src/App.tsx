@@ -276,7 +276,7 @@ export default function App() {
     { label: c.homeEyebrow, desktop: "focushome", mobile: "focushome-mobile" },
     { label: c.analyticsEyebrow, desktop: "analytics", mobile: "analytics-mobile" },
     { label: c.platformsEyebrow, desktop: "platforms", mobile: "platforms-mobile-a" },
-    { label: c.downloadEyebrow, desktop: "download", mobile: "download-mobile" },
+    { label: language === "pt-BR" ? "Baixar Focus" : "Download Focus", desktop: "download", mobile: "download-mobile" },
     { label: c.futureEyebrow, desktop: "future", mobile: "future-mobile" },
     { label: c.logEyebrow, desktop: "focus-log", mobile: "focus-log-mobile" },
   ];
