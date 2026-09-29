@@ -1,5 +1,5 @@
 export const siteLinks = {
-  webApp: "https://pomodoro-1ktl-theta.vercel.app/",
+  webApp: "https://focus-web.online/",
   focusLog: "https://github.com/mateus-gomes-barros/focus-releases",
   android:
     "https://github.com/mateus-gomes-barros/focus-releases/releases/download/v6.0.0/focus-6.0.0.apk",
