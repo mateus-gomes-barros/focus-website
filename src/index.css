@@ -1250,3 +1250,615 @@ button { font: inherit; }
     font-size: 12px;
   }
 }
+
+
+/* =========================================================
+   MOBILE WATCH SYSTEM
+   Rebuild mobile as a self-contained circular viewport.
+   Desktop rules above remain untouched.
+   ========================================================= */
+@media (max-width: 720px) {
+  body {
+    overflow: hidden;
+  }
+
+  .watch-page {
+    min-height: 100dvh;
+    padding: max(8px, env(safe-area-inset-top)) 0 max(8px, env(safe-area-inset-bottom));
+    align-items: center;
+  }
+
+  /*
+    The phone uses width as the primary constraint.
+    Keeping the stage square prevents the watch from stretching on tall screens.
+  */
+  .watch-stage {
+    width: min(96vw, 92dvh);
+    height: min(96vw, 92dvh);
+    max-width: 620px;
+    max-height: 620px;
+  }
+
+  /*
+    On mobile the FocushoMe frame stays outside the content surface.
+    The glass gets a larger safe inset so the irregular SVG never crosses text.
+  */
+  .focus-orbit-frame {
+    inset: -3%;
+    width: 106%;
+    height: 106%;
+  }
+
+  .watch-glass {
+    inset: 5.25%;
+  }
+
+  /* Top safe chord */
+  .watch-topbar {
+    top: 8.3%;
+    left: 24%;
+    right: 24%;
+    height: 8%;
+  }
+
+  .watch-brand {
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 5px;
+    font-size: 11px;
+  }
+
+  .watch-brand svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .watch-brand span {
+    display: inline;
+  }
+
+  .watch-language {
+    right: 0;
+    gap: 4px;
+    font-size: 10px;
+  }
+
+  /* Every page gets the same circular safe area. */
+  .watch-tile {
+    height: 100%;
+    min-height: 100%;
+    padding: 17.5% 13.5% 11.5%;
+    overflow: hidden;
+  }
+
+  .watch-kicker {
+    font-size: 9px;
+    letter-spacing: .12em;
+  }
+
+  .watch-tile h1 {
+    font-size: clamp(28px, 8.1cqw, 38px);
+    line-height: .98;
+    margin: 6px 0 9px;
+  }
+
+  .watch-tile h2 {
+    font-size: clamp(24px, 6.8cqw, 32px);
+    line-height: 1;
+    margin: 6px 0 9px;
+  }
+
+  .watch-tile p {
+    font-size: clamp(11px, 3.15cqw, 14px);
+    line-height: 1.42;
+  }
+
+  .watch-primary {
+    margin-top: 12px;
+    padding: 9px 12px;
+    font-size: 11px;
+  }
+
+  /* Hero: text only on small screens so nothing collides with the frame. */
+  .hero-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 17%;
+    text-align: center;
+  }
+
+  .hero-copy {
+    width: 100%;
+    max-width: 72cqw;
+    margin: 0 auto;
+  }
+
+  .hero-copy > p {
+    max-width: 64cqw;
+    margin-inline: auto;
+  }
+
+  .hero-orbit-visual {
+    display: none;
+  }
+
+  .watch-next {
+    bottom: 7%;
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Story */
+  .watch-centered,
+  .watch-centered.narrow {
+    width: 72%;
+    max-width: none;
+  }
+
+  .watch-pills {
+    gap: 5px;
+    margin-top: 12px;
+  }
+
+  .watch-pills span {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  /* FocushoMe: stack copy and emblem, keep emblem compact. */
+  .focushome-layout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .focushome-copy {
+    width: 74%;
+    margin-inline: auto;
+  }
+
+  .focushome-copy p {
+    max-width: none;
+  }
+
+  .focushome-copy ul {
+    width: max-content;
+    max-width: 100%;
+    gap: 5px;
+    margin: 10px auto 0;
+    text-align: left;
+  }
+
+  .focushome-copy li {
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .focushome-emblem {
+    min-height: 0;
+    margin-top: 0;
+  }
+
+  .focushome-emblem svg {
+    width: 21cqw;
+  }
+
+  .focushome-emblem strong {
+    margin-top: 2px;
+    font-size: 17px;
+  }
+
+  .focushome-emblem span {
+    margin-top: 1px;
+    font-size: 10px;
+  }
+
+  /* Analytics: copy + compact chart both remain visible. */
+  .analytics-tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .analytics-copy {
+    width: 72%;
+    margin-inline: auto;
+  }
+
+  .analytics-copy p {
+    max-width: none;
+    margin-inline: auto;
+  }
+
+  .watch-highlight {
+    justify-content: center;
+    margin-top: 8px;
+    font-size: 10px;
+  }
+
+  .analytics-visual {
+    display: block;
+    width: 54cqw;
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+
+  .analytics-visual-head strong {
+    font-size: 17px;
+  }
+
+  .analytics-visual-head span,
+  .analytics-chip,
+  .analytics-caption {
+    font-size: 9px;
+  }
+
+  .analytics-bars {
+    height: 12cqw;
+    gap: 5px;
+    margin-top: 9px;
+  }
+
+  /* Multiplatform: denser 2-column grid that fits the round display. */
+  .platforms-tile {
+    justify-content: center;
+    padding: 16.5% 12% 10%;
+  }
+
+  .platforms-tile .watch-tile-heading {
+    width: 76%;
+    margin: 0 auto 10px;
+  }
+
+  .platform-grid {
+    width: 76%;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .platform-grid article {
+    min-height: 54px;
+    gap: 6px;
+    padding: 7px 8px 14px;
+    border-radius: 10px;
+  }
+
+  .platform-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 8px;
+  }
+
+  .platform-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .platform-grid strong {
+    font-size: 12px;
+    line-height: 1.05;
+  }
+
+  .platform-grid span {
+    margin-top: 2px;
+    font-size: 10px;
+    line-height: 1.15;
+  }
+
+  .platform-grid i {
+    right: 7px;
+    bottom: 5px;
+    font-size: 8px;
+  }
+
+  /* Download: keep every option readable without overflowing the circle. */
+  .download-tile {
+    justify-content: center;
+    padding: 16.5% 13% 10%;
+  }
+
+  .download-tile .watch-tile-heading {
+    width: 76%;
+    margin: 0 auto 9px;
+  }
+
+  .update-note {
+    width: 74%;
+    gap: 7px;
+    margin: 0 auto 7px;
+    padding: 8px 9px;
+    border-radius: 10px;
+  }
+
+  .update-note > svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .update-note strong {
+    font-size: 11px;
+  }
+
+  .update-note p {
+    margin-top: 2px;
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  .download-grid {
+    width: 74%;
+    gap: 5px;
+  }
+
+  .download-grid a {
+    gap: 7px;
+    padding: 7px 9px;
+    border-radius: 9px;
+  }
+
+  .download-grid a span {
+    font-size: 11px;
+  }
+
+  .download-grid a small {
+    font-size: 10px;
+  }
+
+  /* Future */
+  .future-layout {
+    width: 70%;
+  }
+
+  .future-layout > div:first-child p {
+    max-width: none;
+  }
+
+  .future-orbit {
+    width: 22cqw;
+    height: 22cqw;
+    margin: 12px auto;
+  }
+
+  .future-layout blockquote {
+    padding: 9px 11px;
+    border-radius: 10px;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  /* Dots stay inside the widest section of the circular screen. */
+  .watch-dots {
+    right: 6.2%;
+    gap: 5px;
+  }
+
+  .watch-dots button {
+    width: 5px;
+    height: 5px;
+  }
+
+  .watch-dots button.active {
+    height: 16px;
+  }
+
+  /*
+    Mobile platform modal:
+    make it a compact inner circle with a scrollable card, so long platform
+    descriptions cannot escape the watch.
+  */
+  .platform-modal-layer {
+    padding: 0;
+    background: rgba(2, 5, 3, .82);
+  }
+
+  .platform-modal {
+    width: 78cqw;
+    max-width: none;
+    aspect-ratio: 1;
+    padding: 11cqw 9cqw 8cqw;
+    overflow: hidden;
+  }
+
+  .platform-modal-close {
+    top: 11%;
+    right: 18%;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+
+  .platform-modal-kicker {
+    max-width: 52cqw;
+    font-size: 8px;
+    line-height: 1.25;
+  }
+
+  .platform-modal h3 {
+    margin: 6px 0 2px;
+    font-size: clamp(22px, 6cqw, 28px);
+  }
+
+  .platform-modal > small {
+    font-size: 10px;
+  }
+
+  .platform-modal-card {
+    width: 56cqw;
+    max-height: 43cqw;
+    margin-top: 10px;
+    padding: 10px 11px;
+    border-radius: 12px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .platform-modal-card::-webkit-scrollbar {
+    display: none;
+  }
+
+  .platform-modal-card p {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .platform-modal-divider {
+    margin: 8px 0;
+  }
+
+  .platform-modal-card > strong {
+    margin-bottom: 6px;
+    font-size: 10px;
+  }
+
+  .platform-modal-card ul {
+    gap: 5px;
+  }
+
+  .platform-modal-card li {
+    gap: 5px;
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  .platform-modal-card li svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Narrow phones: preserve safe areas rather than enlarging type. */
+@media (max-width: 430px) {
+  .watch-stage {
+    width: min(97vw, 90dvh);
+    height: min(97vw, 90dvh);
+  }
+
+  .focus-orbit-frame {
+    inset: -2%;
+    width: 104%;
+    height: 104%;
+  }
+
+  .watch-glass {
+    inset: 6%;
+  }
+
+  .watch-topbar {
+    top: 8%;
+    left: 25%;
+    right: 25%;
+  }
+
+  .watch-brand {
+    font-size: 10px;
+  }
+
+  .watch-brand svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .watch-language {
+    font-size: 9px;
+  }
+
+  .watch-tile {
+    padding: 18% 14% 11%;
+  }
+
+  .watch-tile h1 {
+    font-size: clamp(26px, 7.8cqw, 34px);
+  }
+
+  .watch-tile h2 {
+    font-size: clamp(22px, 6.4cqw, 29px);
+  }
+
+  .watch-tile p {
+    font-size: clamp(10px, 3cqw, 12px);
+  }
+
+  .watch-kicker {
+    font-size: 8px;
+  }
+
+  .platform-grid {
+    width: 78%;
+    gap: 5px;
+  }
+
+  .platform-grid article {
+    min-height: 48px;
+    padding: 6px 7px 13px;
+  }
+
+  .platform-grid strong {
+    font-size: 11px;
+  }
+
+  .platform-grid span {
+    font-size: 9px;
+  }
+
+  .platform-grid i {
+    font-size: 7px;
+  }
+
+  .update-note,
+  .download-grid {
+    width: 78%;
+  }
+
+  .update-note p,
+  .download-grid a small {
+    font-size: 9px;
+  }
+
+  .download-grid a span {
+    font-size: 10px;
+  }
+
+  .future-layout {
+    width: 72%;
+  }
+
+  .future-layout blockquote {
+    font-size: 10px;
+  }
+}
+
+/* Short landscape phones: use height as the limiting dimension. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .watch-stage {
+    width: min(92vw, 96dvh);
+    height: min(92vw, 96dvh);
+  }
+
+  .watch-topbar {
+    top: 7.5%;
+  }
+
+  .watch-tile {
+    padding-top: 15%;
+    padding-bottom: 9%;
+  }
+
+  .watch-tile h1 {
+    font-size: clamp(25px, 6cqh, 34px);
+  }
+
+  .watch-tile h2 {
+    font-size: clamp(22px, 5.2cqh, 30px);
+  }
+
+  .watch-tile p {
+    font-size: clamp(10px, 2.4cqh, 12px);
+  }
+}
