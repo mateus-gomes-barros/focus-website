@@ -719,7 +719,16 @@ export default function App() {
 
             <div className="watch-nav-menu" role="menu" aria-hidden={!isSectionMenuOpen}>
               <div className="watch-nav-signal" aria-hidden="true">
-                <i /><i /><i />
+                <svg viewBox="0 0 92 210" fill="none">
+                  <path className="nav-arrow arrow-a" d="M6 58C24 55 35 49 48 38C57 30 62 24 68 16" />
+                  <path className="nav-arrow-tip arrow-a-tip" d="M57 19L69 15L67 28" />
+
+                  <path className="nav-arrow arrow-b" d="M4 106C23 106 38 103 52 96C64 90 72 82 79 73" />
+                  <path className="nav-arrow-tip arrow-b-tip" d="M68 76L80 72L78 85" />
+
+                  <path className="nav-arrow arrow-c" d="M5 153C25 155 42 157 58 153C69 150 77 145 84 138" />
+                  <path className="nav-arrow-tip arrow-c-tip" d="M74 140L85 137L82 149" />
+                </svg>
               </div>
 
               <div className="watch-nav-menu-list">
