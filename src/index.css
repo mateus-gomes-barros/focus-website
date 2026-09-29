@@ -217,7 +217,7 @@ button { font: inherit; }
 .watch-tile p {
   margin: 0;
   color: var(--muted);
-  font-size: clamp(14px, 1.55cqw, 16px);
+  font-size: 16px;
   line-height: 1.55;
 }
 
@@ -302,7 +302,7 @@ button { font: inherit; }
 
 .hero-timer-value span {
   color: #6f7772;
-  font-size: clamp(12px, 1.24cqw, 14px);
+  font-size: 16px;
 }
 
 .hero-timer-meta {
@@ -362,7 +362,7 @@ button { font: inherit; }
   border-radius: 999px;
   background: rgba(255, 255, 255, .02);
   color: #bdc4bf;
-  font-size: clamp(12px, 1.24cqw, 14px);
+  font-size: 16px;
 }
 
 /* FocushoMe */
@@ -587,7 +587,7 @@ button { font: inherit; }
 
 .platform-grid strong {
   display: block;
-  font-size: clamp(12px, 1.24cqw, 14px);
+  font-size: 16px;
 }
 
 .platform-grid span {
@@ -712,7 +712,7 @@ button { font: inherit; }
   border-radius: 1.25cqw;
   background: rgba(255, 255, 255, .018);
   color: #c5cbc7;
-  font-size: clamp(12px, 1.24cqw, 14px);
+  font-size: 16px;
   line-height: 1.45;
 }
 
@@ -907,7 +907,7 @@ button { font: inherit; }
 }
 
 .platform-grid strong {
-  font-size: clamp(12px, 1.24cqw, 14px);
+  font-size: 16px;
 }
 
 .platform-grid span {
@@ -930,7 +930,7 @@ button { font: inherit; }
 }
 
 .future-layout blockquote {
-  font-size: clamp(12px, 1.22cqw, 14px);
+  font-size: 16px;
 }
 
 @media (max-width: 520px) {
@@ -949,11 +949,11 @@ button { font: inherit; }
 
 /* Secondary-copy readability boost */
 .focushome-emblem span {
-  font-size: clamp(14px, 1.55cqw, 16px);
+  font-size: 16px;
 }
 
 .watch-highlight {
-  font-size: clamp(14px, 1.55cqw, 16px);
+  font-size: 16px;
 }
 
 .analytics-visual-head span,
@@ -963,11 +963,11 @@ button { font: inherit; }
 }
 
 .platform-grid strong {
-  font-size: clamp(14px, 1.5cqw, 16px);
+  font-size: 16px;
 }
 
 .platform-grid span {
-  font-size: clamp(14px, 1.55cqw, 16px);
+  font-size: 16px;
 }
 
 .platform-grid i {
@@ -976,16 +976,16 @@ button { font: inherit; }
 
 .update-note strong,
 .download-grid a span {
-  font-size: clamp(14px, 1.48cqw, 16px);
+  font-size: 16px;
 }
 
 .update-note p,
 .download-grid a small {
-  font-size: clamp(14px, 1.55cqw, 16px);
+  font-size: 16px;
 }
 
 .future-layout blockquote {
-  font-size: clamp(14px, 1.5cqw, 16px);
+  font-size: 16px;
 }
 
 .hero-timer-value span,
