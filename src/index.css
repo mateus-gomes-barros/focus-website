@@ -3236,3 +3236,22 @@ button { font: inherit; }
     transform-origin: center;
   }
 }
+
+
+/* Keep the smartwatch navigation open while the pointer travels from dots to menu. */
+@media (min-width: 721px) {
+  .watch-nav-system.open::after {
+    position: absolute;
+    top: 34%;
+    right: -24%;
+    width: 34%;
+    height: 32%;
+    content: "";
+    pointer-events: auto;
+    background: transparent;
+  }
+
+  .watch-nav-system.open .watch-nav-menu {
+    pointer-events: auto;
+  }
+}
