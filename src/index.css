@@ -63,10 +63,10 @@ button { font: inherit; }
 
 .focus-orbit-frame {
   position: absolute;
-  inset: -3.5%;
+  inset: 0;
   z-index: 6;
-  width: 107%;
-  height: 107%;
+  width: 100%;
+  height: 100%;
   color: #969e99;
   pointer-events: none;
   filter:
@@ -76,7 +76,7 @@ button { font: inherit; }
 
 .watch-glass {
   position: absolute;
-  inset: 1.85%;
+  inset: 5%;
   overflow: hidden;
   border-radius: 50%;
   background:
@@ -96,9 +96,9 @@ button { font: inherit; }
 */
 .watch-topbar {
   position: absolute;
-  top: 8.5%;
-  left: 24%;
-  right: 24%;
+  top: 9.4%;
+  left: 25.5%;
+  right: 25.5%;
   z-index: 40;
   height: 4.8cqw;
   display: flex;
@@ -178,7 +178,7 @@ button { font: inherit; }
   display: grid;
   align-items: center;
   overflow: hidden;
-  padding: 15.5% 14.8% 10.5%;
+  padding: 14.8% 13.8% 9.8%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
@@ -225,7 +225,7 @@ button { font: inherit; }
 .hero-tile {
   grid-template-columns: minmax(0, 1fr) minmax(0, .86fr);
   gap: 5.2cqw;
-  padding-inline: 15.2%;
+  padding-inline: 14.2%;
 }
 
 .hero-copy {
@@ -819,17 +819,17 @@ button { font: inherit; }
 /* Very small screens: keep the circle, reduce density rather than breaking it. */
 @media (max-width: 520px) {
   .watch-stage {
-    width: min(93vw, 93dvh);
-    height: min(93vw, 93dvh);
+    width: min(99vw, 99dvh);
+    height: min(99vw, 99dvh);
   }
 
   .focus-orbit-frame {
-    inset: -3.5%;
-    width: 107%;
-    height: 107%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
-  .watch-glass { inset: 1.85%; }
+  .watch-glass { inset: 5%; }
 
   .watch-brand span { display: none; }
 
