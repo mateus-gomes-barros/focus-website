@@ -3427,3 +3427,21 @@ button { font: inherit; }
     }
   }
 }
+
+
+/* Radial nav polish: remove the artificial top stroke that crossed into the watch face. */
+@media (min-width: 721px) {
+  .watch-nav-menu-list::before {
+    display: none;
+  }
+
+  .watch-nav-menu-list button::before {
+    width: 12px;
+    margin-right: 5px;
+  }
+
+  .watch-nav-menu-list button:nth-child(1)::before,
+  .watch-nav-menu-list button:nth-child(8)::before {
+    width: 8px;
+  }
+}
