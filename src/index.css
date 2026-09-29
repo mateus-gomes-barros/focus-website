@@ -3615,3 +3615,44 @@ button { font: inherit; }
     right: -1.5%;
   }
 }
+
+
+/* Mobile fix: keep the platform modal close control visible beside the small modal circle. */
+@media (max-width: 720px) {
+  .platform-modal-layer {
+    overflow: visible;
+  }
+
+  .platform-modal-wrap {
+    width: min(78cqw, 78vw);
+    max-width: 78vw;
+    overflow: visible;
+  }
+
+  .platform-modal-wrap .platform-modal {
+    width: 100%;
+    height: 100%;
+  }
+
+  .platform-modal-wrap .platform-modal-close {
+    top: 4%;
+    right: -7%;
+    width: 44px;
+    height: 44px;
+    z-index: 6;
+  }
+}
+
+@media (max-width: 430px) {
+  .platform-modal-wrap {
+    width: min(74cqw, 74vw);
+    max-width: 74vw;
+  }
+
+  .platform-modal-wrap .platform-modal-close {
+    top: 3%;
+    right: -6%;
+    width: 40px;
+    height: 40px;
+  }
+}
