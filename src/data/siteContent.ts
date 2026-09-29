@@ -4,9 +4,9 @@ export const siteLinks = {
   android:
     "https://github.com/mateus-gomes-barros/focus-releases/releases/download/v6.0.0/focus-6.0.0.apk",
   macOS:
-    "https://github.com/mateus-gomes-barros/focus-releases/releases/download/v6.0.0/Focus%20Horizon_6.0.0_aarch64.dmg",
+    "https://github.com/mateus-gomes-barros/focus-releases/releases/download/v6.0.0/Focus.Horizon_6.0.0_aarch64.dmg",
   windows:
-    "https://github.com/mateus-gomes-barros/focus-releases/releases/download/v6.0.0/Focus%20Horizon_6.0.0_x64-setup.exe",
+    "https://github.com/mateus-gomes-barros/focus-releases/releases/download/v6.0.0/Focus.Horizon_6.0.0_x64-setup.exe",
 };
 
 export function getImageSlots(language: string) {
