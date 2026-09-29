@@ -1014,3 +1014,20 @@ button { font: inherit; }
 .download-grid a small {
   font-size: 15px;
 }
+
+
+/* Topbar emphasis: center the Focus brand */
+.watch-topbar {
+  justify-content: center;
+}
+
+.watch-brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.watch-language {
+  position: absolute;
+  right: 0;
+}
