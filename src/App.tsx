@@ -203,9 +203,12 @@ const mobileIds = [
   "story",
   "focushome-mobile",
   "focushome-identity-mobile",
-  "analytics",
-  "platforms-mobile",
+  "analytics-mobile",
+  "analytics-chart-mobile",
+  "platforms-mobile-a",
+  "platforms-mobile-b",
   "platforms-future-mobile",
+  "download-info-mobile",
   "download-mobile",
   "download-more-mobile",
   "future-mobile",
@@ -405,7 +408,7 @@ export default function App() {
                 </div>
               </section>
 
-              <section className="watch-tile analytics-tile" id="analytics">
+              <section className="watch-tile analytics-tile desktop-dense-tile" id="analytics">
                 <div className="analytics-copy">
                   <span className="watch-kicker">{c.analyticsEyebrow}</span>
                   <h2>{c.analyticsTitle}</h2>
@@ -415,6 +418,22 @@ export default function App() {
                 <AnalyticsVisual />
               </section>
 
+              <section className="watch-tile mobile-split-tile mobile-analytics-copy" id="analytics-mobile">
+                <div className="mobile-tile-card">
+                  <span className="watch-kicker">{c.analyticsEyebrow}</span>
+                  <h2>{c.analyticsTitle}</h2>
+                  <p>{c.analyticsDescription}</p>
+                  <div className="watch-highlight"><Sparkles size={15} />{c.storyTitle}</div>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-analytics-chart" id="analytics-chart-mobile">
+                <div className="mobile-tile-card mobile-chart-card">
+                  <span className="watch-kicker">{c.analyticsEyebrow}</span>
+                  <AnalyticsVisual />
+                </div>
+              </section>
+
               <section className="watch-tile platforms-tile desktop-dense-tile" id="platforms">
                 <div className="watch-tile-heading"><span className="watch-kicker">{c.platformsEyebrow}</span><h2>{c.platformsTitle}</h2></div>
                 <div className="platform-grid">
@@ -422,13 +441,23 @@ export default function App() {
                 </div>
               </section>
 
-              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-mobile">
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-mobile-a">
                 <div className="watch-tile-heading">
                   <span className="watch-kicker">{c.platformsEyebrow}</span>
                   <h2>{c.platformsTitle}</h2>
                 </div>
                 <div className="platform-grid mobile-platform-grid">
-                  {platforms.slice(0, 4).map(renderPlatformCard)}
+                  {platforms.slice(0, 2).map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-mobile-b">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.platformsEyebrow}</span>
+                  <h2>{language === "pt-BR" ? "Continue em qualquer tela." : "Continue on any screen."}</h2>
+                </div>
+                <div className="platform-grid mobile-platform-grid">
+                  {platforms.slice(2, 4).map(renderPlatformCard)}
                 </div>
               </section>
 
@@ -453,12 +482,19 @@ export default function App() {
                 </div>
               </section>
 
+              <section className="watch-tile mobile-split-tile mobile-download-tile mobile-download-info" id="download-info-mobile">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.downloadEyebrow}</span>
+                  <h2>{c.migrationTitle}</h2>
+                </div>
+                <div className="update-note"><RefreshCw size={17} /><div><p>{c.migrationText}</p></div></div>
+              </section>
+
               <section className="watch-tile mobile-split-tile mobile-download-tile" id="download-mobile">
                 <div className="watch-tile-heading">
                   <span className="watch-kicker">{c.downloadEyebrow}</span>
                   <h2>{c.downloadTitle}</h2>
                 </div>
-                <div className="update-note"><RefreshCw size={17} /><div><strong>{c.migrationTitle}</strong><p>{c.migrationText}</p></div></div>
                 <div className="download-grid mobile-download-grid">
                   <a href={siteLinks.android}><Smartphone size={16} /><span>{c.downloadLabels.android}<small>6.0.0 · APK</small></span><Download size={14} /></a>
                   <a href={siteLinks.macOS}><Laptop size={16} /><span>{c.downloadLabels.mac}<small>6.0.0 · DMG</small></span><Download size={14} /></a>
