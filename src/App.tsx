@@ -351,8 +351,31 @@ export default function App() {
 
   if (window.location.pathname === "/privacy") return <PrivacyPolicyPage />;
 
+  const ambientFocusHomes = [
+    "aster",
+    "atlas",
+    "forge",
+    "pulse",
+    "loom",
+    "orbit",
+    "tide",
+    "ember",
+    "nova",
+    "prism",
+    "vanguard",
+    "verdant",
+  ] as const;
+
   return (
     <main className="watch-page">
+      <div className="focushome-ambient" aria-hidden="true">
+        {ambientFocusHomes.map((type, index) => (
+          <div className={`focushome-ambient-symbol ambient-${index + 1}`} key={type}>
+            <FocusHomeSymbol type={type} size={96} compact />
+          </div>
+        ))}
+      </div>
+
       <div className="watch-stage">
         <div className="watch-shell">
           <FocusOrbitFrame />
