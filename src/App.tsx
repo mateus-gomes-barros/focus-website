@@ -12,6 +12,7 @@ import {
   Smartphone,
   Sparkles,
   Watch,
+  X,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FocusHomeSymbol } from "./components/FocusHomeSymbol";
@@ -49,6 +50,53 @@ const content = {
       ios: "iPhone e iPad · futuro.",
       pulse: "Wear OS · testes privados.",
       extension: "Chrome · testes privados.",
+    },
+    platformModal: {
+      eyebrow: "Como essa versão entra na sua rotina",
+      featuresLabel: "O que muda nessa plataforma",
+      close: "Fechar",
+      palm: {
+        title: "Focus — Palm",
+        device: "Android",
+        routine: "É a versão para carregar com você durante o dia: planejar o que importa, iniciar foco longe do computador, receber lembretes e acompanhar progresso sem depender de uma mesa.",
+        features: ["Hoje, Timer, Tarefas, Projetos e Metas", "Widgets e notificações no Android", "FocushoMe, insígnias e Analytics no uso diário"],
+      },
+      horizonMac: {
+        title: "Focus — Horizon",
+        device: "macOS",
+        routine: "Foi pensado para sessões longas de estudo, trabalho e projetos no desktop. O Focus fica disponível junto das ferramentas que você já usa no Mac, sem precisar manter uma aba aberta.",
+        features: ["Experiência desktop dedicada", "Timer, planejamento, tarefas, projetos, metas e Analytics", "Atualizações automáticas a partir do Focus 6.0"],
+      },
+      horizonWin: {
+        title: "Focus — Horizon",
+        device: "Windows",
+        routine: "Leva a mesma experiência desktop do Horizon para o Windows, ideal para quem trabalha, estuda ou joga no PC e quer manter o Focus disponível como aplicativo instalado.",
+        features: ["Aplicativo desktop nativo via Horizon", "Mesmo fluxo central de foco, planejamento e acompanhamento", "Atualizações automáticas quando você aceitar instalar"],
+      },
+      web: {
+        title: "Focus — Web",
+        device: "Navegador",
+        routine: "É a forma mais rápida de entrar no Focus em qualquer computador. Não exige instalação e funciona bem para alternar entre máquinas sem perder o acesso ao seu sistema de produtividade.",
+        features: ["Acesso direto pelo navegador", "Dashboard, Timer, Tarefas, Projetos, Metas, FocushoMe e Analytics", "Novas versões chegam naturalmente ao recarregar ou abrir novamente"],
+      },
+      ios: {
+        title: "Focus — Palm",
+        device: "iPhone e iPad",
+        routine: "A versão para iPhone e iPad continua no meu uso e nos meus testes privados. Ela só será liberada quando estiver consistente com a experiência pública do Palm.",
+        features: ["Experiência Palm adaptada ao ecossistema Apple", "Integrações nativas de iOS em validação", "Ainda não disponível publicamente"],
+      },
+      pulse: {
+        title: "Focus — Pulse",
+        device: "Wear OS",
+        routine: "O Pulse foi feito para reduzir ainda mais o atrito: consultar o dia, iniciar foco e fazer ações rápidas direto no pulso, sem precisar pegar o celular.",
+        features: ["Hoje e Timer no relógio", "Ações rápidas de tarefas, projetos, metas e sincronização", "Beta privado enquanto estabilidade e bateria continuam em teste"],
+      },
+      extension: {
+        title: "Focus — Extension",
+        device: "Chrome",
+        routine: "A Extension aproxima o Focus do navegador para que ações rápidas e lembretes apareçam no contexto em que muita gente já passa boa parte do dia.",
+        features: ["Interação rápida sem abrir o Focus Web", "Notificações do timer e lembretes planejados", "Continua em testes privados para o ciclo 7.0"],
+      },
     },
     downloadEyebrow: "Focus 6.0",
     downloadTitle: "Escolha sua plataforma.",
@@ -89,6 +137,53 @@ const content = {
       ios: "iPhone and iPad · future.",
       pulse: "Wear OS · private testing.",
       extension: "Chrome · private testing.",
+    },
+    platformModal: {
+      eyebrow: "How this version fits your routine",
+      featuresLabel: "What changes on this platform",
+      close: "Close",
+      palm: {
+        title: "Focus — Palm",
+        device: "Android",
+        routine: "The version you carry through the day: plan what matters, start focus away from your desk, receive reminders and follow progress without depending on a computer.",
+        features: ["Today, Timer, Tasks, Projects and Goals", "Android widgets and notifications", "FocushoMe, badges and Analytics in daily use"],
+      },
+      horizonMac: {
+        title: "Focus — Horizon",
+        device: "macOS",
+        routine: "Designed for longer study, work and project sessions on desktop. Focus stays alongside the tools you already use on your Mac without requiring a browser tab.",
+        features: ["Dedicated desktop experience", "Timer, planning, tasks, projects, goals and Analytics", "Automatic updates starting with Focus 6.0"],
+      },
+      horizonWin: {
+        title: "Focus — Horizon",
+        device: "Windows",
+        routine: "Brings the Horizon desktop experience to Windows, ideal for people who work, study or play on PC and want Focus available as an installed application.",
+        features: ["Horizon desktop application", "The same core focus, planning and progress flow", "Automatic updates whenever you accept an update"],
+      },
+      web: {
+        title: "Focus — Web",
+        device: "Browser",
+        routine: "The fastest way to enter Focus on any computer. It requires no installation and works well when moving between machines while keeping access to your productivity system.",
+        features: ["Direct browser access", "Dashboard, Timer, Tasks, Projects, Goals, FocushoMe and Analytics", "New versions arrive naturally when you reload or reopen it"],
+      },
+      ios: {
+        title: "Focus — Palm",
+        device: "iPhone and iPad",
+        routine: "The iPhone and iPad version remains in my own use and private testing. It will only be released when it is consistent with the public Palm experience.",
+        features: ["Palm experience adapted to the Apple ecosystem", "Native iOS integrations under validation", "Not publicly available yet"],
+      },
+      pulse: {
+        title: "Focus — Pulse",
+        device: "Wear OS",
+        routine: "Pulse is designed to remove even more friction: check the day, start focus and perform quick actions directly from your wrist without reaching for your phone.",
+        features: ["Today and Timer on the watch", "Quick actions for tasks, projects, goals and sync", "Private beta while stability and battery continue to be tested"],
+      },
+      extension: {
+        title: "Focus — Extension",
+        device: "Chrome",
+        routine: "Extension brings Focus closer to the browser so quick actions and reminders can live where many people already spend much of their day.",
+        features: ["Quick interaction without opening Focus Web", "Timer notifications and reminders planned", "Remains in private testing for the 7.0 cycle"],
+      },
     },
     downloadEyebrow: "Focus 6.0",
     downloadTitle: "Choose your platform.",
@@ -137,6 +232,7 @@ export default function App() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState("top");
   const [language, setLanguage] = useState<"pt-BR" | "en">("pt-BR");
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
   const c = content[language];
 
   useEffect(() => {
@@ -156,17 +252,28 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!selectedPlatform) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedPlatform(null);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [selectedPlatform]);
+
   const goTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   const platforms = useMemo(
     () => [
-      { icon: Smartphone, name: "Palm", meta: c.platformCopy.palm, ready: true },
-      { icon: Laptop, name: "Horizon", meta: c.platformCopy.horizonMac, ready: true },
-      { icon: MonitorSmartphone, name: "Horizon", meta: c.platformCopy.horizonWin, ready: true },
-      { icon: Globe2, name: "Web", meta: c.platformCopy.web, ready: true },
-      { icon: Smartphone, name: "Palm", meta: c.platformCopy.ios, ready: false },
-      { icon: Watch, name: "Pulse", meta: c.platformCopy.pulse, ready: false },
-      { icon: Puzzle, name: "Extension", meta: c.platformCopy.extension, ready: false },
+      { key: "palm", icon: Smartphone, name: "Palm", meta: c.platformCopy.palm, ready: true },
+      { key: "horizonMac", icon: Laptop, name: "Horizon", meta: c.platformCopy.horizonMac, ready: true },
+      { key: "horizonWin", icon: MonitorSmartphone, name: "Horizon", meta: c.platformCopy.horizonWin, ready: true },
+      { key: "web", icon: Globe2, name: "Web", meta: c.platformCopy.web, ready: true },
+      { key: "ios", icon: Smartphone, name: "Palm", meta: c.platformCopy.ios, ready: false },
+      { key: "pulse", icon: Watch, name: "Pulse", meta: c.platformCopy.pulse, ready: false },
+      { key: "extension", icon: Puzzle, name: "Extension", meta: c.platformCopy.extension, ready: false },
     ],
     [c],
   );
@@ -238,8 +345,20 @@ export default function App() {
               <section className="watch-tile platforms-tile" id="platforms">
                 <div className="watch-tile-heading"><span className="watch-kicker">{c.platformsEyebrow}</span><h2>{c.platformsTitle}</h2></div>
                 <div className="platform-grid">
-                  {platforms.map(({ icon: Icon, name, meta, ready }, index) => (
-                    <article className={ready ? "ready" : "future"} key={`${name}-${index}`}>
+                  {platforms.map(({ key, icon: Icon, name, meta, ready }, index) => (
+                    <article
+                      className={ready ? "ready platform-card" : "future platform-card"}
+                      key={`${name}-${index}`}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setSelectedPlatform(key)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          setSelectedPlatform(key);
+                        }
+                      }}
+                    >
                       <div className="platform-icon"><Icon size={17} /></div>
                       <div><strong>{name}</strong><span>{meta}</span></div>
                       <i>{ready ? c.available : c.future}</i>
@@ -267,6 +386,47 @@ export default function App() {
                 </div>
               </section>
             </div>
+
+            {selectedPlatform && (() => {
+              const detail = c.platformModal[selectedPlatform as keyof typeof c.platformModal];
+              if (!detail || typeof detail === "string") return null;
+
+              return (
+                <div
+                  className="platform-modal-layer"
+                  role="presentation"
+                  onMouseDown={(event) => {
+                    if (event.currentTarget === event.target) setSelectedPlatform(null);
+                  }}
+                >
+                  <section className="platform-modal" role="dialog" aria-modal="true" aria-labelledby="platform-modal-title">
+                    <button
+                      type="button"
+                      className="platform-modal-close"
+                      aria-label={c.platformModal.close}
+                      onClick={() => setSelectedPlatform(null)}
+                    >
+                      <X size={18} />
+                    </button>
+
+                    <span className="platform-modal-kicker">{c.platformModal.eyebrow}</span>
+                    <h3 id="platform-modal-title">{detail.title}</h3>
+                    <small>{detail.device}</small>
+
+                    <div className="platform-modal-card">
+                      <p>{detail.routine}</p>
+                      <div className="platform-modal-divider" />
+                      <strong>{c.platformModal.featuresLabel}</strong>
+                      <ul>
+                        {detail.features.map((feature) => (
+                          <li key={feature}><Check size={15} />{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </section>
+                </div>
+              );
+            })()}
 
             <aside className="watch-dots" aria-label="Section navigation">
               {ids.map((id) => <button key={id} type="button" aria-label={id} className={activeSection === id ? "active" : ""} onClick={() => goTo(id)} />)}
