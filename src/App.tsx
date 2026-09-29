@@ -265,9 +265,21 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("top");
   const [language, setLanguage] = useState<"pt-BR" | "en">("pt-BR");
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const [isSectionMenuOpen, setIsSectionMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 720px)").matches);
   const c = content[language];
   const sectionIds = isMobile ? mobileIds : desktopIds;
+
+  const sectionMenuItems = [
+    { label: c.heroEyebrow, desktop: "top", mobile: "top" },
+    { label: c.storyEyebrow, desktop: "story", mobile: "story-mobile" },
+    { label: c.homeEyebrow, desktop: "focushome", mobile: "focushome-mobile" },
+    { label: c.analyticsEyebrow, desktop: "analytics", mobile: "analytics-mobile" },
+    { label: c.platformsEyebrow, desktop: "platforms", mobile: "platforms-mobile-a" },
+    { label: c.downloadEyebrow, desktop: "download", mobile: "download-mobile" },
+    { label: c.futureEyebrow, desktop: "future", mobile: "future-mobile" },
+    { label: c.logEyebrow, desktop: "focus-log", mobile: "focus-log-mobile" },
+  ];
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 720px)");
@@ -677,9 +689,65 @@ export default function App() {
               );
             })()}
 
+          </div>
+
+          <div
+            className={`watch-nav-system ${isSectionMenuOpen ? "open" : ""}`}
+            onPointerEnter={() => setIsSectionMenuOpen(true)}
+            onPointerLeave={() => setIsSectionMenuOpen(false)}
+            onFocusCapture={() => setIsSectionMenuOpen(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setIsSectionMenuOpen(false);
+              }
+            }}
+            onPointerDown={(event) => {
+              if (event.pointerType === "touch") setIsSectionMenuOpen(true);
+            }}
+          >
             <aside className="watch-dots" aria-label="Section navigation">
-              {sectionIds.map((id) => <button key={id} type="button" aria-label={id} className={activeSection === id ? "active" : ""} onClick={() => goTo(id)} />)}
+              {sectionIds.map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  aria-label={id}
+                  className={activeSection === id ? "active" : ""}
+                  onClick={() => goTo(id)}
+                />
+              ))}
             </aside>
+
+            <div className="watch-nav-menu" role="menu" aria-hidden={!isSectionMenuOpen}>
+              <div className="watch-nav-signal" aria-hidden="true">
+                <i /><i /><i />
+              </div>
+
+              <div className="watch-nav-menu-list">
+                {sectionMenuItems.map((item, index) => {
+                  const target = isMobile ? item.mobile : item.desktop;
+                  const isCurrent =
+                    activeSection === target ||
+                    (isMobile && activeSection.startsWith(target.replace(/-mobile.*$/, "")));
+
+                  return (
+                    <button
+                      key={item.desktop}
+                      type="button"
+                      role="menuitem"
+                      className={isCurrent ? "active" : ""}
+                      onClick={() => {
+                        goTo(target);
+                        setIsSectionMenuOpen(false);
+                      }}
+                      style={{ "--nav-index": index } as React.CSSProperties}
+                    >
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <strong>{item.label}</strong>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
