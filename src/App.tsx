@@ -23,9 +23,9 @@ import { siteLinks } from "./data/siteContent";
 const content = {
   "pt-BR": {
     heroEyebrow: "Focus 6.0",
-    heroTitle: "Planeje o que importa.",
-    heroHighlight: "Foque no que transforma.",
-    heroDescription: "Um sistema de produtividade que acompanha seu dia sem virar obrigação.",
+    heroTitle: "Feito por humanos, para humanos.",
+    heroHighlight: "Orgânico, pessoal e único.",
+    heroDescription: "Como os seus dias: assimétrico por essência.",
     openWeb: "Abrir Focus Web",
     storyEyebrow: "Feito no uso real",
     storyTitle: "3 meses antes de publicar.",
@@ -110,9 +110,9 @@ const content = {
   },
   en: {
     heroEyebrow: "Focus 6.0",
-    heroTitle: "Plan what matters.",
-    heroHighlight: "Focus on what moves you.",
-    heroDescription: "A productivity system that follows your day without becoming another obligation.",
+    heroTitle: "Made by humans, for humans.",
+    heroHighlight: "Organic, personal and unique.",
+    heroDescription: "Like your days: asymmetric by nature.",
     openWeb: "Open Focus Web",
     storyEyebrow: "Built through real use",
     storyTitle: "3 months before release.",
