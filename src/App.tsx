@@ -200,14 +200,16 @@ const content = {
 const desktopIds = ["top", "story", "focushome", "analytics", "platforms", "download", "future"];
 const mobileIds = [
   "top",
-  "story",
+  "story-mobile",
+  "story-context-mobile",
   "focushome-mobile",
   "focushome-identity-mobile",
   "analytics-mobile",
   "analytics-chart-mobile",
   "platforms-mobile-a",
   "platforms-mobile-b",
-  "platforms-future-mobile",
+  "platforms-future-mobile-a",
+  "platforms-future-mobile-b",
   "download-info-mobile",
   "download-mobile",
   "download-more-mobile",
@@ -362,12 +364,30 @@ export default function App() {
                 <button className="watch-next" onClick={() => goTo("story")} type="button" aria-label="Continue"><ArrowDown size={16} /></button>
               </section>
 
-              <section className="watch-tile story-tile" id="story">
+              <section className="watch-tile story-tile desktop-dense-tile" id="story">
                 <div className="watch-centered narrow">
                   <span className="watch-kicker">{c.storyEyebrow}</span>
                   <h2>{c.storyTitle}</h2>
                   <p>{c.storyDescription}</p>
                   <div className="watch-pills">{c.storyPills.map((item) => <span key={item}>{item}</span>)}</div>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-story-tile" id="story-mobile">
+                <div className="mobile-tile-card mobile-story-card">
+                  <span className="watch-kicker">{c.storyEyebrow}</span>
+                  <h2>{c.storyTitle}</h2>
+                  <p>{c.storyDescription}</p>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-story-tile" id="story-context-mobile">
+                <div className="mobile-tile-card mobile-story-context-card">
+                  <span className="watch-kicker">{c.storyEyebrow}</span>
+                  <h2>{language === "pt-BR" ? "Onde o Focus virou rotina." : "Where Focus became routine."}</h2>
+                  <div className="watch-pills mobile-story-pills">
+                    {c.storyPills.map((item) => <span key={item}>{item}</span>)}
+                  </div>
                 </div>
               </section>
 
@@ -461,13 +481,23 @@ export default function App() {
                 </div>
               </section>
 
-              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-future-mobile">
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-future-mobile-a">
                 <div className="watch-tile-heading">
                   <span className="watch-kicker">{c.future}</span>
                   <h2>{language === "pt-BR" ? "Próximas plataformas." : "Platforms coming next."}</h2>
                 </div>
                 <div className="platform-grid mobile-platform-grid mobile-platform-grid-future">
-                  {platforms.slice(4).map(renderPlatformCard)}
+                  {platforms.slice(4, 6).map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile mobile-platforms-last" id="platforms-future-mobile-b">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.future}</span>
+                  <h2>{language === "pt-BR" ? "E mais perto do navegador." : "And closer to your browser."}</h2>
+                </div>
+                <div className="platform-grid mobile-platform-grid mobile-platform-grid-future">
+                  {platforms.slice(6).map(renderPlatformCard)}
                 </div>
               </section>
 
