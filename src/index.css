@@ -2552,3 +2552,17 @@ button { font: inherit; }
     font-size: 11px;
   }
 }
+
+
+/* Mobile hero pagination spacing */
+@media (max-width: 720px) {
+  .hero-tile .watch-next {
+    bottom: 4.5%;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-tile .watch-next {
+    bottom: 4%;
+  }
+}
