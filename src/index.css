@@ -2132,3 +2132,227 @@ button { font: inherit; }
     font-size: 12px;
   }
 }
+
+
+/* =========================================================
+   MOBILE SAFE-CIRCLE FINAL PASS
+   Reserve the top chord for Focus/EN-PT and never let content
+   occupy the curved bottom edge of the watch.
+   ========================================================= */
+@media (max-width: 720px) {
+  .watch-topbar {
+    top: 7.2%;
+    left: 26%;
+    right: 26%;
+    height: 7%;
+  }
+
+  .watch-brand {
+    font-size: 10px;
+  }
+
+  .watch-brand svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .watch-language {
+    font-size: 9px;
+  }
+
+  /*
+    21% top + 15% bottom defines the readable central band of the circle.
+    Dense tiles are already paginated, so we can prioritize breathing room.
+  */
+  .watch-tile,
+  .mobile-split-tile {
+    padding-top: 21%;
+    padding-bottom: 15%;
+  }
+
+  .mobile-split-tile {
+    justify-content: center;
+  }
+
+  .mobile-tile-card,
+  .watch-tile-heading {
+    max-width: 70%;
+  }
+
+  .mobile-tile-card h2,
+  .watch-tile-heading h2 {
+    margin-top: 5px;
+    margin-bottom: 8px;
+  }
+
+  /* Analytics is now two pages. */
+  .mobile-analytics-copy .mobile-tile-card {
+    width: 68%;
+  }
+
+  .mobile-analytics-copy .watch-highlight {
+    margin-top: 10px;
+  }
+
+  .mobile-analytics-chart .mobile-chart-card {
+    width: 68%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mobile-analytics-chart .analytics-visual {
+    width: 58cqw;
+    margin: 0;
+    padding: 12px 13px;
+  }
+
+  .mobile-analytics-chart .analytics-bars {
+    height: 14cqw;
+  }
+
+  /* Two platform cards per available-platform page. */
+  .mobile-platforms-tile .watch-tile-heading {
+    width: 70%;
+    margin: 0 auto 12px;
+  }
+
+  .mobile-platform-grid {
+    width: 68%;
+    gap: 9px;
+  }
+
+  .mobile-platform-grid article {
+    min-height: 58px;
+    padding: 9px 10px 15px;
+  }
+
+  .mobile-platform-grid strong {
+    font-size: 13px;
+  }
+
+  .mobile-platform-grid span {
+    font-size: 11px;
+  }
+
+  .mobile-platform-grid-future {
+    width: 68%;
+  }
+
+  /* Update explanation gets its own page. */
+  .mobile-download-info .watch-tile-heading {
+    width: 68%;
+    margin-bottom: 12px;
+  }
+
+  .mobile-download-info .update-note {
+    width: 66%;
+    margin: 0 auto;
+    padding: 13px 14px;
+  }
+
+  .mobile-download-info .update-note p {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .mobile-download-tile .watch-tile-heading {
+    width: 68%;
+    margin-bottom: 12px;
+  }
+
+  .mobile-download-grid {
+    width: 66%;
+    gap: 10px;
+  }
+
+  .mobile-download-grid a {
+    min-height: 56px;
+    padding: 10px 12px;
+  }
+
+  /* FocushoMe second page: keep list clear of lower curve. */
+  .focushome-mobile-identity .mobile-identity-card {
+    width: 68%;
+    gap: 9px;
+  }
+
+  .focushome-mobile-identity .focushome-emblem svg {
+    width: 24cqw;
+  }
+
+  .mobile-feature-list {
+    gap: 6px;
+  }
+
+  /* Never let the final card touch the lower curved edge. */
+  .mobile-future-layout,
+  .mobile-future-note {
+    width: 66%;
+  }
+
+  .future-orbit {
+    margin-bottom: 4px;
+  }
+
+  /* More pages = tighter navigation rail, still visible. */
+  .watch-dots {
+    right: 6.7%;
+    gap: 3px;
+  }
+
+  .watch-dots button {
+    width: 4px;
+    height: 4px;
+  }
+
+  .watch-dots button.active {
+    height: 12px;
+  }
+}
+
+@media (max-width: 430px) {
+  .watch-topbar {
+    top: 7%;
+    left: 27%;
+    right: 27%;
+  }
+
+  .watch-tile,
+  .mobile-split-tile {
+    padding-top: 22%;
+    padding-bottom: 16%;
+  }
+
+  .mobile-tile-card,
+  .mobile-analytics-copy .mobile-tile-card,
+  .mobile-analytics-chart .mobile-chart-card,
+  .mobile-platform-grid,
+  .mobile-platform-grid-future,
+  .mobile-download-info .watch-tile-heading,
+  .mobile-download-info .update-note,
+  .mobile-download-tile .watch-tile-heading,
+  .mobile-download-grid,
+  .focushome-mobile-identity .mobile-identity-card,
+  .mobile-future-layout,
+  .mobile-future-note {
+    width: 66%;
+    max-width: 66%;
+  }
+
+  .mobile-platform-grid article {
+    min-height: 54px;
+  }
+
+  .mobile-platform-grid span,
+  .mobile-download-info .update-note p,
+  .mobile-download-grid a small,
+  .mobile-feature-list li {
+    font-size: 10px;
+  }
+
+  .mobile-analytics-chart .analytics-visual {
+    width: 56cqw;
+  }
+}
