@@ -4092,3 +4092,218 @@ button { font: inherit; }
     opacity: .38;
   }
 }
+
+
+/* =========================================================
+   ANALOG GLASS EDGE
+   Content appears to slide behind the curved watch crystal.
+   The effect becomes stronger only while a page is changing.
+   ========================================================= */
+.watch-edge-blur {
+  position: absolute;
+  inset: 0;
+  z-index: 38;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.edge-blur-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: clamp(18px, 3.2cqw, 42px);
+  background:
+    radial-gradient(
+      circle,
+      transparent 0 70%,
+      rgba(255,255,255,.018) 76%,
+      rgba(255,255,255,.055) 86%,
+      rgba(69,242,123,.025) 93%,
+      rgba(0,0,0,.24) 100%
+    );
+  backdrop-filter: blur(1.5px) saturate(1.03);
+  -webkit-backdrop-filter: blur(1.5px) saturate(1.03);
+  opacity: .44;
+
+  -webkit-mask:
+    radial-gradient(
+      circle,
+      transparent 0 72%,
+      #000 79% 100%
+    );
+  mask:
+    radial-gradient(
+      circle,
+      transparent 0 72%,
+      #000 79% 100%
+    );
+}
+
+.edge-blur-top,
+.edge-blur-bottom {
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  height: 18%;
+  border-radius: 50%;
+  opacity: .22;
+  backdrop-filter: blur(3px) saturate(1.05);
+  -webkit-backdrop-filter: blur(3px) saturate(1.05);
+  filter: drop-shadow(0 0 1.2cqw rgba(69,242,123,.025));
+}
+
+.edge-blur-top {
+  top: -5%;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(2,4,3,.78),
+      rgba(8,16,11,.22) 48%,
+      transparent 100%
+    );
+}
+
+.edge-blur-bottom {
+  bottom: -5%;
+  background:
+    linear-gradient(
+      to top,
+      rgba(2,4,3,.78),
+      rgba(8,16,11,.22) 48%,
+      transparent 100%
+    );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .watch-shell.page-transitioning .edge-blur-ring {
+    animation: analogEdgeBlur .62s cubic-bezier(.16,1,.3,1);
+  }
+
+  .watch-shell.page-transitioning .edge-blur-top {
+    animation: analogGlassTop .62s cubic-bezier(.16,1,.3,1);
+  }
+
+  .watch-shell.page-transitioning .edge-blur-bottom {
+    animation: analogGlassBottom .62s cubic-bezier(.16,1,.3,1);
+  }
+
+  .watch-shell.page-transitioning .watch-scroller {
+    animation: analogContentDepth .62s cubic-bezier(.16,1,.3,1);
+  }
+}
+
+@keyframes analogEdgeBlur {
+  0% {
+    opacity: .44;
+    backdrop-filter: blur(1.5px) saturate(1.03);
+    -webkit-backdrop-filter: blur(1.5px) saturate(1.03);
+  }
+
+  38% {
+    opacity: .88;
+    backdrop-filter: blur(10px) saturate(1.16);
+    -webkit-backdrop-filter: blur(10px) saturate(1.16);
+  }
+
+  72% {
+    opacity: .62;
+    backdrop-filter: blur(5px) saturate(1.08);
+    -webkit-backdrop-filter: blur(5px) saturate(1.08);
+  }
+
+  100% {
+    opacity: .44;
+    backdrop-filter: blur(1.5px) saturate(1.03);
+    -webkit-backdrop-filter: blur(1.5px) saturate(1.03);
+  }
+}
+
+@keyframes analogGlassTop {
+  0% {
+    opacity: .22;
+    transform: translateY(-3%) scaleX(.98);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+
+  40% {
+    opacity: .72;
+    transform: translateY(2%) scaleX(1.04);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+  }
+
+  100% {
+    opacity: .22;
+    transform: translateY(-3%) scaleX(.98);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+}
+
+@keyframes analogGlassBottom {
+  0% {
+    opacity: .22;
+    transform: translateY(3%) scaleX(.98);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+
+  40% {
+    opacity: .72;
+    transform: translateY(-2%) scaleX(1.04);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+  }
+
+  100% {
+    opacity: .22;
+    transform: translateY(3%) scaleX(.98);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+}
+
+@keyframes analogContentDepth {
+  0% {
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  36% {
+    filter: blur(.45px);
+    transform: scale(.997);
+  }
+
+  100% {
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 720px) {
+  .edge-blur-ring {
+    padding: 18px;
+    opacity: .36;
+  }
+
+  .edge-blur-top,
+  .edge-blur-bottom {
+    left: 12%;
+    right: 12%;
+    height: 15%;
+    opacity: .18;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .watch-shell.page-transitioning .edge-blur-ring {
+      animation-duration: .56s;
+    }
+
+    .watch-shell.page-transitioning .edge-blur-top,
+    .watch-shell.page-transitioning .edge-blur-bottom {
+      animation-duration: .56s;
+    }
+  }
+}
