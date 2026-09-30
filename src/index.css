@@ -3746,3 +3746,76 @@ button { font: inherit; }
     font-size: 11px;
   }
 }
+
+
+/* Focus Log mobile: give the CTA page more breathing room inside the watch. */
+@media (max-width: 720px) {
+  .focus-log-mobile-cta {
+    padding-top: 15%;
+    padding-bottom: 13%;
+  }
+
+  .focus-log-mobile-cta .focus-log-mobile-card {
+    width: 72%;
+  }
+
+  .focus-log-mobile-cta h2 {
+    max-width: 92%;
+    margin: 6px auto 10px;
+    font-size: clamp(20px, 5.5cqw, 26px);
+    line-height: 1.03;
+  }
+
+  .focus-log-mobile-cta p {
+    max-width: 92%;
+    font-size: 11px;
+    line-height: 1.36;
+  }
+
+  .focus-log-mobile-cta .focus-log-actions {
+    margin-top: 10px;
+    gap: 7px;
+  }
+
+  .focus-log-mobile-cta .watch-primary {
+    margin-top: 0;
+    padding: 8px 11px;
+    font-size: 10px;
+  }
+
+  .focus-log-mobile-cta .watch-secondary-link {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .focus-log-mobile-cta {
+    padding-top: 14%;
+    padding-bottom: 12%;
+  }
+
+  .focus-log-mobile-cta .focus-log-mobile-card {
+    width: 74%;
+  }
+
+  .focus-log-mobile-cta h2 {
+    max-width: 94%;
+    font-size: clamp(19px, 5.2cqw, 24px);
+    line-height: 1.02;
+  }
+
+  .focus-log-mobile-cta p {
+    max-width: 94%;
+    font-size: 10.5px;
+    line-height: 1.34;
+  }
+
+  .focus-log-mobile-cta .watch-primary {
+    padding: 7px 10px;
+    font-size: 9.5px;
+  }
+
+  .focus-log-mobile-cta .watch-secondary-link {
+    font-size: 9.5px;
+  }
+}
