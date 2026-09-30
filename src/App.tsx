@@ -1,549 +1,809 @@
 import {
-  Activity, ArrowDown, ArrowRight, ArrowUpRight, BellRing, Check,
-  FolderKanban, Menu, Smartphone, Sparkles, Target, TimerReset, X,
+  ArrowDown,
+  ArrowUpRight,
+  BarChart3,
+  Check,
+  Download,
+  Globe2,
+  Laptop,
+  MonitorSmartphone,
+  Puzzle,
+  RefreshCw,
+  Smartphone,
+  Sparkles,
+  Watch,
+  X,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { AnalyticsPreview } from "./components/AnalyticsPreview";
-import { FocusMark } from "./components/FocusMark";
-import { FocusHomePreview } from "./components/FocusHomePreview";
-import { ProductVisual } from "./components/ProductVisual";
-import { LanguageSwitcher } from "./components/LanguageSwitcher";
-import { TimerPreview } from "./components/TimerPreview";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { FocusHomeSymbol } from "./components/FocusHomeSymbol";
+import { FocusMark, FocusOrbitFrame } from "./components/FocusMark";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
-import { features } from "./data/features";
-import { badgeMilestones, getImageSlots, siteLinks, widgetNames } from "./data/siteContent";
+import { siteLinks } from "./data/siteContent";
 
-const reveal = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.15 },
-  transition: { duration: 0.65 },
-};
+const content = {
+  "pt-BR": {
+    heroEyebrow: "Focus 6.0",
+    heroTitle: "Feito por humanos, para humanos.",
+    heroHighlight: "Orgânico, pessoal e único.",
+    heroDescription: "Como os seus dias: assimétrico por essência.",
+    openWeb: "Abrir Focus Web",
+    storyEyebrow: "Feito no uso real",
+    storyTitle: "3 meses antes de publicar.",
+    storyDescription: "Usei o Focus em projetos, trabalho, faculdade e lazer. Juntei tudo o que sentia falta em outros apps para que produtividade não virasse uma tarefa a mais, mas uma extensão natural do meu dia.",
+    storyPills: ["Projetos", "Trabalho", "Faculdade", "Lazer"],
+    homeEyebrow: "O coração do Focus",
+    homeTitle: "Seu foco ganha uma identidade.",
+    homeDescription: "FocushoMe é o emblema mais importante do Focus. Ele observa como você planeja, executa, conclui, retoma e mantém seu ritmo para construir uma identidade que evolui junto com você.",
+    homePoints: ["Comportamento real, não só minutos.", "Emblema, cor e evolução.", "Retrospectivas da sua jornada."],
+    analyticsEyebrow: "Entenda seu ritmo",
+    analyticsTitle: "Estatísticas sem pressão.",
+    analyticsDescription: "Sessões, projetos e progresso viram contexto para você entender onde sua atenção realmente acontece.",
+    platformsEyebrow: "Multiplataforma",
+    platformsTitle: "Um Focus. Várias telas.",
+    available: "Disponível",
+    future: "Em testes",
+    platformCopy: {
+      palm: "Android · Focus no bolso.",
+      horizonMac: "macOS · desktop dedicado.",
+      horizonWin: "Windows · desktop dedicado.",
+      web: "Browser · sem instalar.",
+      ios: "iPhone e iPad · futuro.",
+      pulse: "Wear OS · testes privados.",
+      extension: "Chrome · testes privados.",
+    },
+    platformModal: {
+      eyebrow: "Como essa versão entra na sua rotina",
+      featuresLabel: "O que muda nessa plataforma",
+      close: "Fechar",
+      palm: {
+        title: "Focus — Palm",
+        device: "Android",
+        routine: "É a versão para carregar com você durante o dia: planejar o que importa, iniciar foco longe do computador, receber lembretes e acompanhar progresso sem depender de uma mesa.",
+        features: ["Hoje, Timer, Tarefas, Projetos e Metas", "Widgets e notificações no Android", "FocushoMe, insígnias e Analytics no uso diário"],
+      },
+      horizonMac: {
+        title: "Focus — Horizon",
+        device: "macOS",
+        routine: "Foi pensado para sessões longas de estudo, trabalho e projetos no desktop. O Focus fica disponível junto das ferramentas que você já usa no Mac, sem precisar manter uma aba aberta.",
+        features: ["Experiência desktop dedicada", "Timer, planejamento, tarefas, projetos, metas e Analytics", "Atualizações automáticas a partir do Focus 6.0"],
+      },
+      horizonWin: {
+        title: "Focus — Horizon",
+        device: "Windows",
+        routine: "Leva a mesma experiência desktop do Horizon para o Windows, ideal para quem trabalha, estuda ou joga no PC e quer manter o Focus disponível como aplicativo instalado.",
+        features: ["Aplicativo desktop nativo via Horizon", "Mesmo fluxo central de foco, planejamento e acompanhamento", "Atualizações automáticas quando você aceitar instalar"],
+      },
+      web: {
+        title: "Focus — Web",
+        device: "Navegador",
+        routine: "É a forma mais rápida de entrar no Focus em qualquer computador. Não exige instalação e funciona bem para alternar entre máquinas sem perder o acesso ao seu sistema de produtividade.",
+        features: ["Acesso direto pelo navegador", "Dashboard, Timer, Tarefas, Projetos, Metas, FocushoMe e Analytics", "Novas versões chegam naturalmente ao recarregar ou abrir novamente"],
+      },
+      ios: {
+        title: "Focus — Palm",
+        device: "iPhone e iPad",
+        routine: "A versão para iPhone e iPad continua no meu uso e nos meus testes privados. Ela só será liberada quando estiver consistente com a experiência pública do Palm.",
+        features: ["Experiência Palm adaptada ao ecossistema Apple", "Integrações nativas de iOS em validação", "Ainda não disponível publicamente"],
+      },
+      pulse: {
+        title: "Focus — Pulse",
+        device: "Wear OS",
+        routine: "O Pulse foi feito para reduzir ainda mais o atrito: consultar o dia, iniciar foco e fazer ações rápidas direto no pulso, sem precisar pegar o celular.",
+        features: ["Hoje e Timer no relógio", "Ações rápidas de tarefas, projetos, metas e sincronização", "Beta privado enquanto estabilidade e bateria continuam em teste"],
+      },
+      extension: {
+        title: "Focus — Extension",
+        device: "Chrome",
+        routine: "A Extension aproxima o Focus do navegador para que ações rápidas e lembretes apareçam no contexto em que muita gente já passa boa parte do dia.",
+        features: ["Interação rápida sem abrir o Focus Web", "Notificações do timer e lembretes planejados", "Continua em testes privados para o ciclo 7.0"],
+      },
+    },
+    downloadEyebrow: "Focus 6.0",
+    downloadTitle: "Escolha sua plataforma.",
+    migrationTitle: "Já usava antes do 6.0?",
+    migrationText: "Instale o 6.0 uma vez. Palm e Horizon passam a oferecer atualizações automáticas nas próximas versões.",
+    downloadLabels: { android: "Palm · Android", mac: "Horizon · macOS", windows: "Horizon · Windows", web: "Focus Web" },
+    futureEyebrow: "Focus Labs",
+    futureTitle: "O que vem depois.",
+    futureDescription: "Palm para iPhone/iPad, Focus Pulse e Focus Extension continuam no meu uso diário e em testes privados.",
+    futureNote: "Só vou liberar essas plataformas quando a experiência estiver pronta para outras pessoas.",
+    logEyebrow: "Focus Log",
+    logTitle: "Conheça muito mais sobre o focus aqui",
+    logDescription: "O Focus passou por muitas versões até se tornar estável e utilizável diariamente. Estou pronto para compartilhar tudo o que desenvolvi ao longo de meses de uso: bugs que encontrei, decisões, funcionalidades que achei interessantes e o que se tornou indispensável no meu dia a dia.",
+    logMobileIntro: "O Focus passou por muitas versões até se tornar estável e utilizável diariamente.",
+    logMobileMore: "Agora estou pronto para compartilhar meses de uso real: bugs que encontrei, decisões, funcionalidades que achei interessantes e o que se tornou indispensável no meu dia a dia.",
+    logCta: "Me leve para o Focus Log",
+    privacyCta: "Política de Privacidade",
+  },
+  en: {
+    heroEyebrow: "Focus 6.0",
+    heroTitle: "Made by humans, for humans.",
+    heroHighlight: "Organic, personal and unique.",
+    heroDescription: "Like your days: asymmetric by nature.",
+    openWeb: "Open Focus Web",
+    storyEyebrow: "Built through real use",
+    storyTitle: "3 months before release.",
+    storyDescription: "I used Focus across projects, work, college and leisure. I brought together everything I missed in other apps so productivity would not become another task — but a natural extension of my day.",
+    storyPills: ["Projects", "Work", "College", "Leisure"],
+    homeEyebrow: "The heart of Focus",
+    homeTitle: "Your focus becomes an identity.",
+    homeDescription: "FocushoMe is the most important emblem in Focus. It looks at how you plan, execute, complete, resume and maintain your rhythm to build an identity that evolves with you.",
+    homePoints: ["Real behavior, not only minutes.", "Emblem, color and evolution.", "Retrospectives of your journey."],
+    analyticsEyebrow: "Understand your rhythm",
+    analyticsTitle: "Analytics without pressure.",
+    analyticsDescription: "Sessions, projects and progress become context so you can understand where your attention actually happens.",
+    platformsEyebrow: "Multiplatform",
+    platformsTitle: "One Focus. Many screens.",
+    available: "Available",
+    future: "In testing",
+    platformCopy: {
+      palm: "Android · Focus in your pocket.",
+      horizonMac: "macOS · dedicated desktop.",
+      horizonWin: "Windows · dedicated desktop.",
+      web: "Browser · no install.",
+      ios: "iPhone and iPad · future.",
+      pulse: "Wear OS · private testing.",
+      extension: "Chrome · private testing.",
+    },
+    platformModal: {
+      eyebrow: "How this version fits your routine",
+      featuresLabel: "What changes on this platform",
+      close: "Close",
+      palm: {
+        title: "Focus — Palm",
+        device: "Android",
+        routine: "The version you carry through the day: plan what matters, start focus away from your desk, receive reminders and follow progress without depending on a computer.",
+        features: ["Today, Timer, Tasks, Projects and Goals", "Android widgets and notifications", "FocushoMe, badges and Analytics in daily use"],
+      },
+      horizonMac: {
+        title: "Focus — Horizon",
+        device: "macOS",
+        routine: "Designed for longer study, work and project sessions on desktop. Focus stays alongside the tools you already use on your Mac without requiring a browser tab.",
+        features: ["Dedicated desktop experience", "Timer, planning, tasks, projects, goals and Analytics", "Automatic updates starting with Focus 6.0"],
+      },
+      horizonWin: {
+        title: "Focus — Horizon",
+        device: "Windows",
+        routine: "Brings the Horizon desktop experience to Windows, ideal for people who work, study or play on PC and want Focus available as an installed application.",
+        features: ["Horizon desktop application", "The same core focus, planning and progress flow", "Automatic updates whenever you accept an update"],
+      },
+      web: {
+        title: "Focus — Web",
+        device: "Browser",
+        routine: "The fastest way to enter Focus on any computer. It requires no installation and works well when moving between machines while keeping access to your productivity system.",
+        features: ["Direct browser access", "Dashboard, Timer, Tasks, Projects, Goals, FocushoMe and Analytics", "New versions arrive naturally when you reload or reopen it"],
+      },
+      ios: {
+        title: "Focus — Palm",
+        device: "iPhone and iPad",
+        routine: "The iPhone and iPad version remains in my own use and private testing. It will only be released when it is consistent with the public Palm experience.",
+        features: ["Palm experience adapted to the Apple ecosystem", "Native iOS integrations under validation", "Not publicly available yet"],
+      },
+      pulse: {
+        title: "Focus — Pulse",
+        device: "Wear OS",
+        routine: "Pulse is designed to remove even more friction: check the day, start focus and perform quick actions directly from your wrist without reaching for your phone.",
+        features: ["Today and Timer on the watch", "Quick actions for tasks, projects, goals and sync", "Private beta while stability and battery continue to be tested"],
+      },
+      extension: {
+        title: "Focus — Extension",
+        device: "Chrome",
+        routine: "Extension brings Focus closer to the browser so quick actions and reminders can live where many people already spend much of their day.",
+        features: ["Quick interaction without opening Focus Web", "Timer notifications and reminders planned", "Remains in private testing for the 7.0 cycle"],
+      },
+    },
+    downloadEyebrow: "Focus 6.0",
+    downloadTitle: "Choose your platform.",
+    migrationTitle: "Used Focus before 6.0?",
+    migrationText: "Install 6.0 once. Palm and Horizon can then offer automatic updates for future releases.",
+    downloadLabels: { android: "Palm · Android", mac: "Horizon · macOS", windows: "Horizon · Windows", web: "Focus Web" },
+    futureEyebrow: "Focus Labs",
+    futureTitle: "What comes next.",
+    futureDescription: "Palm for iPhone/iPad, Focus Pulse and Focus Extension remain in my daily use and private testing.",
+    futureNote: "I will only release these platforms when the experience is ready for other people.",
+    logEyebrow: "Focus Log",
+    logTitle: "Discover much more about Focus here",
+    logDescription: "Focus went through many versions before becoming stable and useful every day. I am ready to share what I built through months of real use: bugs I found, decisions I made, features I considered interesting and what became indispensable in my daily routine.",
+    logMobileIntro: "Focus went through many versions before becoming stable and useful every day.",
+    logMobileMore: "Now I am ready to share months of real use: bugs I found, decisions I made, features I considered interesting and what became indispensable in my daily routine.",
+    logCta: "Take me to Focus Log",
+    privacyCta: "Privacy Policy",
+  },
+} as const;
 
-const flow = [
-  ["01", "Start a session", "Choose a project and what you are working on."],
-  ["02", "Focus remembers", "Time, tasks, activity and streaks update together."],
-  ["03", "See the pattern", "Analytics turn everyday work into visible progress."],
+const desktopIds = ["top", "story", "focushome", "analytics", "platforms", "download", "future", "focus-log"];
+const mobileIds = [
+  "top",
+  "story-mobile",
+  "story-context-mobile",
+  "focushome-mobile",
+  "focushome-identity-mobile",
+  "analytics-mobile",
+  "analytics-chart-mobile",
+  "platforms-mobile-a",
+  "platforms-mobile-b",
+  "platforms-future-mobile-a",
+  "platforms-future-mobile-b",
+  "download-info-mobile",
+  "download-mobile",
+  "download-more-mobile",
+  "future-mobile",
+  "future-note-mobile",
+  "focus-log-mobile",
+  "focus-log-cta-mobile",
 ];
 
+function HeroVisual() {
+  return (
+    <div className="hero-orbit-visual" aria-hidden="true">
+      <svg viewBox="0 0 180 180">
+        <circle className="timer-track" cx="90" cy="90" r="68" />
+        <circle className="timer-progress" cx="90" cy="90" r="68" />
+      </svg>
+      <div className="hero-timer-value"><strong>24:16</strong><span>50 min</span></div>
+      <div className="hero-timer-meta"><span>Focus</span><b>+18%</b></div>
+    </div>
+  );
+}
+
+function AnalyticsVisual() {
+  const bars = [34, 52, 42, 68, 56, 82, 66];
+  return (
+    <div className="analytics-visual" aria-hidden="true">
+      <div className="analytics-visual-head">
+        <div><span>Focus</span><strong>18h 42m</strong></div>
+        <div className="analytics-chip">+12%</div>
+      </div>
+      <div className="analytics-bars">
+        {bars.map((height, index) => <span key={index} style={{ height: `${height}%` }} className={index === 5 ? "active" : ""} />)}
+      </div>
+      <div className="analytics-caption">Mon · Tue · Wed · Thu · Fri · Sat · Sun</div>
+    </div>
+  );
+}
+
 export default function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const { t, i18n } = useTranslation();
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState("top");
+  const [language, setLanguage] = useState<"pt-BR" | "en">("pt-BR");
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const [isSectionMenuOpen, setIsSectionMenuOpen] = useState(false);
+  const [isPageTransitioning, setIsPageTransitioning] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 720px)").matches);
+  const c = content[language];
+  const sectionIds = isMobile ? mobileIds : desktopIds;
 
-  const currentLanguage = i18n.resolvedLanguage?.startsWith("pt")
-    ? "pt-BR"
-    : "en";
+  const sectionMenuItems = [
+    { label: c.heroEyebrow, desktop: "top", mobile: "top" },
+    { label: c.storyEyebrow, desktop: "story", mobile: "story-mobile" },
+    { label: c.homeEyebrow, desktop: "focushome", mobile: "focushome-mobile" },
+    { label: c.analyticsEyebrow, desktop: "analytics", mobile: "analytics-mobile" },
+    { label: c.platformsEyebrow, desktop: "platforms", mobile: "platforms-mobile-a" },
+    { label: language === "pt-BR" ? "Baixar Focus" : "Download Focus", desktop: "download", mobile: "download-mobile" },
+    { label: c.futureEyebrow, desktop: "future", mobile: "future-mobile" },
+    { label: c.logEyebrow, desktop: "focus-log", mobile: "focus-log-mobile" },
+  ];
 
-  const imageSlots = getImageSlots(currentLanguage);
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 720px)");
+    const sync = () => setIsMobile(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
 
-  if (
-    window.location.pathname ===
-    "/privacy"
-  ) {
-    return <PrivacyPolicyPage />;
-  }
+  useEffect(() => {
+    const root = scrollerRef.current;
+    if (!root) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { root, threshold: [0.5, 0.7, 0.9] },
+    );
+
+    sectionIds.forEach((id) => {
+      const node = document.getElementById(id);
+      if (node) observer.observe(node);
+    });
+
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+  useEffect(() => {
+    setIsPageTransitioning(true);
+    const timeout = window.setTimeout(() => setIsPageTransitioning(false), 620);
+    return () => window.clearTimeout(timeout);
+  }, [activeSection]);
+
+  useEffect(() => {
+    if (!selectedPlatform) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedPlatform(null);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [selectedPlatform]);
+
+  const goTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  const platforms = useMemo(
+    () => [
+      { key: "palm", icon: Smartphone, name: "Palm", meta: c.platformCopy.palm, ready: true },
+      { key: "horizonMac", icon: Laptop, name: "Horizon", meta: c.platformCopy.horizonMac, ready: true },
+      { key: "horizonWin", icon: MonitorSmartphone, name: "Horizon", meta: c.platformCopy.horizonWin, ready: true },
+      { key: "web", icon: Globe2, name: "Web", meta: c.platformCopy.web, ready: true },
+      { key: "ios", icon: Smartphone, name: "Palm", meta: c.platformCopy.ios, ready: false },
+      { key: "pulse", icon: Watch, name: "Pulse", meta: c.platformCopy.pulse, ready: false },
+      { key: "extension", icon: Puzzle, name: "Extension", meta: c.platformCopy.extension, ready: false },
+    ],
+    [c],
+  );
+
+  const renderPlatformCard = (
+    { key, icon: Icon, name, meta, ready }: (typeof platforms)[number],
+    index: number,
+  ) => (
+    <article
+      className={ready ? "ready platform-card" : "future platform-card"}
+      key={`${key}-${index}`}
+      role="button"
+      tabIndex={0}
+      onClick={() => setSelectedPlatform(key)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setSelectedPlatform(key);
+        }
+      }}
+    >
+      <div className="platform-icon"><Icon size={17} /></div>
+      <div><strong>{name}</strong><span>{meta}</span></div>
+      <i>{ready ? c.available : c.future}</i>
+    </article>
+  );
+
+  if (window.location.pathname === "/privacy") return <PrivacyPolicyPage />;
+
+  const ambientFocusHomes = [
+    "aster",
+    "atlas",
+    "forge",
+    "pulse",
+    "loom",
+    "orbit",
+    "tide",
+    "ember",
+    "nova",
+    "prism",
+    "vanguard",
+    "verdant",
+  ] as const;
 
   return (
-    <main>
-      <nav className="nav shell" aria-label="Main navigation">
-        <a className="brand" href="#top" aria-label="Focus home"><FocusMark /><span>focus</span></a>
-        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <a href="#system" onClick={() => setMenuOpen(false)}>{t("navigation.product")}</a>
-          <a href="#features" onClick={() => setMenuOpen(false)}>{t("navigation.features")}</a>
-          <a href="#focushome" onClick={() => setMenuOpen(false)}>{t("navigation.focusHome")}</a>
-          <a href="#analytics" onClick={() => setMenuOpen(false)}>{t("navigation.analytics")}</a>
-          <a href="#widgets" onClick={() => setMenuOpen(false)}>{t("navigation.widgets")}</a>
-          <a className="nav-cta" href="#download" onClick={() => setMenuOpen(false)}>{t("navigation.action")} <ArrowUpRight size={15} /></a>
-        </div>
-        <div className="nav-actions">
-          <LanguageSwitcher />
-          <button className="menu-button" aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-      </nav>
-
-      <section className="hero shell" id="top">
-        <motion.div className="hero-copy" initial={{ opacity: 0, x: -25 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
-          <div className="eyebrow"><span /> {t("hero.eyebrow")}</div>
-          <h1>{t("hero.title")}<br /><em>{t("hero.highlight")}</em></h1>
-          <p>{t("hero.description")}</p>
-          <div className="hero-actions">
-            <a
-              className="button-primary"
-              href={siteLinks.webApp}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t("hero.primaryAction")}
-              <ArrowUpRight size={18} />
-            </a>
-
-            <a
-              className="text-link"
-              href="#focushome"
-            >
-              {t("hero.secondaryAction")}
-              <ArrowDown size={16} />
-            </a>
+    <main className="watch-page">
+      <div className="focushome-ambient" aria-hidden="true">
+        {ambientFocusHomes.map((type, index) => (
+          <div className={`focushome-ambient-symbol ambient-${index + 1}`} key={type}>
+            <FocusHomeSymbol type={type} size={96} compact />
           </div>
-          <div className="hero-points">
-            <span>{t("hero.point1")}</span>
-            <span>{t("hero.point2")}</span>
-            <span>{t("hero.point3")}</span>
-          </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.15 }}>
-          <TimerPreview />
-        </motion.div>
-      </section>
+        ))}
+      </div>
 
-      <motion.section className="statement shell" {...reveal} id="system">
-        <p>{t("system.eyebrow")}</p>
-        <h2>{t("system.title")} <span>{t("system.highlight")}</span></h2>
-        <div className="flow-grid">
-          {flow.map(([number], index) => (
-            <div className="flow-item" key={number}>
-              <span>{number}</span>
-              <h3>{t(`system.steps.${index}.title`)}</h3>
-              <p>{t(`system.steps.${index}.description`)}</p>
-              <ArrowRight size={18} />
+      <div className="watch-stage">
+        <div className={`watch-shell ${isPageTransitioning ? "page-transitioning" : ""}`} data-section={activeSection}>
+          <FocusOrbitFrame />
+          <div className="watch-liquid-bezel" aria-hidden="true">
+            <span className="liquid-rim rim-a" />
+            <span className="liquid-rim rim-b" />
+            <span className="liquid-rim rim-c" />
+            <span className="liquid-specular spec-a" />
+            <span className="liquid-specular spec-b" />
+          </div>
+          <div className="watch-glass">
+            <div className="watch-edge-blur" aria-hidden="true">
+              <span className="edge-blur-ring" />
+              <span className="edge-blur-top" />
+              <span className="edge-blur-bottom" />
             </div>
-          ))}
-        </div>
-      </motion.section>
-
-      <section className="features shell" id="features">
-        <motion.div className="section-heading" {...reveal}>
-          <span className="section-kicker">{t("foundation.eyebrow")}</span>
-          <h2>{t("foundation.title")}<br /><span>{t("foundation.highlight")}</span></h2>
-        </motion.div>
-        <div className="feature-grid">
-          {features.map(({ number, icon: Icon, title, text }, index) => (
-            <motion.article className="feature-card" key={number} {...reveal} transition={{ duration: 0.55, delay: index * 0.08 }}>
-              <div className="feature-top"><span>{number}</span><Icon size={22} /></div><h3>{t(`foundation.features.${index}.title`)}</h3>
-              <p>{t(`foundation.features.${index}.description`)}</p>
-            </motion.article>
-          ))}
-        </div>
-      </section>
-
-      <section className="showcase shell">
-        <motion.div className="showcase-copy" {...reveal}>
-          <span className="section-kicker">{t("timer.eyebrow")}</span>
-          <h2>{t("timer.title")}<br /><span>{t("timer.highlight")}</span></h2>
-          <p>{t("timer.description")}</p>
-          <div className="settings-row">
-            <span><TimerReset size={17} /> {t("timer.duration")}</span>
-            <span><Sparkles size={17} /> {t("timer.transitions")}</span>
-          </div>
-        </motion.div>
-        <ProductVisual src={imageSlots.timer} label={t("timer.imageLabel")} alt={t("timer.imageLabel")} />
-      </section>
-
-      <section
-        className="focushome-section"
-        id="focushome"
-      >
-        <div className="shell focushome-layout">
-          <motion.div
-            className="focushome-copy"
-            {...reveal}
-          >
-            <span className="section-kicker">
-              {t("focusHome.eyebrow")}
-            </span>
-
-            <h2>
-              {t("focusHome.title")}
-              <br />
-              <span>
-                {t("focusHome.highlight")}
-              </span>
-            </h2>
-
-            <p>
-              {t("focusHome.description")}
-            </p>
-
-            <ul className="check-list">
-              <li>
-                <Check size={16} />
-                {t("focusHome.item1")}
-              </li>
-
-              <li>
-                <Check size={16} />
-                {t("focusHome.item2")}
-              </li>
-
-              <li>
-                <Check size={16} />
-                {t("focusHome.item3")}
-              </li>
-            </ul>
-          </motion.div>
-
-          <motion.div
-            {...reveal}
-            transition={{
-              duration: 0.75,
-              delay: 0.12,
-            }}
-          >
-            <FocusHomePreview
-              eyebrow={t(
-                "focusHome.previewEyebrow",
-              )}
-              name="Prism"
-              description={t(
-                "focusHome.previewDescription",
-              )}
-              traits={[
-                t("focusHome.trait1"),
-                t("focusHome.trait2"),
-                t("focusHome.trait3"),
-              ]}
-            />
-          </motion.div>
-        </div>
-
-        <div className="shell glass-principles">
-          {Array.from({
-            length: 3,
-          }).map((_, index) => (
-            <article key={index}>
-              <span>
-                {String(index + 1).padStart(
-                  2,
-                  "0",
-                )}
-              </span>
-
-              <h3>
-                {t(
-                  `focusHome.principles.${index}.title`,
-                )}
-              </h3>
-
-              <p>
-                {t(
-                  `focusHome.principles.${index}.description`,
-                )}
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="showcase reverse shell">
-        <ProductVisual src={imageSlots.notifications} label={t("notification.imageLabel")} alt={t("notification.imageLabel")} className="phone-visual" />
-        <motion.div className="showcase-copy" {...reveal}>
-          <span className="section-kicker">{t("notification.eyebrow")}</span>
-          <h2>{t("notification.title")}<br /><span>{t("notification.highlight")}</span></h2>
-          <p>{t("notification.description")}</p>
-          <ul className="check-list">
-            <li><Check size={16} /> {t("notification.item1")}</li>
-            <li><Check size={16} /> {t("notification.item2")}</li>
-            <li><Check size={16} /> {t("notification.item3")}</li>
-          </ul>
-        </motion.div>
-      </section>
-
-      <section className="projects-section shell">
-        <motion.div className="wide-heading" {...reveal}>
-          <span className="section-kicker">{t("projects.eyebrow")}</span>
-          <h2>{t("projects.title")} <span>{t("projects.highlight")}</span></h2>
-          <p>{t("projects.description")}</p>
-        </motion.div>
-        <div className="project-layout">
-          <ProductVisual src={imageSlots.projects} label={t("projects.imageLabel")} alt={t("projects.imageLabel")} />
-          <div className="detail-stack">
-            <article><FolderKanban /><div><h3>{t("projects.projectTitle")}</h3><p>{t("projects.projectDescription")}</p></div></article>
-            <article><Check /><div><h3>{t("projects.taskTitle")}</h3><p>{t("projects.taskDescription")}</p></div></article>
-            <article><Target /><div><h3>{t("projects.goalTitle")}</h3><p>{t("projects.goalDescription")}</p></div></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="analytics-section" id="analytics">
-        <div className="shell analytics-layout">
-          <motion.div className="analytics-copy" {...reveal}>
-            <span className="section-kicker">{t("analytics.eyebrow")}</span>
-            <h2>{t("analytics.title")} <span>{t("analytics.highlight")}</span></h2>
-            <p>{t("analytics.description")}</p>
-            <div className="period-tabs">
-              <span>{t("analytics.week")}</span>
-              <span className="active">{t("analytics.month")}</span>
-              <span>{t("analytics.year")}</span>
-              <span>{t("analytics.allTime")}</span>
-            </div>
-          </motion.div>
-          <AnalyticsPreview />
-        </div>
-        <div className="shell image-pair">
-          <ProductVisual src={imageSlots.analytics} label={t("analytics.analyticsImage")} alt={t("analytics.analyticsImage")} />
-          <ProductVisual src={imageSlots.history} label={t("analytics.historyImage")} alt={t("analytics.historyImage")} />
-        </div>
-      </section>
-
-      <section className="insights shell">
-        <motion.div className="section-heading" {...reveal}>
-          <span className="section-kicker">{t("insights.eyebrow")}</span>
-          <h2>
-            {t("insights.title1")}<br />
-            {t("insights.title2")}<br />
-            <span>{t("insights.highlight")}</span>
-          </h2>
-        </motion.div>
-        <div className="insight-grid">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <article key={index}>
-              <Activity size={18} />
-              <span>{t(`insights.cards.${index}.label`)}</span>
-              <strong>{t(`insights.cards.${index}.value`)}</strong>
-              <p>{t(`insights.cards.${index}.detail`)}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="badges-section shell">
-        <motion.div className="badges-copy" {...reveal}>
-          <span className="section-kicker">{t("badges.eyebrow")}</span>
-          <h2>{t("badges.title")} <span>{t("badges.highlight")}</span></h2>
-          <p>{t("badges.description")}</p>
-          <div className="badge-strip">
-            {badgeMilestones.map((badge) => (
-              <div className="badge-item" key={badge.name}>
-                <b>{badge.icon}</b>
-                <span>{badge.name}</span>
-                <small>
-                  {currentLanguage === "pt-BR"
-                    ? badge.days.replace("days", "dias").replace("day", "dia")
-                    : badge.days}
-                </small>
+            <header className="watch-topbar">
+              <button className="watch-brand" type="button" onClick={() => goTo("top")}><FocusMark /><span>focus</span></button>
+              <div className="watch-language">
+                <button className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")} type="button">EN</button>
+                <span>/</span>
+                <button className={language === "pt-BR" ? "active" : ""} onClick={() => setLanguage("pt-BR")} type="button">PT</button>
               </div>
-            ))}
-          </div>
-        </motion.div>
-        <ProductVisual src={imageSlots.badges} label={t("badges.imageLabel")} alt={t("badges.imageLabel")} />
-      </section>
+            </header>
 
-      <section className="widgets-section" id="widgets">
-        <div className="shell widgets-layout">
-          <ProductVisual src={imageSlots.widgets} label={t("widgets.imageLabel")} alt={t("widgets.imageLabel")} className="widgets-visual" />
-          <motion.div className="showcase-copy" {...reveal}>
-            <span className="section-kicker">{t("widgets.eyebrow")}</span>
-            <h2>{t("widgets.title")}<br /><span>{t("widgets.highlight")}</span></h2>
-            <p>{t("widgets.description")}</p>
-            <div className="widget-tags">{widgetNames.map((name, index) => {
-              const portugueseWidgets = [
-                "Foco de hoje",
-                "Sequência atual",
-                "Atividade semanal",
-                "Atividade mensal",
-                "Análises semanais",
-                "Análises mensais",
-                "Metas",
-                "Projeto principal",
-                "Timer de foco",
-                "FocushoMe",
-              ];
+            <div className="watch-scroller" ref={scrollerRef}>
+              <section className="watch-tile hero-tile" id="top">
+                <div className="hero-copy">
+                  <span className="watch-kicker">{c.heroEyebrow}</span>
+                  <h1>{c.heroTitle}<strong>{c.heroHighlight}</strong></h1>
+                  <p>{c.heroDescription}</p>
+                  <a href={siteLinks.webApp} target="_blank" rel="noreferrer" className="watch-primary">{c.openWeb}<ArrowUpRight size={14} /></a>
+                </div>
+                <HeroVisual />
+                <button className="watch-next" onClick={() => goTo("story")} type="button" aria-label="Continue"><ArrowDown size={16} /></button>
+              </section>
+
+              <section className="watch-tile story-tile desktop-dense-tile" id="story">
+                <div className="watch-centered narrow">
+                  <span className="watch-kicker">{c.storyEyebrow}</span>
+                  <h2>{c.storyTitle}</h2>
+                  <p>{c.storyDescription}</p>
+                  <div className="watch-pills">{c.storyPills.map((item) => <span key={item}>{item}</span>)}</div>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-story-tile" id="story-mobile">
+                <div className="mobile-tile-card mobile-story-card">
+                  <span className="watch-kicker">{c.storyEyebrow}</span>
+                  <h2>{c.storyTitle}</h2>
+                  <p>{c.storyDescription}</p>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-story-tile" id="story-context-mobile">
+                <div className="mobile-tile-card mobile-story-context-card">
+                  <span className="watch-kicker">{c.storyEyebrow}</span>
+                  <h2>{language === "pt-BR" ? "Onde o Focus virou rotina." : "Where Focus became routine."}</h2>
+                  <div className="watch-pills mobile-story-pills">
+                    {c.storyPills.map((item) => <span key={item}>{item}</span>)}
+                  </div>
+                </div>
+              </section>
+
+              <section className="watch-tile focushome-tile desktop-dense-tile" id="focushome">
+                <div className="focushome-layout">
+                  <div className="focushome-copy">
+                    <span className="watch-kicker">{c.homeEyebrow}</span>
+                    <h2>{c.homeTitle}</h2>
+                    <p>{c.homeDescription}</p>
+                    <ul>{c.homePoints.map((item) => <li key={item}><Check size={13} />{item}</li>)}</ul>
+                  </div>
+                  <div className="focushome-emblem">
+                    <div className="focushome-glow" />
+                    <FocusHomeSymbol type="prism" size={220} />
+                    <strong>Prism</strong><span>FocushoMe</span>
+                  </div>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile focushome-mobile-copy" id="focushome-mobile">
+                <div className="mobile-tile-card">
+                  <span className="watch-kicker">{c.homeEyebrow}</span>
+                  <h2>{c.homeTitle}</h2>
+                  <p>{c.homeDescription}</p>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile focushome-mobile-identity" id="focushome-identity-mobile">
+                <div className="mobile-tile-card mobile-identity-card">
+                  <div className="focushome-emblem">
+                    <div className="focushome-glow" />
+                    <FocusHomeSymbol type="prism" size={220} />
+                    <strong>Prism</strong><span>FocushoMe</span>
+                  </div>
+                  <ul className="mobile-feature-list">
+                    {c.homePoints.map((item) => <li key={item}><Check size={14} />{item}</li>)}
+                  </ul>
+                </div>
+              </section>
+
+              <section className="watch-tile analytics-tile desktop-dense-tile" id="analytics">
+                <div className="analytics-copy">
+                  <span className="watch-kicker">{c.analyticsEyebrow}</span>
+                  <h2>{c.analyticsTitle}</h2>
+                  <p>{c.analyticsDescription}</p>
+                  <div className="watch-highlight"><Sparkles size={15} />{c.storyTitle}</div>
+                </div>
+                <AnalyticsVisual />
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-analytics-copy" id="analytics-mobile">
+                <div className="mobile-tile-card">
+                  <span className="watch-kicker">{c.analyticsEyebrow}</span>
+                  <h2>{c.analyticsTitle}</h2>
+                  <p>{c.analyticsDescription}</p>
+                  <div className="watch-highlight"><Sparkles size={15} />{c.storyTitle}</div>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-analytics-chart" id="analytics-chart-mobile">
+                <div className="mobile-tile-card mobile-chart-card">
+                  <span className="watch-kicker">{c.analyticsEyebrow}</span>
+                  <AnalyticsVisual />
+                </div>
+              </section>
+
+              <section className="watch-tile platforms-tile desktop-dense-tile" id="platforms">
+                <div className="watch-tile-heading"><span className="watch-kicker">{c.platformsEyebrow}</span><h2>{c.platformsTitle}</h2></div>
+                <div className="platform-grid">
+                  {platforms.map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-mobile-a">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.platformsEyebrow}</span>
+                  <h2>{c.platformsTitle}</h2>
+                </div>
+                <div className="platform-grid mobile-platform-grid">
+                  {platforms.slice(0, 2).map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-mobile-b">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.platformsEyebrow}</span>
+                  <h2>{language === "pt-BR" ? "Continue em qualquer tela." : "Continue on any screen."}</h2>
+                </div>
+                <div className="platform-grid mobile-platform-grid">
+                  {platforms.slice(2, 4).map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile" id="platforms-future-mobile-a">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.future}</span>
+                  <h2>{language === "pt-BR" ? "Próximas plataformas." : "Platforms coming next."}</h2>
+                </div>
+                <div className="platform-grid mobile-platform-grid mobile-platform-grid-future">
+                  {platforms.slice(4, 6).map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-platforms-tile mobile-platforms-last" id="platforms-future-mobile-b">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.future}</span>
+                  <h2>{language === "pt-BR" ? "E mais perto do navegador." : "And closer to your browser."}</h2>
+                </div>
+                <div className="platform-grid mobile-platform-grid mobile-platform-grid-future">
+                  {platforms.slice(6).map(renderPlatformCard)}
+                </div>
+              </section>
+
+              <section className="watch-tile download-tile desktop-dense-tile" id="download">
+                <div className="watch-tile-heading"><span className="watch-kicker">{c.downloadEyebrow}</span><h2>{c.downloadTitle}</h2></div>
+                <div className="update-note"><RefreshCw size={17} /><div><strong>{c.migrationTitle}</strong><p>{c.migrationText}</p></div></div>
+                <div className="download-grid">
+                  <a href={siteLinks.android}><Smartphone size={16} /><span>{c.downloadLabels.android}<small>6.0.0 · APK</small></span><Download size={14} /></a>
+                  <a href={siteLinks.macOS}><Laptop size={16} /><span>{c.downloadLabels.mac}<small>6.0.0 · DMG</small></span><Download size={14} /></a>
+                  <a href={siteLinks.windows}><MonitorSmartphone size={16} /><span>{c.downloadLabels.windows}<small>6.0.0 · EXE</small></span><Download size={14} /></a>
+                  <a href={siteLinks.webApp} target="_blank" rel="noreferrer"><Globe2 size={16} /><span>{c.downloadLabels.web}<small>Browser</small></span><ArrowUpRight size={14} /></a>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-download-tile mobile-download-info" id="download-info-mobile">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.downloadEyebrow}</span>
+                  <h2>{c.migrationTitle}</h2>
+                </div>
+                <div className="update-note"><RefreshCw size={17} /><div><p>{c.migrationText}</p></div></div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-download-tile" id="download-mobile">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.downloadEyebrow}</span>
+                  <h2>{c.downloadTitle}</h2>
+                </div>
+                <div className="download-grid mobile-download-grid">
+                  <a href={siteLinks.android}><Smartphone size={16} /><span>{c.downloadLabels.android}<small>6.0.0 · APK</small></span><Download size={14} /></a>
+                  <a href={siteLinks.macOS}><Laptop size={16} /><span>{c.downloadLabels.mac}<small>6.0.0 · DMG</small></span><Download size={14} /></a>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-download-tile" id="download-more-mobile">
+                <div className="watch-tile-heading">
+                  <span className="watch-kicker">{c.downloadEyebrow}</span>
+                  <h2>{language === "pt-BR" ? "Continue onde preferir." : "Continue wherever you prefer."}</h2>
+                </div>
+                <div className="download-grid mobile-download-grid">
+                  <a href={siteLinks.windows}><MonitorSmartphone size={16} /><span>{c.downloadLabels.windows}<small>6.0.0 · EXE</small></span><Download size={14} /></a>
+                  <a href={siteLinks.webApp} target="_blank" rel="noreferrer"><Globe2 size={16} /><span>{c.downloadLabels.web}<small>Browser</small></span><ArrowUpRight size={14} /></a>
+                </div>
+              </section>
+
+              <section className="watch-tile future-tile desktop-dense-tile" id="future">
+                <div className="future-layout">
+                  <div><span className="watch-kicker">{c.futureEyebrow}</span><h2>{c.futureTitle}</h2><p>{c.futureDescription}</p></div>
+                  <div className="future-orbit"><Watch size={30} /><Puzzle size={24} /><Smartphone size={24} /><BarChart3 size={22} /></div>
+                  <blockquote>{c.futureNote}</blockquote>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-future-tile" id="future-mobile">
+                <div className="future-layout mobile-future-layout">
+                  <div>
+                    <span className="watch-kicker">{c.futureEyebrow}</span>
+                    <h2>{c.futureTitle}</h2>
+                    <p>{c.futureDescription}</p>
+                  </div>
+                  <div className="future-orbit"><Watch size={30} /><Puzzle size={24} /><Smartphone size={24} /><BarChart3 size={22} /></div>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile mobile-future-tile" id="future-note-mobile">
+                <div className="future-layout mobile-future-layout mobile-future-note">
+                  <span className="watch-kicker">{c.futureEyebrow}</span>
+                  <blockquote>{c.futureNote}</blockquote>
+                </div>
+              </section>
+
+              <section className="watch-tile desktop-dense-tile" id="focus-log">
+                <div className="watch-centered narrow">
+                  <span className="watch-kicker">{c.logEyebrow}</span>
+                  <h2>{c.logTitle}</h2>
+                  <p>{c.logDescription}</p>
+                  <div className="focus-log-actions">
+                    <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
+                      {c.logCta}<ArrowUpRight size={14} />
+                    </a>
+                    <a href="/privacy" className="watch-secondary-link">
+                      {c.privacyCta}
+                    </a>
+                  </div>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile focus-log-mobile" id="focus-log-mobile">
+                <div className="mobile-tile-card focus-log-mobile-card">
+                  <span className="watch-kicker">{c.logEyebrow}</span>
+                  <h2>{c.logTitle}</h2>
+                  <p>{c.logMobileIntro}</p>
+                </div>
+              </section>
+
+              <section className="watch-tile mobile-split-tile focus-log-mobile" id="focus-log-cta-mobile">
+                <div className="mobile-tile-card focus-log-mobile-card focus-log-mobile-cta">
+                  <span className="watch-kicker">{c.logEyebrow}</span>
+                  <h2>{language === "pt-BR" ? "Meses de evolução, agora abertos." : "Months of evolution, now open."}</h2>
+                  <p>{c.logMobileMore}</p>
+                  <div className="focus-log-actions">
+                    <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
+                      {c.logCta}<ArrowUpRight size={14} />
+                    </a>
+                    <a href="/privacy" className="watch-secondary-link">
+                      {c.privacyCta}
+                    </a>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            {selectedPlatform && (() => {
+              const detail = c.platformModal[selectedPlatform as keyof typeof c.platformModal];
+              if (!detail || typeof detail === "string") return null;
 
               return (
-                <span key={name}>
-                  {currentLanguage === "pt-BR"
-                    ? portugueseWidgets[index]
-                    : name}
-                </span>
-              );
-            })}</div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="connection shell">
-        <motion.div {...reveal}>
-          <span className="section-kicker">{t("connection.eyebrow")}</span>
-          <h2>{t("connection.title")}<br /><span>{t("connection.highlight")}</span></h2>
-        </motion.div>
-        <div className="connection-chain">
-          {Array.from({ length: 6 }).map((_, index) => (
-            
-            <div key={index}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <strong>{t(`connection.steps.${index}`)}</strong>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="origin shell">
-        <motion.div className="origin-card" {...reveal}>
-          <BellRing size={25} />
-          <blockquote>“{t("origin.quote")}”</blockquote>
-          <p>{t("origin.description")}</p>
-        </motion.div>
-      </section>
-
-      <motion.section
-        className="download-section shell"
-        id="download"
-        {...reveal}
-      >
-        <div className="download-heading">
-          <span className="section-kicker">
-            {t("final.eyebrow")}
-          </span>
-
-          <h2>
-            {t("final.title")}
-            <br />
-            <span>{t("final.highlight")}</span>
-          </h2>
-
-          <p>{t("final.description")}</p>
-          <div className="updater-notice" role="note">
-            <div className="updater-notice-icon" aria-hidden="true">↗</div>
-            <div>
-              <strong className="updater-notice-title">
-                {t("final.updaterTitle")}
-              </strong>
-              <p className="updater-notice-text">
-                {t("final.updaterNotice")}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="download-layout">
-          <article className="download-card">
-            <div className="download-platform">
-              <div className="download-icon">
-                <Smartphone size={25} />
-              </div>
-
-              <div>
-                <span>{t("final.platform")}</span>
-                <strong>{t("final.available")}</strong>
-              </div>
-            </div>
-
-            <div className="download-meta">
-              <div>
-                <span>{t("final.versionLabel")}</span>
-                <strong>5.0.4</strong>
-              </div>
-
-              <div>
-                <span>{t("final.sizeLabel")}</span>
-                <strong>4,6 MB</strong>
-              </div>
-
-              <div>
-                <span>{t("final.formatLabel")}</span>
-                <strong>APK</strong>
-              </div>
-            </div>
-
-            <div className="download-actions">
-              <a
-                className="button-primary download-button"
-                href={siteLinks.download}
-                download="focus-5.0.4-android.apk"
-              >
-                {t("final.download")}
-                <ArrowDown size={18} />
-              </a>
-
-              <a
-                className="web-app-button"
-                href={siteLinks.webApp}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {t("final.openWeb")}
-                <ArrowUpRight size={18} />
-              </a>
-            </div>
-
-            <div className="download-security">
-              <Check size={15} />
-
-              <p>
-                {t("final.signed")}
-                {" "}
-                <a
-                  href={siteLinks.checksum}
-                  download
+                <div
+                  className="platform-modal-layer"
+                  role="presentation"
+                  onMouseDown={(event) => {
+                    if (event.currentTarget === event.target) setSelectedPlatform(null);
+                  }}
                 >
-                  {t("final.checksum")}
-                </a>
-              </p>
-            </div>
-          </article>
+                  <div className="platform-modal-wrap">
+                    <button
+                      type="button"
+                      className="platform-modal-close"
+                      aria-label={c.platformModal.close}
+                      onClick={() => setSelectedPlatform(null)}
+                    >
+                      <FocusMark className="platform-modal-close-mark" />
+                      <X className="platform-modal-close-x" size={17} />
+                    </button>
 
-          <aside className="install-guide">
-            <span className="install-number">
-              01 — 03
-            </span>
+                    <section className="platform-modal" role="dialog" aria-modal="true" aria-labelledby="platform-modal-title">
+                    <span className="platform-modal-kicker">{c.platformModal.eyebrow}</span>
+                    <h3 id="platform-modal-title">{detail.title}</h3>
+                    <small>{detail.device}</small>
 
-            <h3>{t("final.instructionsTitle")}</h3>
+                    <div className="platform-modal-card">
+                      <p>{detail.routine}</p>
+                      <div className="platform-modal-divider" />
+                      <strong>{c.platformModal.featuresLabel}</strong>
+                      <ul>
+                        {detail.features.map((feature) => (
+                          <li key={feature}><Check size={15} />{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    </section>
+                  </div>
+                </div>
+              );
+            })()}
 
-            <ol>
-              {Array.from({
-                length: 3,
-              }).map((_, index) => (
-                <li key={index}>
-                  <span>{index + 1}</span>
-                  <p>
-                    {t(
-                      `final.steps.${index}`,
-                    )}
-                  </p>
-                </li>
-              ))}
-            </ol>
-
-            <p className="install-note">
-              {t("final.permissionNote")}
-            </p>
-          </aside>
-        </div>
-
-        <div className="download-footer">
-          <div className="store-statuses">
-            <span>
-              {t("final.galaxyStoreSoon")}
-            </span>
-
-            <span>
-              {t("final.playStoreSoon")}
-            </span>
-
-            <span>
-              {t("final.appStoreSoon")}
-            </span>
           </div>
 
-        </div>
-      </motion.section>
+          <div
+            className={`watch-nav-system ${isSectionMenuOpen ? "open" : ""}`}
+            onPointerEnter={() => setIsSectionMenuOpen(true)}
+            onPointerLeave={() => setIsSectionMenuOpen(false)}
+            onFocusCapture={() => setIsSectionMenuOpen(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setIsSectionMenuOpen(false);
+              }
+            }}
+            onPointerDown={(event) => {
+              if (event.pointerType === "touch") setIsSectionMenuOpen(true);
+            }}
+          >
+            <aside className="watch-dots" aria-label="Section navigation">
+              {(isMobile ? sectionMenuItems : sectionMenuItems).map((item) => {
+                const target = isMobile ? item.mobile : item.desktop;
+                const groupKey = item.desktop;
+                const isCurrent = isMobile
+                  ? activeSection === target ||
+                    activeSection.startsWith(`${groupKey}-`) ||
+                    (groupKey === "top" && activeSection === "top")
+                  : activeSection === target;
 
-      <footer className="footer shell">
-        <div className="brand"><FocusMark /><span>focus</span></div>
-        <div className="footer-center">
-          <p>{t("footer.message")}</p>
-          <a href="/privacy">
-            {currentLanguage === "pt-BR"
-              ? "Política de Privacidade"
-              : "Privacy Policy"}
-          </a>
+                return (
+                  <button
+                    key={item.desktop}
+                    type="button"
+                    aria-label={item.label}
+                    className={isCurrent ? "active" : ""}
+                    onClick={() => goTo(target)}
+                  />
+                );
+              })}
+            </aside>
+
+            <div className="watch-nav-menu" role="menu" aria-hidden={!isSectionMenuOpen}>
+              <div className="watch-nav-signal" aria-hidden="true">
+                <svg viewBox="0 0 92 210" fill="none">
+                  <path className="nav-arrow arrow-a" d="M6 58C24 55 35 49 48 38C57 30 62 24 68 16" />
+                  <path className="nav-arrow-tip arrow-a-tip" d="M57 19L69 15L67 28" />
+
+                  <path className="nav-arrow arrow-b" d="M4 106C23 106 38 103 52 96C64 90 72 82 79 73" />
+                  <path className="nav-arrow-tip arrow-b-tip" d="M68 76L80 72L78 85" />
+
+                  <path className="nav-arrow arrow-c" d="M5 153C25 155 42 157 58 153C69 150 77 145 84 138" />
+                  <path className="nav-arrow-tip arrow-c-tip" d="M74 140L85 137L82 149" />
+                </svg>
+              </div>
+
+              <div className="watch-nav-menu-list">
+                {sectionMenuItems.map((item, index) => {
+                  const target = isMobile ? item.mobile : item.desktop;
+                  const isCurrent =
+                    activeSection === target ||
+                    (isMobile && activeSection.startsWith(target.replace(/-mobile.*$/, "")));
+
+                  return (
+                    <button
+                      key={item.desktop}
+                      type="button"
+                      role="menuitem"
+                      className={isCurrent ? "active" : ""}
+                      onClick={() => {
+                        goTo(target);
+                        setIsSectionMenuOpen(false);
+                      }}
+                      style={{ "--nav-index": index } as React.CSSProperties}
+                    >
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <strong>{item.label}</strong>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
-        <span>© 2026 Focus</span>
-      </footer>
+      </div>
     </main>
   );
 }
