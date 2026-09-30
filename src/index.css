@@ -3704,3 +3704,45 @@ button { font: inherit; }
     height: 12px;
   }
 }
+
+
+/* Visible privacy access from the public Focus Site. */
+.focus-log-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  margin-top: 14px;
+}
+
+.focus-log-actions .watch-primary {
+  margin-top: 0;
+}
+
+.watch-secondary-link {
+  color: #9aa39d;
+  font-size: 13px;
+  text-decoration: underline;
+  text-decoration-color: rgba(69, 242, 123, .28);
+  text-underline-offset: 4px;
+  transition: color .18s ease, text-decoration-color .18s ease;
+}
+
+.watch-secondary-link:hover,
+.watch-secondary-link:focus-visible {
+  color: var(--green);
+  text-decoration-color: var(--green);
+  outline: none;
+}
+
+@media (max-width: 720px) {
+  .focus-log-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .watch-secondary-link {
+    font-size: 11px;
+  }
+}
