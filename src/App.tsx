@@ -113,6 +113,7 @@ const content = {
     logMobileIntro: "O Focus passou por muitas versões até se tornar estável e utilizável diariamente.",
     logMobileMore: "Agora estou pronto para compartilhar meses de uso real: bugs que encontrei, decisões, funcionalidades que achei interessantes e o que se tornou indispensável no meu dia a dia.",
     logCta: "Me leve para o Focus Log",
+    privacyCta: "Política de Privacidade",
   },
   en: {
     heroEyebrow: "Focus 6.0",
@@ -206,6 +207,7 @@ const content = {
     logMobileIntro: "Focus went through many versions before becoming stable and useful every day.",
     logMobileMore: "Now I am ready to share months of real use: bugs I found, decisions I made, features I considered interesting and what became indispensable in my daily routine.",
     logCta: "Take me to Focus Log",
+    privacyCta: "Privacy Policy",
   },
 } as const;
 
@@ -622,9 +624,14 @@ export default function App() {
                   <span className="watch-kicker">{c.logEyebrow}</span>
                   <h2>{c.logTitle}</h2>
                   <p>{c.logDescription}</p>
-                  <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
-                    {c.logCta}<ArrowUpRight size={14} />
-                  </a>
+                  <div className="focus-log-actions">
+                    <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
+                      {c.logCta}<ArrowUpRight size={14} />
+                    </a>
+                    <a href="/privacy" className="watch-secondary-link">
+                      {c.privacyCta}
+                    </a>
+                  </div>
                 </div>
               </section>
 
@@ -641,9 +648,14 @@ export default function App() {
                   <span className="watch-kicker">{c.logEyebrow}</span>
                   <h2>{language === "pt-BR" ? "Meses de evolução, agora abertos." : "Months of evolution, now open."}</h2>
                   <p>{c.logMobileMore}</p>
-                  <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
-                    {c.logCta}<ArrowUpRight size={14} />
-                  </a>
+                  <div className="focus-log-actions">
+                    <a href={siteLinks.focusLog} target="_blank" rel="noreferrer" className="watch-primary">
+                      {c.logCta}<ArrowUpRight size={14} />
+                    </a>
+                    <a href="/privacy" className="watch-secondary-link">
+                      {c.privacyCta}
+                    </a>
+                  </div>
                 </div>
               </section>
             </div>
