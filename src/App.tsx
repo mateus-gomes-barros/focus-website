@@ -268,6 +268,7 @@ export default function App() {
   const [language, setLanguage] = useState<"pt-BR" | "en">("pt-BR");
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
   const [isSectionMenuOpen, setIsSectionMenuOpen] = useState(false);
+  const [isPageTransitioning, setIsPageTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 720px)").matches);
   const c = content[language];
   const sectionIds = isMobile ? mobileIds : desktopIds;
@@ -313,6 +314,12 @@ export default function App() {
 
     return () => observer.disconnect();
   }, [isMobile]);
+
+  useEffect(() => {
+    setIsPageTransitioning(true);
+    const timeout = window.setTimeout(() => setIsPageTransitioning(false), 620);
+    return () => window.clearTimeout(timeout);
+  }, [activeSection]);
 
   useEffect(() => {
     if (!selectedPlatform) return;
@@ -391,8 +398,15 @@ export default function App() {
       </div>
 
       <div className="watch-stage">
-        <div className="watch-shell">
+        <div className={`watch-shell ${isPageTransitioning ? "page-transitioning" : ""}`} data-section={activeSection}>
           <FocusOrbitFrame />
+          <div className="watch-liquid-bezel" aria-hidden="true">
+            <span className="liquid-rim rim-a" />
+            <span className="liquid-rim rim-b" />
+            <span className="liquid-rim rim-c" />
+            <span className="liquid-specular spec-a" />
+            <span className="liquid-specular spec-b" />
+          </div>
           <div className="watch-glass">
             <header className="watch-topbar">
               <button className="watch-brand" type="button" onClick={() => goTo("top")}><FocusMark /><span>focus</span></button>
