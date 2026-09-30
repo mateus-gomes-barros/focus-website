@@ -408,6 +408,11 @@ export default function App() {
             <span className="liquid-specular spec-b" />
           </div>
           <div className="watch-glass">
+            <div className="watch-edge-blur" aria-hidden="true">
+              <span className="edge-blur-ring" />
+              <span className="edge-blur-top" />
+              <span className="edge-blur-bottom" />
+            </div>
             <header className="watch-topbar">
               <button className="watch-brand" type="button" onClick={() => goTo("top")}><FocusMark /><span>focus</span></button>
               <div className="watch-language">
